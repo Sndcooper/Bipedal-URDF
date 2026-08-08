@@ -1,0 +1,766 @@
+<?xml version="1.0" ?>
+<robot name="bipedal_export_temp" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find bipedal_export_temp_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find bipedal_export_temp_description)/urdf/bipedal_export_temp.trans" />
+<xacro:include filename="$(find bipedal_export_temp_description)/urdf/bipedal_export_temp.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.05382820871711473 0.024270753342091098 -0.0710234932925312" rpy="0 0 0"/>
+    <mass value="1.90502266258246"/>
+    <inertia ixx="0.005499" iyy="0.006896" izz="0.009169" ixy="-0.0" iyz="1.6e-05" ixz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="ax-12__3__1">
+  <inertial>
+    <origin xyz="0.016440810679351492 3.350589059883391e-06 0.012319353567892918" rpy="0 0 0"/>
+    <mass value="0.043433148174171265"/>
+    <inertia ixx="1e-05" iyy="1.3e-05" izz="7e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.016193 -0.055 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.016193 -0.055 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="ax-12_1">
+  <inertial>
+    <origin xyz="-0.016440472531059486 -3.350589059902473e-06 0.012319353567893362" rpy="0 0 0"/>
+    <mass value="0.043433148174171265"/>
+    <inertia ixx="1e-05" iyy="1.3e-05" izz="7e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.123807 0.005 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.123807 0.005 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="ax-12__2__1">
+  <inertial>
+    <origin xyz="-0.016440472531059486 -3.350589059883391e-06 0.012319353567893362" rpy="0 0 0"/>
+    <mass value="0.043433148174171265"/>
+    <inertia ixx="1e-05" iyy="1.3e-05" izz="7e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.123807 -0.055 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.123807 -0.055 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="ax-12__1__1">
+  <inertial>
+    <origin xyz="0.016440810679351492 3.3505890598677784e-06 0.012319353567892904" rpy="0 0 0"/>
+    <mass value="0.043433148174171265"/>
+    <inertia ixx="1e-05" iyy="1.3e-05" izz="7e-06" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.016193 0.005 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.016193 0.005 0.081271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/ax-12__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Configuration_1_1">
+  <inertial>
+    <origin xyz="0.07055159225526811 0.0030618308214988323 0.030349936598724318" rpy="0 0 0"/>
+    <mass value="2.302487626677058"/>
+    <inertia ixx="0.002502" iyy="0.005588" izz="0.005353" ixy="-2e-05" iyz="-5.2e-05" ixz="-2e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.016193 -0.025 0.022271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/Configuration_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.016193 -0.025 0.022271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/Configuration_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Configuration_1__2__1">
+  <inertial>
+    <origin xyz="-0.050499786088647705 0.0026285374492455403 0.04559012486581564" rpy="0 0 0"/>
+    <mass value="0.6016243860449282"/>
+    <inertia ixx="0.000558" iyy="0.001505" izz="0.001148" ixy="0.0" iyz="-0.000149" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.103707 -0.0155 0.012871" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/Configuration_1__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.103707 -0.0155 0.012871" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/Configuration_1__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="botom_femur__3__1">
+  <inertial>
+    <origin xyz="-0.1236780784360697 0.03649480021772704 -0.014494195073889257" rpy="0 0 0"/>
+    <mass value="0.04046411855805348"/>
+    <inertia ixx="2.1e-05" iyy="1.9e-05" izz="2e-06" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.098278 0.041493 0.087771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.098278 0.041493 0.087771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="botom_femur__1__1">
+  <inertial>
+    <origin xyz="-0.1236780784360697 0.03665208380342784 0.045506407580293076" rpy="0 0 0"/>
+    <mass value="0.04046411855805348"/>
+    <inertia ixx="2.1e-05" iyy="1.9e-05" izz="2e-06" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.098278 -0.018507 0.147771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.098278 -0.018507 0.147771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="botom_femur__2__1">
+  <inertial>
+    <origin xyz="0.12367841658436203 0.11210384841146903 -0.01449419491451956" rpy="0 0 0"/>
+    <mass value="0.04046411855805348"/>
+    <inertia ixx="2.1e-05" iyy="1.9e-05" izz="2e-06" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.009336 0.117107 0.087771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.009336 0.117107 0.087771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="botom_femur_1">
+  <inertial>
+    <origin xyz="0.123678416584362 0.11226783984232755 0.045506420960373634" rpy="0 0 0"/>
+    <mass value="0.04046411855805348"/>
+    <inertia ixx="2.1e-05" iyy="1.9e-05" izz="2e-06" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.009336 0.057107 0.147771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.009336 0.057107 0.147771" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/botom_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="top_femur_1">
+  <inertial>
+    <origin xyz="0.0909616407567175 0.0029958087084616183 -0.09125116074896032" rpy="0 0 0"/>
+    <mass value="0.0465667780620982"/>
+    <inertia ixx="2.4e-05" iyy="2.2e-05" izz="2e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.049836 0.007992 0.009163" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.049836 0.007992 0.009163" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="top_femur__1__1">
+  <inertial>
+    <origin xyz="0.09096164075671748 0.06370634116988068 -0.09075954697677248" rpy="0 0 0"/>
+    <mass value="0.0465667780620982"/>
+    <inertia ixx="2.4e-05" iyy="2.2e-05" izz="2e-06" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.049836 0.008553 0.009654" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.049836 0.008553 0.009654" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="top_femur__3__1">
+  <inertial>
+    <origin xyz="-0.09096130260842518 -0.0030000409318453065 0.07134983953585589" rpy="0 0 0"/>
+    <mass value="0.0465667780620982"/>
+    <inertia ixx="2.4e-05" iyy="2.2e-05" izz="2e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.057778 0.002005 0.171764" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.057778 0.002005 0.171764" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="top_femur__2__1">
+  <inertial>
+    <origin xyz="-0.09096130260842518 -0.0635326245113838 0.07087633899271731" rpy="0 0 0"/>
+    <mass value="0.0465667780620982"/>
+    <inertia ixx="2.4e-05" iyy="2.2e-05" izz="2e-06" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.057778 -0.118671 0.17129" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.057778 -0.118671 0.17129" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/top_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_1_1">
+  <inertial>
+    <origin xyz="-8.205216236093632e-05 0.020887601054854866 -0.07106874262271437" rpy="0 0 0"/>
+    <mass value="0.2089415503982678"/>
+    <inertia ixx="0.000351" iyy="0.000295" izz="6e-05" ixy="4e-06" iyz="7.6e-05" ixz="-1.4e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.031493 0.005005 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.031493 0.005005 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_1__1__1">
+  <inertial>
+    <origin xyz="8.239031065412905e-05 -0.0208898207785123 -0.07106838288486542" rpy="0 0 0"/>
+    <mass value="0.2089415503982678"/>
+    <inertia ixx="0.000351" iyy="0.000295" izz="6e-05" ixy="4e-06" iyz="-7.6e-05" ixz="1.4e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.139107 -0.055431 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.139107 -0.055431 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_1__1__1">
+  <inertial>
+    <origin xyz="0.004082390310654133 -0.0208898207785123 -0.07106838288486542" rpy="0 0 0"/>
+    <mass value="0.2089415503982678"/>
+    <inertia ixx="0.000351" iyy="0.000295" izz="6e-05" ixy="4e-06" iyz="-7.6e-05" ixz="1.4e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.135107 -0.055431 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.135107 -0.055431 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_1_1">
+  <inertial>
+    <origin xyz="-0.004082052162360936 0.020887601054854866 -0.07106874262271437" rpy="0 0 0"/>
+    <mass value="0.2089415503982678"/>
+    <inertia ixx="0.000351" iyy="0.000295" izz="6e-05" ixy="4e-06" iyz="7.6e-05" ixz="-1.4e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.027493 0.005005 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.027493 0.005005 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2__1__1">
+  <inertial>
+    <origin xyz="-0.0016675355507453637 0.017644089270773246 -0.06023636309711217" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="6e-05" ixz="-1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.135107 0.004999 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.135107 0.004999 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2__1__1">
+  <inertial>
+    <origin xyz="-0.005667535550745367 0.017644089270773246 -0.06023636309711217" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="6e-05" ixz="-1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.139107 0.004999 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.139107 0.004999 0.136271" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2_1">
+  <inertial>
+    <origin xyz="0.005667873699038498 -0.01763627148478346 -0.06023928845186638" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="-6e-05" ixz="1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.031493 -0.055408 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.031493 -0.055408 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2_1">
+  <inertial>
+    <origin xyz="0.0016678736990384975 -0.01763627148478346 -0.06023928845186638" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="-6e-05" ixz="1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.027493 -0.055408 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.027493 -0.055408 0.136269" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="motor__1__1">
+  <inertial>
+    <origin xyz="0.022803310761279855 -3.363696396114016e-05 -0.00017987229442822938" rpy="0 0 0"/>
+    <mass value="0.04657465805654406"/>
+    <inertia ixx="7e-06" iyy="1.3e-05" izz="1.3e-05" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.035293 -0.025204 0.239439" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/motor__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.035293 -0.025204 0.239439" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/motor__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2_1">
+  <inertial>
+    <origin xyz="0.0016678736990384975 0.01256772851521654 0.04293071154813363" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="-6e-05" ixz="1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.027493 -0.025204 0.239439" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.027493 -0.025204 0.239439" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="motor_1">
+  <inertial>
+    <origin xyz="-0.02280297261298639 3.337521182769643e-05 -0.00018021271267057437" rpy="0 0 0"/>
+    <mass value="0.04657465805654406"/>
+    <inertia ixx="7e-06" iyy="1.3e-05" izz="1.3e-05" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.142907 -0.025219 0.239436" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/motor_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.142907 -0.025219 0.239436" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/motor_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2__1__1">
+  <inertial>
+    <origin xyz="-0.0016675355507453637 -0.012573910729226753 0.04292863690288784" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="0.00028" iyy="0.000235" izz="4.7e-05" ixy="3e-06" iyz="6e-05" ixz="-1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.135107 -0.025219 0.239436" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.135107 -0.025219 0.239436" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find bipedal_export_temp_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Rigid 1" type="fixed">
+  <origin xyz="-0.016193 0.055 -0.081271" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="ax-12__3__1"/>
+</joint>
+
+<joint name="Rigid 2" type="fixed">
+  <origin xyz="0.123807 -0.005 -0.081271" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="ax-12_1"/>
+</joint>
+
+<joint name="Rigid 3" type="fixed">
+  <origin xyz="0.123807 0.055 -0.081271" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="ax-12__2__1"/>
+</joint>
+
+<joint name="Rigid 4" type="fixed">
+  <origin xyz="-0.016193 -0.005 -0.081271" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="ax-12__1__1"/>
+</joint>
+
+<joint name="Rigid 5" type="fixed">
+  <origin xyz="-0.016193 0.025 -0.022271" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Configuration_1_1"/>
+</joint>
+
+<joint name="Rigid 6" type="fixed">
+  <origin xyz="0.1199 -0.0095 0.0094" rpy="0 0 0"/>
+  <parent link="Configuration_1_1"/>
+  <child link="Configuration_1__2__1"/>
+</joint>
+
+<joint name="Revolute 7" type="revolute">
+  <origin xyz="0.114471 -0.036493 -0.0065" rpy="0 0 0"/>
+  <parent link="ax-12__1__1"/>
+  <child link="botom_femur__3__1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="-1.745329" lower="-4.537856" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 8" type="revolute">
+  <origin xyz="0.114471 -0.036493 -0.0665" rpy="0 0 0"/>
+  <parent link="ax-12__3__1"/>
+  <child link="botom_femur__1__1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="4.537856" lower="1.745329" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 9" type="revolute">
+  <origin xyz="-0.114471 -0.112107 -0.0065" rpy="0 0 0"/>
+  <parent link="ax-12_1"/>
+  <child link="botom_femur__2__1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="4.537856" lower="1.745329" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 10" type="revolute">
+  <origin xyz="-0.114471 -0.112107 -0.0665" rpy="0 0 0"/>
+  <parent link="ax-12__2__1"/>
+  <child link="botom_femur_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="4.537856" lower="1.745329" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 11" type="revolute">
+  <origin xyz="0.0405 0.109115 0.078608" rpy="0 0 0"/>
+  <parent link="botom_femur__2__1"/>
+  <child link="top_femur_1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="1.396263" lower="-1.396263" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 12" type="revolute">
+  <origin xyz="0.0405 0.048554 0.138117" rpy="0 0 0"/>
+  <parent link="botom_femur_1"/>
+  <child link="top_femur__1__1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="-0.174533" lower="-2.96706" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 13" type="revolute">
+  <origin xyz="-0.0405 0.039488 -0.083993" rpy="0 0 0"/>
+  <parent link="botom_femur__3__1"/>
+  <child link="top_femur__3__1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="-0.174533" lower="-2.96706" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 14" type="revolute">
+  <origin xyz="-0.0405 0.100164 -0.023519" rpy="0 0 0"/>
+  <parent link="botom_femur__1__1"/>
+  <child link="top_femur__2__1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="-0.174533" lower="-2.96706" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 15" type="revolute">
+  <origin xyz="-0.085271 -0.003 0.035493" rpy="0 0 0"/>
+  <parent link="top_femur__3__1"/>
+  <child link="tibia_1_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 16" type="revolute">
+  <origin xyz="0.085271 0.063984 -0.126615" rpy="0 0 0"/>
+  <parent link="top_femur__1__1"/>
+  <child link="tibia_1__1__1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 17" type="revolute">
+  <origin xyz="0.125771 0.112538 0.011502" rpy="0 0 0"/>
+  <parent link="botom_femur_1"/>
+  <child link="tibia_1__1__1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="-0.785398" lower="-5.497787" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 18" type="revolute">
+  <origin xyz="-0.125771 0.036488 -0.0485" rpy="0 0 0"/>
+  <parent link="botom_femur__3__1"/>
+  <child link="tibia_1_1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="-0.785398" lower="-5.497787" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 19" type="revolute">
+  <origin xyz="0.125771 0.142326 -0.151665" rpy="0 0 0"/>
+  <parent link="botom_femur__2__1"/>
+  <child link="tibia_2__1__1"/>
+  <axis xyz="-1.0 0.0 -0.0"/>
+  <limit upper="5.497787" lower="0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 20" type="revolute">
+  <origin xyz="0.085271 0.033211 -0.230273" rpy="0 0 0"/>
+  <parent link="top_femur_1"/>
+  <child link="tibia_2__1__1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="0.785398" lower="-3.926991" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 21" type="revolute">
+  <origin xyz="-0.085271 -0.093467 -0.068149" rpy="0 0 0"/>
+  <parent link="top_femur__2__1"/>
+  <child link="tibia_2_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+  <limit upper="3.752458" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 22" type="revolute">
+  <origin xyz="-0.125771 0.006697 -0.091668" rpy="0 0 0"/>
+  <parent link="botom_femur__1__1"/>
+  <child link="tibia_2_1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="-0.785398" lower="-5.497787" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Rigid 23" type="fixed">
+  <origin xyz="-0.0078 0.030209 -0.103168" rpy="0 0 0"/>
+  <parent link="tibia_1_1"/>
+  <child link="motor__1__1"/>
+</joint>
+
+<joint name="Revolute 24" type="revolute">
+  <origin xyz="0.0 0.030209 -0.103168" rpy="0 0 0"/>
+  <parent link="tibia_1_1"/>
+  <child link="tibia_2_1"/>
+  <axis xyz="-1.0 -0.0 -0.0"/>
+  <limit upper="2.96706" lower="0.523599" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Rigid 25" type="fixed">
+  <origin xyz="0.0078 -0.030212 -0.103167" rpy="0 0 0"/>
+  <parent link="tibia_1__1__1"/>
+  <child link="motor_1"/>
+</joint>
+
+<joint name="Revolute 27" type="revolute">
+  <origin xyz="0.0 -0.030212 -0.103167" rpy="0 0 0"/>
+  <parent link="tibia_1__1__1"/>
+  <child link="tibia_2__1__1"/>
+  <axis xyz="1.0 -0.0 0.0"/>
+  <limit upper="1.396263" lower="-1.047198" effort="100" velocity="100"/>
+</joint>
+
+</robot>

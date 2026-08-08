@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<robot name="Bipedal" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<transmission name="right_lower_hip_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="right_lower_hip_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="right_lower_hip_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="left_lower_hip_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="left_lower_hip_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="left_lower_hip_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="left_upper_hip_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="left_upper_hip_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="left_upper_hip_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="right_upper_hip_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="right_upper_hip_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="right_upper_hip_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="left_knee_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="left_knee_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="left_knee_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="right_knee_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="right_knee_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="right_knee_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="right_upper_knee_to_linkage1_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="right_upper_knee_to_linkage1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="right_upper_knee_to_linkage1_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="left_lower_knee_to_linkage2_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="left_lower_knee_to_linkage2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="left_lower_knee_to_linkage2_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="right_tibia_to_linkage2_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="right_tibia_to_linkage2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="right_tibia_to_linkage2_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="left_tibia_to_linkage1_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="left_tibia_to_linkage1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="left_tibia_to_linkage1_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+</robot>

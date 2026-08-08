@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<robot name="bipedal" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Materials -->
+  <material name="silver">
+    <color rgba="0.75 0.75 0.75 1.0"/>
+  </material>
+  
+  <material name="dark_grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+
+  <!-- Base Link (Center of the robot) -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <mass value="0.3"/> <!-- 300g 3D printed body -->
+      <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+    <visual>
+      <!-- CAD origin was approx X=0.0535, Y=0.025, Z=-0.081 -->
+      <!-- We rotate by -90 deg around Z to match ROS coords -->
+      <origin xyz="-0.025 0.0535 0.081" rpy="0 0 -1.570796"/>
+      <geometry>
+        <mesh filename="package://bipedal_export_temp_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+  </link>
+
+  <!-- Battery -->
+  <link name="battery">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.260"/> <!-- 260g -->
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+  <joint name="battery_joint" type="fixed">
+    <origin xyz="0 0 -0.03" rpy="0 0 0"/> <!-- Below servo box -->
+    <parent link="base_link"/>
+    <child link="battery"/>
+  </joint>
+
+  <!-- Macro for Leg linkages -->
+  <!-- Note: We only attach the femur and tibia to the FRONT servos to break the closed loop in URDF. -->
+  <!-- The BACK servos are included but left unconnected to the tibia to satisfy the URDF tree requirement. -->
+  
+  <xacro:macro name="biped_leg" params="prefix side_y femur_mesh_front femur_mesh_back tibia_mesh">
+    
+    <!-- BACK SERVO (Left in local solver frame) -->
+    <link name="${prefix}_back_servo">
+      <inertial>
+        <mass value="0.0535"/>
+        <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_back_servo_joint" type="revolute">
+      <!-- Back servo is at X=-30mm -->
+      <origin xyz="-0.03 ${side_y} 0.0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="${prefix}_back_servo"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14" upper="3.14" effort="10.0" velocity="5.0"/>
+    </joint>
+
+    <!-- FRONT SERVO (Right in local solver frame) -->
+    <link name="${prefix}_front_servo">
+      <inertial>
+        <mass value="0.0535"/>
+        <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_front_servo_joint" type="revolute">
+      <!-- Front servo is at X=30mm -->
+      <origin xyz="0.03 ${side_y} 0.0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="${prefix}_front_servo"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14" upper="3.14" effort="10.0" velocity="5.0"/>
+    </joint>
+
+    <!-- BACK FEMUR -->
+    <link name="${prefix}_back_femur">
+      <inertial>
+        <mass value="0.040"/>
+        <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <!-- Offset to rotate visual to match new coordinates -->
+        <origin xyz="0 0 0" rpy="0 0 -1.570796"/>
+        <geometry>
+          <cylinder radius="0.005" length="0.055"/>
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+    </link>
+    <joint name="${prefix}_back_femur_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}_back_servo"/>
+      <child link="${prefix}_back_femur"/>
+    </joint>
+
+    <!-- FRONT FEMUR -->
+    <link name="${prefix}_front_femur">
+      <inertial>
+        <mass value="0.040"/>
+        <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 -1.570796"/>
+        <geometry>
+          <cylinder radius="0.005" length="0.055"/>
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+    </link>
+    <joint name="${prefix}_front_femur_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}_front_servo"/>
+      <child link="${prefix}_front_femur"/>
+    </joint>
+
+    <!-- TIBIA (Attached to Front Femur to avoid closed loop) -->
+    <link name="${prefix}_tibia">
+      <inertial>
+        <mass value="0.100"/>
+        <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.005" length="0.100"/>
+        </geometry>
+        <material name="silver"/>
+      </visual>
+    </link>
+    <!-- Knee Joint connects front femur to tibia -->
+    <joint name="${prefix}_knee_joint" type="revolute">
+      <!-- Upper link is 55mm long, assume going straight down initially -->
+      <origin xyz="0 0 -0.055" rpy="0 0 0"/>
+      <parent link="${prefix}_front_femur"/>
+      <child link="${prefix}_tibia"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14" upper="3.14" effort="10.0" velocity="5.0"/>
+    </joint>
+
+    <!-- MOTOR & WHEEL -->
+    <link name="${prefix}_motor">
+      <inertial>
+        <mass value="0.150"/> <!-- 150g JGA12V motor -->
+        <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+    </link>
+    <joint name="${prefix}_ankle_joint" type="fixed">
+      <!-- Lower link is 100mm long -->
+      <origin xyz="0 0 -0.100" rpy="0 0 0"/>
+      <parent link="${prefix}_tibia"/>
+      <child link="${prefix}_motor"/>
+    </joint>
+
+    <link name="${prefix}_wheel">
+      <inertial>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <!-- Wheel 65mm diameter (radius 32.5mm) -->
+        <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+        <geometry>
+          <cylinder radius="0.0325" length="0.02"/>
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+    </link>
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}_motor"/>
+      <child link="${prefix}_wheel"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+
+  </xacro:macro>
+
+  <!-- Instantiate Legs -->
+  <!-- Leg 1 (Left Leg) is ID 6 (back), 14 (front). Y = 90mm (0.09) -->
+  <xacro:biped_leg prefix="leg1" side_y="0.09" femur_mesh_front="dummy" femur_mesh_back="dummy" tibia_mesh="dummy"/>
+  
+  <!-- Leg 2 (Right Leg) is ID 0 (back), 1 (front). Y = -90mm (-0.09) -->
+  <xacro:biped_leg prefix="leg2" side_y="-0.09" femur_mesh_front="dummy" femur_mesh_back="dummy" tibia_mesh="dummy"/>
+
+</robot>
