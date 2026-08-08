@@ -1,318 +1,338 @@
 <?xml version="1.0" ?>
+<!--
+  Bipedal robot - 5-bar parallel closed-loop legs.
+
+  ============================================================================
+  MECHANISM
+  ============================================================================
+  Each leg is a planar 5-bar linkage (2 DOF) lying in the sagittal plane:
+
+        pelvis
+      H_rear o========= 60 mm ========o H_front     [ground link = base_link]
+              \                      /
+               \ 55 mm        55 mm /               [the two femurs]
+                \                  /
+          K_rear o                o K_front         [the two knees]
+                  \              /
+           107.5   \            /   107.5 mm        [the two shanks]
+                    \          /
+                     \        /
+                      o======o
+                       FOOT                         [loop-closure pivot]
+
+  Both hips are actuated; both knees are PASSIVE and fully determined by the
+  hip angles through the loop-closure constraint. Link lengths were measured
+  directly off the CAD meshes and the loop closes to within 1 micron at the
+  CAD zero pose.
+
+  ============================================================================
+  WHY THERE IS NO <joint> FOR THE FOOT PIVOT
+  ============================================================================
+  URDF can only describe a kinematic TREE. A 5-bar has one independent loop
+  per leg, so exactly one joint per leg must be left out of the tree - here
+  that is the foot pivot, "<side>_foot_closure". Each leg therefore contributes
+  4 tree joints (2 hips + 2 knees) and 1 cut joint.
+
+  The cut is NOT a modelling error and must NOT be "fixed" by giving the
+  inner linkage a second parent (a link with two parents is invalid URDF and
+  is what caused the earlier model to load with dangling, disconnected knees).
+
+  To make the linkage render CLOSED in RViz, run the five_bar_state_publisher
+  node shipped with this package: it takes the 2 hip angles per leg, solves
+  the closure analytically, and publishes all 8 joint values consistently.
+  See launch/display.launch.py.
+
+  For Gazebo, the real revolute constraint is re-attached in assembly.gazebo.
+
+  ============================================================================
+  FRAMES
+  ============================================================================
+  The CAD was exported with +X pointing DOWN and +Z pointing across the hips.
+  base_footprint re-expresses that in the ROS convention (REP-103: X forward,
+  Y left, Z up) via a single fixed joint, so the robot stands upright in RViz
+  with its feet on the grid. All link/joint numbers below are kept in the
+  original CAD frame so they can be checked against the Fusion export.
+
+  Zero configuration == the CAD assembly pose.
+-->
 <robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find assembly_description)/urdf/materials.xacro" />
-<xacro:include filename="$(find assembly_description)/urdf/assembly.trans" />
-<xacro:include filename="$(find assembly_description)/urdf/assembly.gazebo" />
-<link name="base_link">
-  <inertial>
-    <origin xyz="0.021483404329702544 0.02602124280867646 -0.06951546728903525" rpy="0 0 0"/>
-    <mass value="5.554037091220957"/>
-    <inertia ixx="0.019731" iyy="0.024901" izz="0.017821" ixy="0.000405" iyz="-2.5e-05" ixz="0.00012"/>
-  </inertial>
-  <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <xacro:include filename="$(find assembly_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find assembly_description)/urdf/assembly.trans" />
+  <xacro:include filename="$(find assembly_description)/urdf/assembly.gazebo" />
 
-<link name="Combined_femur_1">
-  <inertial>
-    <origin xyz="0.020244192221942445 -4.543585551996729e-06 -0.006481680057539518" rpy="0 0 0"/>
-    <mass value="0.08613648212097492"/>
-    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- ===================================================================== -->
+  <!-- Measured mechanism parameters (metres)                                -->
+  <!-- ===================================================================== -->
+  <xacro:property name="femur_len"   value="0.055"   />
+  <xacro:property name="shank_len"   value="0.1075"  />
+  <xacro:property name="hip_spacing" value="0.060"   />
+  <!-- lowest point of the foot meshes at the zero pose, in CAD +X -->
+  <xacro:property name="stand_height" value="0.2018" />
+  <!-- The CAD origin is not centred between the legs (they sit at CAD
+       z = +0.008 and -0.148, and the feet at CAD y = +0.0146), so the model
+       would otherwise render hanging off to one side of the grid. These two
+       offsets put base_footprint midway between the feet. -->
+  <xacro:property name="centre_x" value="-0.0146" />
+  <xacro:property name="centre_y" value="-0.0700" />
 
-<link name="Combined_femur__3__1">
-  <inertial>
-    <origin xyz="0.020244192221942472 -4.543585552012341e-06 -0.006481680057539518" rpy="0 0 0"/>
-    <mass value="0.08613648212097492"/>
-    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- Actuated hip travel about the CAD pose. Verified by sweeping the
+       closure solver: over +-60 deg the mechanism stays 45 mm away from the
+       stretched singularity and every pose is reachable. Going to +-90 deg
+       folds the linkage back through itself, so do not widen this without
+       re-checking self-collision. -->
+  <xacro:property name="hip_lower"  value="-1.047198" />  <!-- -60 deg -->
+  <xacro:property name="hip_upper"  value="1.047198"  />  <!-- +60 deg -->
 
-<link name="Combined_femur__1__1">
-  <inertial>
-    <origin xyz="0.0202441922219425 4.543585551963769e-06 0.0064816800575395305" rpy="0 0 0"/>
-    <mass value="0.08613648212097492"/>
-    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- Passive knee travel: the range the dependent knees actually sweep over
+       the hip workspace above, plus a small margin. -->
+  <xacro:property name="knee_rear_lower"  value="-1.522119" />
+  <xacro:property name="knee_rear_upper"  value="1.189686"  />
+  <xacro:property name="knee_front_lower" value="-1.199474" />
+  <xacro:property name="knee_front_upper" value="1.756498"  />
 
-<link name="Combined_femur__2__1">
-  <inertial>
-    <origin xyz="0.0202441922219425 4.543585551957698e-06 0.006481680057539529" rpy="0 0 0"/>
-    <mass value="0.08613648212097492"/>
-    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <xacro:property name="joint_effort"   value="100" />
+  <xacro:property name="joint_velocity" value="100" />
+  <xacro:property name="joint_damping"  value="0.05" />
 
-<link name="combined_motor_tibia__1__1">
-  <inertial>
-    <origin xyz="0.0916133412345842 -0.026627976073639873 -0.007967217020517796" rpy="0 0 0"/>
-    <mass value="0.5702684639688947"/>
-    <inertia ixx="0.000219" iyy="0.000581" izz="0.000555" ixy="0.000115" iyz="-2e-05" ixz="6.6e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- ===================================================================== -->
+  <!-- Helper macros                                                         -->
+  <!-- ===================================================================== -->
 
-<link name="combined_motor_tibia_1">
-  <inertial>
-    <origin xyz="0.09161334123458417 0.026627976073640078 0.00796721702051778" rpy="0 0 0"/>
-    <mass value="0.5702684639688947"/>
-    <inertia ixx="0.000219" iyy="0.000581" izz="0.000555" ixy="-0.000115" iyz="-2e-05" ixz="-6.6e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- A CAD-exported body: the mesh lives in assembly coordinates, so the
+       visual origin is simply minus the link-frame position. -->
+  <xacro:macro name="cad_link" params="name mesh colour mass ixx iyy izz ixy iyz ixz
+                                       com_x com_y com_z org_x org_y org_z">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="${com_x} ${com_y} ${com_z}" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}"
+                 ixy="${ixy}" iyz="${iyz}" ixz="${ixz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="${-org_x} ${-org_y} ${-org_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find assembly_description)/meshes/${mesh}"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${colour}"/>
+      </visual>
+      <collision>
+        <origin xyz="${-org_x} ${-org_y} ${-org_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find assembly_description)/meshes/${mesh}"
+                scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
 
-<link name="leg2_knee_tibia_1">
-  <inertial>
-    <origin xyz="0.060273696368209784 0.017517055517382807 -0.001667704624892007" rpy="0 0 0"/>
-    <mass value="0.16915049183932718"/>
-    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="-6e-05" iyz="3e-06" ixz="1.1e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- ===================================================================== -->
+  <!-- Root: ROS-oriented frame -> CAD-oriented pelvis                       -->
+  <!-- ===================================================================== -->
+  <link name="base_footprint"/>
 
-<link name="leg1_knee_tibia_1">
-  <inertial>
-    <origin xyz="0.060273696368209784 -0.017517055517382668 0.001667704624891908" rpy="0 0 0"/>
-    <mass value="0.16915049183932718"/>
-    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="6e-05" iyz="3e-06" ixz="-1.1e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <!-- rpy maps CAD (+X down, +Y forward, +Z lateral) onto ROS
+         (+X forward, +Y left, +Z up); z lifts the feet onto the ground -->
+    <origin xyz="${centre_x} ${centre_y} ${stand_height}" rpy="1.5707963 1.5707963 0"/>
+    <parent link="base_footprint"/>
+    <child  link="base_link"/>
+  </joint>
 
-<link name="leg1_knee_tibia_2">
-  <inertial>
-    <origin xyz="-0.04295530363179023 0.012482944482617334 0.001667704624891908" rpy="0 0 0"/>
-    <mass value="0.16915049183932718"/>
-    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="6e-05" iyz="3e-06" ixz="-1.1e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <xacro:cad_link name="base_link" mesh="pelvis.stl" colour="pelvis_grey"
+      mass="5.554037091220957"
+      ixx="0.019731" iyy="0.024901" izz="0.017821"
+      ixy="0.000405" iyz="-2.5e-05" ixz="0.00012"
+      com_x="0.021483404329702544" com_y="0.02602124280867646"
+      com_z="-0.06951546728903525"
+      org_x="0" org_y="0" org_z="0"/>
 
-<link name="leg2_knee_tibia_2">
-  <inertial>
-    <origin xyz="-0.04295530363179023 -0.012482944482617192 -0.001667704624892007" rpy="0 0 0"/>
-    <mass value="0.16915049183932718"/>
-    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="-6e-05" iyz="3e-06" ixz="1.1e-05"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+  <!-- ===================================================================== -->
+  <!-- LEFT LEG   (CAD z = -0.144 / -0.148)                                  -->
+  <!-- On this leg the motor-carrying shank is the REAR one; the two legs    -->
+  <!-- are related by a 180 deg rotation about the CAD X axis, not a mirror. -->
+  <!-- ===================================================================== -->
 
-<joint name="Revolute 1" type="revolute">
-  <origin xyz="0.065 -0.005 -0.144" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="Combined_femur_1"/>
-  <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
-</joint>
+  <xacro:cad_link name="left_femur_rear" mesh="left_femur_rear.stl" colour="femur_orange"
+      mass="0.08613648212097492"
+      ixx="3.3e-05" iyy="1.4e-05" izz="4.4e-05" ixy="1.6e-05" iyz="0.0" ixz="-0.0"
+      com_x="0.010118104071906081" com_y="-0.01753428953089357"
+      com_z="-0.006481680057539574"
+      org_x="0.065" org_y="-0.005" org_z="-0.144"/>
 
-<joint name="Revolute 2" type="revolute">
-  <origin xyz="0.065 0.055 -0.144" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="Combined_femur__3__1"/>
-  <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
-</joint>
+  <xacro:cad_link name="left_femur_front" mesh="left_femur_front.stl" colour="femur_orange"
+      mass="0.08613648212097492"
+      ixx="2.4e-05" iyy="2.3e-05" izz="4.4e-05" ixy="-1.9e-05" iyz="-0.0" ixz="-0.0"
+      com_x="0.014245283831201772" com_y="0.01438399207214832"
+      com_z="-0.006481680057539546"
+      org_x="0.065" org_y="0.055" org_z="-0.144"/>
 
-<joint name="Revolute 3" type="revolute">
-  <origin xyz="0.065 0.055 0.004" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="Combined_femur__1__1"/>
-  <axis xyz="0.0 0.0 -1.0"/>
-  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
-</joint>
+  <xacro:cad_link name="left_shank_rear" mesh="left_shank_rear.stl" colour="shank_dark"
+      mass="0.5702684639688947"
+      ixx="0.000354" iyy="0.000446" izz="0.000555"
+      ixy="-0.00021" iyz="-4.3e-05" ixz="-5.3e-05"
+      com_x="0.07432671506086122" com_y="0.05981391011482628"
+      com_z="0.00796721702051778"
+      org_x="0.092496" org_y="-0.052634" org_z="-0.148"/>
 
-<joint name="Revolute 4" type="revolute">
-  <origin xyz="0.065 -0.005 0.004" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="Combined_femur__2__1"/>
-  <axis xyz="0.0 0.0 -1.0"/>
-  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
-</joint>
+  <xacro:cad_link name="left_shank_front" mesh="left_shank_front.stl" colour="linkage_blue"
+      mass="0.16915049183932718"
+      ixx="0.000151" iyy="0.000131" izz="0.00028"
+      ixy="0.000112" iyz="9e-06" ixz="-8e-06"
+      com_x="0.04236179225341931" com_y="-0.04631717992048758"
+      com_z="0.0016677046248919636"
+      org_x="0.103696" org_y="0.094085" org_z="-0.148"/>
 
-<joint name="Revolute 5" type="revolute">
-  <origin xyz="0.055 4e-06 0.004" rpy="0 0 0"/>
-  <parent link="Combined_femur__1__1"/>
-  <child link="combined_motor_tibia__1__1"/>
-  <axis xyz="-0.0 -0.0 -1.0"/>
-  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
-</joint>
+  <joint name="left_hip_rear" type="revolute">
+    <origin xyz="0.065 -0.005 -0.144" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="left_femur_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${hip_lower}" upper="${hip_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
 
-<joint name="Revolute 6" type="revolute">
-  <origin xyz="0.055 -4e-06 -0.004" rpy="0 0 0"/>
-  <parent link="Combined_femur_1"/>
-  <child link="combined_motor_tibia_1"/>
-  <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
-</joint>
+  <joint name="left_hip_front" type="revolute">
+    <origin xyz="0.065 0.055 -0.144" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="left_femur_front"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${hip_lower}" upper="${hip_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
 
-<joint name="Revolute 7" type="revolute">
-  <origin xyz="0.158229 0.030004 0.004" rpy="0 0 0"/>
-  <parent link="Combined_femur__2__1"/>
-  <child link="leg2_knee_tibia_1"/>
-  <axis xyz="-0.0 0.0 -1.0"/>
-  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
-</joint>
+  <!-- knee = femur distal pivot. 55.000 mm from the hip, confirmed against
+       the bolt-hole ring in the mesh. -->
+  <joint name="left_knee_rear" type="revolute">
+    <origin xyz="0.027496 -0.047634 -0.004" rpy="0 0 0"/>
+    <parent link="left_femur_rear"/>
+    <child  link="left_shank_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${knee_rear_lower}" upper="${knee_rear_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
 
-<joint name="Revolute 8" type="revolute">
-  <origin xyz="0.158229 -0.030004 -0.004" rpy="0 0 0"/>
-  <parent link="Combined_femur__3__1"/>
-  <child link="leg1_knee_tibia_1"/>
-  <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
-</joint>
+  <joint name="left_knee_front" type="revolute">
+    <origin xyz="0.038696 0.039085 -0.004" rpy="0 0 0"/>
+    <parent link="left_femur_front"/>
+    <child  link="left_shank_front"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${knee_front_lower}" upper="${knee_front_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
 
-<joint name="Revolute 9" type="revolute">
-  <origin xyz="0.103229 0.03 0.0" rpy="0 0 0"/>
-  <parent link="combined_motor_tibia_1"/>
-  <child link="leg1_knee_tibia_2"/>
-  <axis xyz="-0.0 0.0 -1.0"/>
-  <limit upper="-3.403392" lower="-5.759587" effort="100" velocity="100"/>
-</joint>
+  <!-- foot frame at the loop-closure pivot, carried by the front shank -->
+  <link name="left_foot"/>
+  <joint name="left_foot_frame" type="fixed">
+    <origin xyz="0.072552 -0.079325 0.0" rpy="0 0 0"/>
+    <parent link="left_shank_front"/>
+    <child  link="left_foot"/>
+  </joint>
 
-<joint name="Revolute 10" type="revolute">
-  <origin xyz="0.103229 -0.03 0.0" rpy="0 0 0"/>
-  <parent link="combined_motor_tibia__1__1"/>
-  <child link="leg2_knee_tibia_2"/>
-  <axis xyz="0.0 0.0 1.0"/>
-  <limit upper="2.96706" lower="0.523599" effort="100" velocity="100"/>
-</joint>
+  <!-- ===================================================================== -->
+  <!-- RIGHT LEG  (CAD z = +0.004 / +0.008)                                  -->
+  <!-- Here the motor-carrying shank is the FRONT one.                       -->
+  <!-- ===================================================================== -->
+
+  <xacro:cad_link name="right_femur_rear" mesh="right_femur_rear.stl" colour="femur_orange"
+      mass="0.08613648212097492"
+      ixx="3.3e-05" iyy="1.4e-05" izz="4.4e-05" ixy="1.6e-05" iyz="-0.0" ixz="0.0"
+      com_x="0.010126030971558397" com_y="-0.01752971295047831"
+      com_z="0.006481680057539532"
+      org_x="0.065" org_y="-0.005" org_z="0.004"/>
+
+  <xacro:cad_link name="right_femur_front" mesh="right_femur_front.stl" colour="femur_orange"
+      mass="0.08613648212097492"
+      ixx="2.3e-05" iyy="2.4e-05" izz="4.4e-05" ixy="-1.9e-05" iyz="0.0" ixz="0.0"
+      com_x="0.014373975384444154" com_y="0.014255390945551817"
+      com_z="0.006481680057539529"
+      org_x="0.065" org_y="0.055" org_z="0.004"/>
+
+  <xacro:cad_link name="right_shank_rear" mesh="right_shank_rear.stl" colour="linkage_blue"
+      mass="0.16915049183932718"
+      ixx="0.000116" iyy="0.000166" izz="0.00028"
+      ixy="-0.000109" iyz="7e-06" ixz="9e-06"
+      com_x="0.049086628082017525" com_y="0.039117637698670785"
+      com_z="-0.0016677046248920096"
+      org_x="0.092504" org_y="-0.052629" org_z="0.008"/>
+
+  <xacro:cad_link name="right_shank_front" mesh="right_shank_front.stl" colour="shank_dark"
+      mass="0.5702684639688947"
+      ixx="0.000419" iyy="0.000381" izz="0.000555"
+      ixy="0.000214" iyz="-5.1e-05" ixz="4.6e-05"
+      com_x="0.06435519701667934" com_y="-0.07043142801604275"
+      com_z="-0.0079672170205178"
+      org_x="0.104057" org_y="0.093724" org_z="0.008"/>
+
+  <joint name="right_hip_rear" type="revolute">
+    <origin xyz="0.065 -0.005 0.004" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="right_femur_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${hip_lower}" upper="${hip_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <joint name="right_hip_front" type="revolute">
+    <origin xyz="0.065 0.055 0.004" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="right_femur_front"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${hip_lower}" upper="${hip_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- NOTE: this origin is the one the Fusion exporter got wrong. It wrote
+       (0.111574, 0.019366, 0.004), which is 113 mm from the hip - a point in
+       empty space, well off the end of a 55 mm femur. The correct distal
+       pivot is the one below. -->
+  <joint name="right_knee_rear" type="revolute">
+    <origin xyz="0.027504 -0.047629 0.004" rpy="0 0 0"/>
+    <parent link="right_femur_rear"/>
+    <child  link="right_shank_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${knee_rear_lower}" upper="${knee_rear_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <joint name="right_knee_front" type="revolute">
+    <origin xyz="0.039057 0.038724 0.004" rpy="0 0 0"/>
+    <parent link="right_femur_front"/>
+    <child  link="right_shank_front"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${knee_front_lower}" upper="${knee_front_upper}"
+           effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <link name="right_foot"/>
+  <joint name="right_foot_frame" type="fixed">
+    <origin xyz="0.072517 -0.079358 0.0" rpy="0 0 0"/>
+    <parent link="right_shank_front"/>
+    <child  link="right_foot"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- LOOP CLOSURES (documentation only - deliberately not <joint> tags)    -->
+  <!--                                                                       -->
+  <!--   left_foot_closure :  left_shank_rear  <-> left_shank_front          -->
+  <!--       on left_shank_rear  at xyz = 0.083752  0.067394  0             -->
+  <!--       on left_shank_front at xyz = 0.072552 -0.079325  0             -->
+  <!--                                                                       -->
+  <!--   right_foot_closure: right_shank_rear <-> right_shank_front          -->
+  <!--       on right_shank_rear  at xyz = 0.084070  0.066995  0            -->
+  <!--       on right_shank_front at xyz = 0.072517 -0.079358  0            -->
+  <!--                                                                       -->
+  <!-- Both pairs coincide exactly at the zero pose. See assembly.gazebo.    -->
+  <!-- ===================================================================== -->
 
 </robot>

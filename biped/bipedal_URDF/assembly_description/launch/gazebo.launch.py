@@ -25,11 +25,9 @@ def generate_launch_description():
         ]
     )
 
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher'
-    )
+    # Deliberately no joint_state_publisher here: in simulation Gazebo owns the
+    # joint state, and a second publisher pushing zeros would fight both the
+    # controllers and the 5-bar loop-closure constraint.
 
     gazebo_server = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -59,14 +57,16 @@ def generate_launch_description():
         executable='spawn_entity.py',
         arguments=[
             '-entity', 'assembly',
-            '-topic', 'robot_description'
+            '-topic', 'robot_description',
+            # drop it in from just above the ground rather than spawning with
+            # the feet exactly on the plane, which starts the sim in contact
+            '-z', '0.05',
         ],
         output='screen'
     )
 
     return LaunchDescription([
         robot_state_publisher_node,
-        joint_state_publisher_node,
         gazebo_server,
         gazebo_client,
         urdf_spawn_node,

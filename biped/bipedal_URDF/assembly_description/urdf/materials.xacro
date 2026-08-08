@@ -1,8 +1,29 @@
 <?xml version="1.0" ?>
-<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+<!-- Distinct colours per role so the parallel linkage is readable in RViz:
+     the two shanks of a leg are deliberately different colours, which makes
+     it immediately obvious whether the loop is closing at the foot. -->
+<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<material name="silver">
-  <color rgba="0.700 0.700 0.700 1.000"/>
-</material>
+  <material name="pelvis_grey">
+    <color rgba="0.45 0.47 0.50 1.0"/>
+  </material>
+
+  <material name="femur_orange">
+    <color rgba="0.95 0.55 0.15 1.0"/>
+  </material>
+
+  <!-- motor-carrying shank -->
+  <material name="shank_dark">
+    <color rgba="0.18 0.20 0.23 1.0"/>
+  </material>
+
+  <!-- thin inner linkage bar -->
+  <material name="linkage_blue">
+    <color rgba="0.20 0.50 0.85 1.0"/>
+  </material>
+
+  <material name="silver">
+    <color rgba="0.700 0.700 0.700 1.000"/>
+  </material>
 
 </robot>

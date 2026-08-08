@@ -26,6 +26,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'five_bar_state_publisher ='
+            ' assembly_description.five_bar_state_publisher:main',
         ],
     },
 )
