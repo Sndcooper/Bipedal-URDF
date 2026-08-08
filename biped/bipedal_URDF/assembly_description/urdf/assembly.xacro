@@ -1,0 +1,318 @@
+<?xml version="1.0" ?>
+<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find assembly_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find assembly_description)/urdf/assembly.trans" />
+<xacro:include filename="$(find assembly_description)/urdf/assembly.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.021483404329702544 0.02602124280867646 -0.06951546728903525" rpy="0 0 0"/>
+    <mass value="5.554037091220957"/>
+    <inertia ixx="0.019731" iyy="0.024901" izz="0.017821" ixy="0.000405" iyz="-2.5e-05" ixz="0.00012"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Combined_femur_1">
+  <inertial>
+    <origin xyz="0.020244192221942445 -4.543585551996729e-06 -0.006481680057539518" rpy="0 0 0"/>
+    <mass value="0.08613648212097492"/>
+    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Combined_femur__3__1">
+  <inertial>
+    <origin xyz="0.020244192221942472 -4.543585552012341e-06 -0.006481680057539518" rpy="0 0 0"/>
+    <mass value="0.08613648212097492"/>
+    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Combined_femur__1__1">
+  <inertial>
+    <origin xyz="0.0202441922219425 4.543585551963769e-06 0.0064816800575395305" rpy="0 0 0"/>
+    <mass value="0.08613648212097492"/>
+    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="Combined_femur__2__1">
+  <inertial>
+    <origin xyz="0.0202441922219425 4.543585551957698e-06 0.006481680057539529" rpy="0 0 0"/>
+    <mass value="0.08613648212097492"/>
+    <inertia ixx="5e-06" iyy="4.2e-05" izz="4.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="combined_motor_tibia__1__1">
+  <inertial>
+    <origin xyz="0.0916133412345842 -0.026627976073639873 -0.007967217020517796" rpy="0 0 0"/>
+    <mass value="0.5702684639688947"/>
+    <inertia ixx="0.000219" iyy="0.000581" izz="0.000555" ixy="0.000115" iyz="-2e-05" ixz="6.6e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="combined_motor_tibia_1">
+  <inertial>
+    <origin xyz="0.09161334123458417 0.026627976073640078 0.00796721702051778" rpy="0 0 0"/>
+    <mass value="0.5702684639688947"/>
+    <inertia ixx="0.000219" iyy="0.000581" izz="0.000555" ixy="-0.000115" iyz="-2e-05" ixz="-6.6e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2__1__1">
+  <inertial>
+    <origin xyz="0.060273696368209784 0.017517055517382807 -0.001667704624892007" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="-6e-05" iyz="3e-06" ixz="1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2_1">
+  <inertial>
+    <origin xyz="0.060273696368209784 -0.017517055517382668 0.001667704624891908" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="6e-05" iyz="3e-06" ixz="-1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2_1">
+  <inertial>
+    <origin xyz="-0.04295530363179023 0.012482944482617334 0.001667704624891908" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="6e-05" iyz="3e-06" ixz="-1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="tibia_2__1__1">
+  <inertial>
+    <origin xyz="-0.04295530363179023 -0.012482944482617192 -0.001667704624892007" rpy="0 0 0"/>
+    <mass value="0.16915049183932718"/>
+    <inertia ixx="4.6e-05" iyy="0.000236" izz="0.00028" ixy="-6e-05" iyz="3e-06" ixz="1.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find assembly_description)/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Revolute 1" type="revolute">
+  <origin xyz="0.065 -0.005 -0.144" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Combined_femur_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 2" type="revolute">
+  <origin xyz="0.065 0.055 -0.144" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Combined_femur__3__1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 3" type="revolute">
+  <origin xyz="0.065 0.055 0.004" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Combined_femur__1__1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 4" type="revolute">
+  <origin xyz="0.065 -0.005 0.004" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Combined_femur__2__1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="-2.094395" lower="-4.18879" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 5" type="revolute">
+  <origin xyz="0.055 4e-06 0.004" rpy="0 0 0"/>
+  <parent link="Combined_femur__1__1"/>
+  <child link="combined_motor_tibia__1__1"/>
+  <axis xyz="-0.0 -0.0 -1.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 6" type="revolute">
+  <origin xyz="0.055 -4e-06 -0.004" rpy="0 0 0"/>
+  <parent link="Combined_femur_1"/>
+  <child link="combined_motor_tibia_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 7" type="revolute">
+  <origin xyz="0.158229 0.030004 0.004" rpy="0 0 0"/>
+  <parent link="Combined_femur__2__1"/>
+  <child link="tibia_2__1__1"/>
+  <axis xyz="-0.0 0.0 -1.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 8" type="revolute">
+  <origin xyz="0.158229 -0.030004 -0.004" rpy="0 0 0"/>
+  <parent link="Combined_femur__3__1"/>
+  <child link="tibia_2_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 9" type="revolute">
+  <origin xyz="0.103229 0.03 0.0" rpy="0 0 0"/>
+  <parent link="combined_motor_tibia_1"/>
+  <child link="tibia_2_1"/>
+  <axis xyz="-0.0 0.0 -1.0"/>
+  <limit upper="-3.403392" lower="-5.759587" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Revolute 10" type="revolute">
+  <origin xyz="0.103229 -0.03 0.0" rpy="0 0 0"/>
+  <parent link="combined_motor_tibia__1__1"/>
+  <child link="tibia_2__1__1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="2.96706" lower="0.523599" effort="100" velocity="100"/>
+</joint>
+
+</robot>
