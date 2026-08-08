@@ -215,7 +215,8 @@
       </axis>
     </joint>
   </gazebo>
-  <!-- +80 deg -->
+  <!-- 30 deg, closing  -->
+  <!--  +60 deg -->
   <!-- ===================================================================== -->
   <!-- Helper macros                                                         -->
   <!-- ===================================================================== -->
@@ -340,7 +341,7 @@
     <parent link="base_link"/>
     <child link="left_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-1.396263" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="left_hip_front" type="revolute">
@@ -348,7 +349,7 @@
     <parent link="base_link"/>
     <child link="left_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <!-- knee = femur distal pivot. 55.000 mm from the hip, confirmed against
@@ -358,7 +359,7 @@
     <parent link="left_femur_rear"/>
     <child link="left_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="2.094395" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="left_knee_front" type="revolute">
@@ -366,7 +367,7 @@
     <parent link="left_femur_front"/>
     <child link="left_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-2.094395" upper="1.047198" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <!-- foot frame at the loop-closure pivot, carried by the front shank -->
@@ -465,7 +466,7 @@
     <parent link="base_link"/>
     <child link="right_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-1.396263" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="right_hip_front" type="revolute">
@@ -473,7 +474,7 @@
     <parent link="base_link"/>
     <child link="right_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <!-- NOTE: this origin is the one the Fusion exporter got wrong. It wrote
@@ -485,7 +486,7 @@
     <parent link="right_femur_rear"/>
     <child link="right_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="2.094395" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="right_knee_front" type="revolute">
@@ -493,7 +494,7 @@
     <parent link="right_femur_front"/>
     <child link="right_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-2.094395" upper="1.047198" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <link name="right_foot"/>

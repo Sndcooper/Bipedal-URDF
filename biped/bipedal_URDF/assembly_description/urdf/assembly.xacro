@@ -79,7 +79,7 @@
   <!-- CAREFUL: 0 is very close to full extension. The foot then hangs       -->
   <!-- 223.2 mm below the base origin and the mechanism's maximum reach is   -->
   <!-- 227.5 mm, so the leg can essentially only retract from the default    -->
-  <!-- pose. It also shrinks the usable hip range - see hip_range below.     -->
+  <!-- pose. It also shrinks the usable hip range - see hip_in below.        -->
   <!-- The CAD assembly pose corresponds to roughly 52 deg of splay, which   -->
   <!-- is a well-conditioned crouch; try 0.5 rad if you want the default to  -->
   <!-- stand rather than lock out.                                           -->
@@ -144,26 +144,53 @@
   <xacro:property name="centre_x" value="-0.025" />
   <xacro:property name="centre_y" value="-0.070" />
 
-  <!-- Actuated hip travel about the zero pose.
-       The binding constraint is the two femurs of a leg colliding: they are
-       coplanar, and counter-rotating them closes the gap between their knee
-       pivots as hip_spacing - 2*femur_len*sin(range). At zero_splay = 0 that
-       gap vanishes at 33.06 deg, so 30 deg is the practical ceiling and even
-       that leaves only 5 mm at the worst corner (rear +30, front -30).
-       Splaying the zero pose buys range back: at the CAD splay of ~52 deg,
-       +-60 deg was safe. -->
-  <xacro:property name="hip_range" value="0.523599" />  <!-- 30 deg -->
-  <xacro:property name="hip_lower" value="${-hip_range}" />
-  <xacro:property name="hip_upper" value="${hip_range}"  />
+  <!-- Actuated hip travel about the zero pose. DIRECTIONAL, not symmetric.
+       ==========================================================================
+       "Outward" = the two femurs of a leg SPREADING apart, which retracts the
+       leg (crouch). "Inward" = the femurs CLOSING towards each other.
+
+       The sign convention is a REAR/FRONT distinction, not a LEFT/RIGHT one:
+
+           spread (outward, crouch) :  hip_rear NEGATIVE , hip_front POSITIVE
+           close  (inward)          :  hip_rear POSITIVE , hip_front NEGATIVE
+
+       Both legs use axis (0 0 1) with joint origins that differ by less than
+       0.01 rad, so the left and right legs are NOT sign-inverted - the same
+       signs mean the same motion on both. (The "180 deg rotation about CAD X"
+       noted above describes which shank carries the motor, i.e. the part
+       geometry, not the joint kinematics.)
+
+       Outward is limited by the closure, which stays solvable well past 80 deg
+       (knee separation at 80 deg spread is 168 mm against a 215 mm two-shank
+       span), so 80 deg is free.
+
+       Inward is the binding constraint: the femurs are coplanar and closing
+       them shrinks the knee-pivot gap as hip_spacing - 2*femur_len*sin(range).
+       At zero_splay = 0 that gap vanishes at 33.06 deg, so 30 deg is the
+       ceiling and even that leaves only 5.00 mm at the worst corner
+       (rear +30, front -30). Do not raise hip_in without splaying the zero
+       pose - at the CAD splay of ~52 deg, +-60 deg was safe. -->
+  <xacro:property name="hip_out" value="1.396263" />  <!-- 80 deg, spreading -->
+  <xacro:property name="hip_in"  value="0.523599" />  <!-- 30 deg, closing  -->
+
+  <xacro:property name="hip_rear_lower"  value="${-hip_out}" />
+  <xacro:property name="hip_rear_upper"  value="${hip_in}"   />
+  <xacro:property name="hip_front_lower" value="${-hip_in}"  />
+  <xacro:property name="hip_front_upper" value="${hip_out}"  />
 
   <!-- Passive knee travel.
-       NOTE: these are wider than the closure ever actually uses. Driven
-       correctly (hips within +-30 deg), the knees only ever reach about
-       +-58/46 deg - see doc/CLOSURE_README for the swept range. These wider
-       bounds (-60 deg "inward" / +80 deg "outward" from the zero pose, same
-       convention on both joints) exist so the joints can be posed by hand
-       past the mechanism's real working range, e.g. in a static URDF viewer
-       where you are dragging one joint at a time.
+       These MUST cover everything the closure can produce inside the hip box
+       above, or the solver will command a knee the URDF calls out of range.
+       Swept over the full hip box (rear -80..+30, front -30..+80) the closure
+       actually reaches:
+
+           knee_rear  in [ -58.87, +115.32] deg
+           knee_front in [-115.32,  +58.87] deg
+
+       so the bounds below are those, widened to a round +-120 deg of margin.
+       Note the knees are MIRRORED in sign (rear opens positive, front opens
+       negative), matching the hips; the old symmetric +-(-60/+80) pair was
+       both too narrow on the spread side and wrong-handed on the front knee.
 
        IMPORTANT: widening these does NOT make a static/offline viewer show
        the leg closed. The knee position is only correct when it equals the
@@ -174,10 +201,10 @@
        tree, not something a limit change can fix. Use the interactive
        closure viewer (doc/five_bar_viewer.html) or RViz mode:=demo /
        mode:=gui, both of which run the real solver and are exact. -->
-  <xacro:property name="knee_rear_lower"  value="-1.047198" />  <!-- -60 deg -->
-  <xacro:property name="knee_rear_upper"  value="1.396263"  />  <!-- +80 deg -->
-  <xacro:property name="knee_front_lower" value="-1.047198" />  <!-- -60 deg -->
-  <xacro:property name="knee_front_upper" value="1.396263"  />  <!-- +80 deg -->
+  <xacro:property name="knee_rear_lower"  value="-1.047198" />  <!--  -60 deg -->
+  <xacro:property name="knee_rear_upper"  value="2.094395"  />  <!-- +120 deg -->
+  <xacro:property name="knee_front_lower" value="-2.094395" />  <!-- -120 deg -->
+  <xacro:property name="knee_front_upper" value="1.047198"  />  <!--  +60 deg -->
 
   <xacro:property name="joint_effort"   value="100" />
   <xacro:property name="joint_velocity" value="100" />
@@ -278,7 +305,7 @@
     <parent link="base_link"/>
     <child  link="left_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit lower="${hip_lower}" upper="${hip_upper}"
+    <limit lower="${hip_rear_lower}" upper="${hip_rear_upper}"
            effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}"/>
   </joint>
@@ -288,7 +315,7 @@
     <parent link="base_link"/>
     <child  link="left_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit lower="${hip_lower}" upper="${hip_upper}"
+    <limit lower="${hip_front_lower}" upper="${hip_front_upper}"
            effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}"/>
   </joint>
@@ -363,7 +390,7 @@
     <parent link="base_link"/>
     <child  link="right_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit lower="${hip_lower}" upper="${hip_upper}"
+    <limit lower="${hip_rear_lower}" upper="${hip_rear_upper}"
            effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}"/>
   </joint>
@@ -373,7 +400,7 @@
     <parent link="base_link"/>
     <child  link="right_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit lower="${hip_lower}" upper="${hip_upper}"
+    <limit lower="${hip_front_lower}" upper="${hip_front_upper}"
            effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}"/>
   </joint>

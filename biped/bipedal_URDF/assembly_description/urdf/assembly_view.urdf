@@ -85,7 +85,8 @@
   <!-- explodes on spawn, relax the closure with an <ode><erp>/<cfm> pair or  -->
   <!-- spawn already at the zero pose, where both pivots coincide exactly.    -->
   <!-- ===================================================================== -->
-  <!-- +80 deg -->
+  <!-- 30 deg, closing  -->
+  <!--  +60 deg -->
   <!-- ===================================================================== -->
   <!-- Helper macros                                                         -->
   <!-- ===================================================================== -->
@@ -102,9 +103,9 @@
   </joint>
   <link name="base_link">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.021483404329702544 0.02602124280867646 -0.06951546728903525"/>
-      <mass value="5.554037091220957"/>
-      <inertia ixx="0.019731" ixy="0.000405" ixz="0.00012" iyy="0.024901" iyz="-2.5e-05" izz="0.017821"/>
+      <origin rpy="0 0 0" xyz="-0.171800 0.026020 0.000000"/>
+      <mass value="0.915000"/>
+      <inertia ixx="2.790826e-03" ixy="0.0" ixz="0.0" iyy="4.122323e-03" iyz="0.0" izz="3.527497e-03"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -127,9 +128,9 @@
   <!-- ===================================================================== -->
   <link name="left_femur_rear">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.010118104071906081 -0.01753428953089357 -0.006481680057539574"/>
-      <mass value="0.08613648212097492"/>
-      <inertia ixx="3.3e-05" ixy="1.6e-05" ixz="-0.0" iyy="1.4e-05" iyz="0.0" izz="4.4e-05"/>
+      <origin rpy="0 0 0" xyz="0.010118 -0.017534 -0.006482"/>
+      <mass value="0.040000"/>
+      <inertia ixx="1.809003e-05" ixy="0.0" ixz="0.0" iyy="9.708333e-06" iyz="0.0" izz="2.675670e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.065 0.005 0.144"/>
@@ -147,9 +148,9 @@
   </link>
   <link name="left_femur_front">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.014245283831201772 0.01438399207214832 -0.006481680057539546"/>
-      <mass value="0.08613648212097492"/>
-      <inertia ixx="2.4e-05" ixy="-1.9e-05" ixz="-0.0" iyy="2.3e-05" iyz="-0.0" izz="4.4e-05"/>
+      <origin rpy="0 0 0" xyz="0.014245 0.014384 -0.006482"/>
+      <mass value="0.040000"/>
+      <inertia ixx="1.438833e-05" ixy="0.0" ixz="0.0" iyy="1.421687e-05" iyz="0.0" izz="2.756353e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.065 -0.055 0.144"/>
@@ -167,9 +168,9 @@
   </link>
   <link name="left_shank_rear">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.07432671506086122 0.05981391011482628 0.00796721702051778"/>
-      <mass value="0.5702684639688947"/>
-      <inertia ixx="0.000354" ixy="-0.00021" ixz="-5.3e-05" iyy="0.000446" iyz="-4.3e-05" izz="0.000555"/>
+      <origin rpy="0 0 0" xyz="0.003882 0.003124 0.000416"/>
+      <mass value="0.338000"/>
+      <inertia ixx="4.490088e-04" ixy="0.0" ixz="0.0" iyy="5.551611e-04" iyz="0.0" izz="7.475011e-04"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.092496 0.052634 0.148"/>
@@ -187,9 +188,9 @@
   </link>
   <link name="left_shank_front">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.04236179225341931 -0.04631717992048758 0.0016677046248919636"/>
-      <mass value="0.16915049183932718"/>
-      <inertia ixx="0.000151" ixy="0.000112" ixz="-8e-06" iyy="0.000131" iyz="9e-06" izz="0.00028"/>
+      <origin rpy="0 0 0" xyz="0.042362 -0.046317 0.001668"/>
+      <mass value="0.040000"/>
+      <inertia ixx="4.724833e-05" ixy="0.0" ixz="0.0" iyy="4.210497e-05" iyz="0.0" izz="8.847163e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.103696 -0.094085 0.148"/>
@@ -210,37 +211,52 @@
     <parent link="base_link"/>
     <child link="left_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-1.396263" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
+  <!-- MIMIC CHAIN: driver = left_hip_rear. multiplier -1 makes the two femurs
+       counter-rotate, which is the symmetric spread/crouch motion. -->
   <joint name="left_hip_front" type="revolute">
     <origin rpy="0 0 -0.790399343078837" xyz="0.065 0.055 -0.144"/>
     <parent link="base_link"/>
     <child link="left_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="left_hip_rear" multiplier="1.0" offset="0"/>
+    <mimic joint="left_hip_rear" multiplier="-1.0" offset="0"/>
   </joint>
+  <!-- knee = femur distal pivot. 55.000 mm from the hip, confirmed against
+       the bolt-hole ring in the mesh.
 
+       The true knee ratio along this symmetric path is not constant: it runs
+       from -1.5400 at t = -20 deg to -1.4416 at t = -80 deg. -1.4774 is the
+       MINIMAX fit over the driver range [-80, +30] deg, chosen to bound the
+       worst-case foot gap rather than to be exact at the zero pose. Residual
+       foot gap: 0.00 mm at zero, under 1.5 mm for |t| < 50 deg, 6.48 mm at the
+       -80 deg extreme. -->
   <joint name="left_knee_rear" type="revolute">
     <origin rpy="0 0 -1.442050229164275" xyz="0.027496 -0.047634 -0.004"/>
     <parent link="left_femur_rear"/>
     <child link="left_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="2.094395" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="left_hip_rear" multiplier="-1.266389" offset="0"/>
+    <mimic joint="left_hip_rear" multiplier="-1.477400" offset="0"/>
   </joint>
-
   <joint name="left_knee_front" type="revolute">
     <origin rpy="0 0 1.337538022687104" xyz="0.038696 0.039085 -0.004"/>
     <parent link="left_femur_front"/>
     <child link="left_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-2.094395" upper="1.047198" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="left_hip_rear" multiplier="-1.266407" offset="0"/>
+    <!-- Mimics hip_FRONT, not hip_rear. Mathematically identical during normal
+         driving (hip_front = -1.0*hip_rear, so -1.4774*hip_front = +1.4774*
+         hip_rear), but it keeps the FRONT chain self-consistent if a viewer
+         lets the user drag left_hip_front directly: the knee then follows its
+         own parent hip instead of freezing. Cuts the tear-open error from
+         207 mm to 86 mm at the 80 deg extreme. -->
+    <mimic joint="left_hip_front" multiplier="-1.477400" offset="0"/>
   </joint>
   <!-- foot frame at the loop-closure pivot, carried by the front shank -->
   <link name="left_foot"/>
@@ -250,14 +266,59 @@
     <child link="left_foot"/>
   </joint>
   <!-- ===================================================================== -->
+  <!-- LEFT WHEEL                                                            -->
+  <!--                                                                       -->
+  <!-- Mounts on the D-shaft protruding from the OUTBOARD face of the        -->
+  <!-- motor-carrying rear shank. Shaft located by scanning the STL: axis at -->
+  <!-- mesh (182.897, 15.848), body face at Z = -159.0 mm, shaft tip at      -->
+  <!-- Z = -175.22 mm, so it stands 16.22 mm proud at ~6 mm radius (with the -->
+  <!-- D-flat cutting the minimum radius to 2.72 mm). The joint origin puts  -->
+  <!-- the wheel mid-plane 7.5 mm outboard of that face, i.e. the 15 mm-wide -->
+  <!-- wheel is centred on the exposed shaft.                                -->
+  <!--                                                                       -->
+  <!-- Outboard on this leg is -Z, so the axis is negated relative to the    -->
+  <!-- right wheel: +rotation is "forward" on both sides.                    -->
+  <!--                                                                       -->
+  <!-- COLLISION is a SPHERE, not the visual cylinder, so the contact solver -->
+  <!-- sees one smooth point instead of catching on a polygonal rim edge.    -->
+  <!-- ===================================================================== -->
+  <link name="left_wheel">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.030000"/>
+      <!-- solid cylinder, axis = local Z: Izz = m*r^2/2, Ixx=Iyy = m*(3r^2+L^2)/12 -->
+      <inertia ixx="8.730000e-06" ixy="0.0" ixz="0.0" iyy="8.730000e-06" iyz="0.0" izz="1.633500e-05"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.015" radius="0.033"/>
+      </geometry>
+      <material name="shank_dark"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius="0.033"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_wheel_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0.090401 0.068482 -0.018500"/>
+    <parent link="left_shank_rear"/>
+    <child link="left_wheel"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.01"/>
+  </joint>
+  <!-- ===================================================================== -->
   <!-- RIGHT LEG  (CAD z = +0.004 / +0.008)                                  -->
   <!-- Here the motor-carrying shank is the FRONT one.                       -->
   <!-- ===================================================================== -->
   <link name="right_femur_rear">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.010126030971558397 -0.01752971295047831 0.006481680057539532"/>
-      <mass value="0.08613648212097492"/>
-      <inertia ixx="3.3e-05" ixy="1.6e-05" ixz="0.0" iyy="1.4e-05" iyz="-0.0" izz="4.4e-05"/>
+      <origin rpy="0 0 0" xyz="0.010126 -0.017530 0.006482"/>
+      <mass value="0.040000"/>
+      <inertia ixx="1.809003e-05" ixy="0.0" ixz="0.0" iyy="9.708333e-06" iyz="0.0" izz="2.675670e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.065 0.005 -0.004"/>
@@ -275,9 +336,9 @@
   </link>
   <link name="right_femur_front">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.014373975384444154 0.014255390945551817 0.006481680057539529"/>
-      <mass value="0.08613648212097492"/>
-      <inertia ixx="2.3e-05" ixy="-1.9e-05" ixz="0.0" iyy="2.4e-05" iyz="0.0" izz="4.4e-05"/>
+      <origin rpy="0 0 0" xyz="0.014374 0.014255 0.006482"/>
+      <mass value="0.040000"/>
+      <inertia ixx="1.425963e-05" ixy="0.0" ixz="0.0" iyy="1.438833e-05" iyz="0.0" izz="2.760630e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.065 -0.055 -0.004"/>
@@ -295,9 +356,9 @@
   </link>
   <link name="right_shank_rear">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.049086628082017525 0.039117637698670785 -0.0016677046248920096"/>
-      <mass value="0.16915049183932718"/>
-      <inertia ixx="0.000116" ixy="-0.000109" ixz="9e-06" iyy="0.000166" iyz="7e-06" izz="0.00028"/>
+      <origin rpy="0 0 0" xyz="0.049087 0.039118 -0.001668"/>
+      <mass value="0.040000"/>
+      <inertia ixx="3.803563e-05" ixy="0.0" ixz="0.0" iyy="5.111713e-05" iyz="0.0" izz="8.827110e-05"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.092504 0.052629 -0.008"/>
@@ -315,9 +376,9 @@
   </link>
   <link name="right_shank_front">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.06435519701667934 -0.07043142801604275 -0.0079672170205178"/>
-      <mass value="0.5702684639688947"/>
-      <inertia ixx="0.000419" ixy="0.000214" ixz="4.6e-05" iyy="0.000381" iyz="-5.1e-05" izz="0.000555"/>
+      <origin rpy="0 0 0" xyz="0.003361 -0.003678 -0.000416"/>
+      <mass value="0.338000"/>
+      <inertia ixx="5.251940e-04" ixy="0.0" ixz="0.0" iyy="4.810264e-04" iyz="0.0" izz="7.495516e-04"/>
     </inertial>
     <visual>
       <origin rpy="0 0 0" xyz="-0.104057 -0.093724 -0.008"/>
@@ -338,43 +399,86 @@
     <parent link="base_link"/>
     <child link="right_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-1.396263" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
+  <!-- MIMIC CHAIN: driver = right_hip_rear. Same signs as the left leg - the
+       two legs are NOT sign-inverted (both use axis 0 0 1 with origins that
+       differ by under 0.01 rad). -->
   <joint name="right_hip_front" type="revolute">
     <origin rpy="0 0 -0.7811169383490308" xyz="0.065 0.055 0.004"/>
     <parent link="base_link"/>
     <child link="right_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="right_hip_rear" multiplier="1.0" offset="0"/>
+    <mimic joint="right_hip_rear" multiplier="-1.0" offset="0"/>
   </joint>
-
+  <!-- NOTE: this origin is the one the Fusion exporter got wrong. It wrote
+       (0.111574, 0.019366, 0.004), which is 113 mm from the hip - a point in
+       empty space, well off the end of a 55 mm femur. The correct distal
+       pivot is the one below. -->
   <joint name="right_knee_rear" type="revolute">
     <origin rpy="0 0 -1.4371325724496562" xyz="0.027504 -0.047629 0.004"/>
     <parent link="right_femur_rear"/>
     <child link="right_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="2.094395" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="right_hip_rear" multiplier="-1.266421" offset="0"/>
+    <mimic joint="right_hip_rear" multiplier="-1.477400" offset="0"/>
   </joint>
-
   <joint name="right_knee_front" type="revolute">
     <origin rpy="0 0 1.3287030430581956" xyz="0.039057 0.038724 0.004"/>
     <parent link="right_femur_front"/>
     <child link="right_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
+    <limit effort="100" lower="-2.094395" upper="1.047198" velocity="100"/>
     <dynamics damping="0.05"/>
-    <mimic joint="right_hip_rear" multiplier="-1.266374" offset="0"/>
+    <!-- Mimics hip_FRONT, not hip_rear - see the note on left_knee_front. -->
+    <mimic joint="right_hip_front" multiplier="-1.477400" offset="0"/>
   </joint>
   <link name="right_foot"/>
   <joint name="right_foot_frame" type="fixed">
     <origin rpy="0 0 0" xyz="0.072517 -0.079358 0.0"/>
     <parent link="right_shank_front"/>
     <child link="right_foot"/>
+  </joint>
+  <!-- ===================================================================== -->
+  <!-- RIGHT WHEEL                                                           -->
+  <!--                                                                       -->
+  <!-- Same D-shaft mount, but on this leg the motor-carrying shank is the   -->
+  <!-- FRONT one and its outboard face is +Z. Shaft axis at mesh             -->
+  <!-- (182.964, 12.280), body face at Z = +19.0 mm, tip at +35.22 mm.       -->
+  <!-- Axis is +Z here (mirrored from the left) so that a positive joint     -->
+  <!-- value drives both wheels the same way.                                -->
+  <!-- ===================================================================== -->
+  <link name="right_wheel">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.030000"/>
+      <!-- solid cylinder, axis = local Z: Izz = m*r^2/2, Ixx=Iyy = m*(3r^2+L^2)/12 -->
+      <inertia ixx="8.730000e-06" ixy="0.0" ixz="0.0" iyy="8.730000e-06" iyz="0.0" izz="1.633500e-05"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.015" radius="0.033"/>
+      </geometry>
+      <material name="shank_dark"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius="0.033"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_wheel_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0.078907 -0.081444 0.018500"/>
+    <parent link="right_shank_front"/>
+    <child link="right_wheel"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.01"/>
   </joint>
   <!-- ===================================================================== -->
   <!-- LOOP CLOSURES (documentation only - deliberately not <joint> tags)    -->

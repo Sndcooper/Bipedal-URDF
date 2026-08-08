@@ -38,10 +38,28 @@ HIP_SPACING = HIP_FRONT[1] - HIP_REAR[1]
 # joint origins. 0.0 means both femurs hang vertically.
 ZERO_SPLAY = 0.0
 
-# Hip limit, matching hip_range in the URDF. Bounded by the two femurs of a
-# leg colliding, not by the closure: their knee pivots meet when
-# 2*FEMUR_LEN*sin(range) reaches HIP_SPACING + 2*FEMUR_LEN*sin(ZERO_SPLAY).
-HIP_LIMIT = 0.523599  # 30 deg
+# Hip limits, matching hip_out / hip_in in assembly.xacro. DIRECTIONAL: the
+# travel is not symmetric about the zero pose, and the sign convention is a
+# REAR/FRONT distinction rather than a LEFT/RIGHT one - both legs are identical
+# in joint space, so the same signs mean the same motion on each.
+#
+#     spread (outward, crouch) : hip_rear NEGATIVE, hip_front POSITIVE
+#     close  (inward)          : hip_rear POSITIVE, hip_front NEGATIVE
+#
+# Outward is free (the closure stays solvable well past 80 deg). Inward is
+# bounded by the two femurs of a leg colliding, not by the closure: their knee
+# pivots meet when 2*FEMUR_LEN*sin(range) reaches
+# HIP_SPACING + 2*FEMUR_LEN*sin(ZERO_SPLAY), i.e. at 33.06 deg for zero splay.
+HIP_OUT = 1.396263  # 80 deg, femurs spreading
+HIP_IN = 0.523599   # 30 deg, femurs closing
+
+# (lower, upper) per joint, so a slider cannot ask for a pose the URDF forbids.
+HIP_BOUNDS = {
+    'left_hip_rear': (-HIP_OUT, HIP_IN),
+    'left_hip_front': (-HIP_IN, HIP_OUT),
+    'right_hip_rear': (-HIP_OUT, HIP_IN),
+    'right_hip_front': (-HIP_IN, HIP_OUT),
+}
 
 HIP_JOINTS = ['left_hip_rear', 'left_hip_front', 'right_hip_rear', 'right_hip_front']
 KNEE_JOINTS = ['left_knee_rear', 'left_knee_front', 'right_knee_rear', 'right_knee_front']
@@ -51,6 +69,11 @@ LEGS = {'left': {}, 'right': {}}
 
 def _wrap(a):
     return math.atan2(math.sin(a), math.cos(a))
+
+
+def _clamp(joint, q):
+    lo, hi = HIP_BOUNDS[joint]
+    return max(lo, min(hi, q))
 
 
 class LegModel:
@@ -131,7 +154,9 @@ class FiveBarStatePublisher(Node):
         self.declare_parameter('mode', 'gui')
         self.declare_parameter('rate', 50.0)
         self.declare_parameter('initial_hips', [0.0, 0.0, 0.0, 0.0])
-        self.declare_parameter('demo_amplitude', 0.45)
+        # 1.0 rad of spread ~= 57 deg, which crouches the foot from 223 mm to
+        # about 170 mm below the base origin. Capped at HIP_OUT (80 deg).
+        self.declare_parameter('demo_amplitude', 1.0)
         self.declare_parameter('demo_period', 6.0)
 
         self.mode = self.get_parameter('mode').value
@@ -171,7 +196,7 @@ class FiveBarStatePublisher(Node):
                 self.hips[name] = pos
 
     def _demo_hips(self, t):
-        amp = min(float(self.get_parameter('demo_amplitude').value), HIP_LIMIT)
+        amp = min(float(self.get_parameter('demo_amplitude').value), HIP_OUT)
         period = max(0.1, float(self.get_parameter('demo_period').value))
         w = 2.0 * math.pi * t / period
 
@@ -199,8 +224,8 @@ class FiveBarStatePublisher(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
 
         for side in ('left', 'right'):
-            q_rear = max(-HIP_LIMIT, min(HIP_LIMIT, self.hips[f'{side}_hip_rear']))
-            q_front = max(-HIP_LIMIT, min(HIP_LIMIT, self.hips[f'{side}_hip_front']))
+            q_rear = _clamp(f'{side}_hip_rear', self.hips[f'{side}_hip_rear'])
+            q_front = _clamp(f'{side}_hip_front', self.hips[f'{side}_hip_front'])
             knees = self.legs[side].solve(q_rear, q_front)
             if knees is None:
                 # unreachable command: keep the last valid knee pair rather
