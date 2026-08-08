@@ -151,7 +151,7 @@
   </collision>
 </link>
 
-<link name="tibia_2__1__1">
+<link name="leg2_knee_tibia_1">
   <inertial>
     <origin xyz="0.060273696368209784 0.017517055517382807 -0.001667704624892007" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -172,7 +172,7 @@
   </collision>
 </link>
 
-<link name="tibia_2_1">
+<link name="leg1_knee_tibia_1">
   <inertial>
     <origin xyz="0.060273696368209784 -0.017517055517382668 0.001667704624891908" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -193,7 +193,7 @@
   </collision>
 </link>
 
-<link name="tibia_2_1">
+<link name="leg1_knee_tibia_2">
   <inertial>
     <origin xyz="-0.04295530363179023 0.012482944482617334 0.001667704624891908" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -214,7 +214,7 @@
   </collision>
 </link>
 
-<link name="tibia_2__1__1">
+<link name="leg2_knee_tibia_2">
   <inertial>
     <origin xyz="-0.04295530363179023 -0.012482944482617192 -0.001667704624892007" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -286,7 +286,7 @@
 <joint name="Revolute 7" type="revolute">
   <origin xyz="0.158229 0.030004 0.004" rpy="0 0 0"/>
   <parent link="Combined_femur__2__1"/>
-  <child link="tibia_2__1__1"/>
+  <child link="leg2_knee_tibia_1"/>
   <axis xyz="-0.0 0.0 -1.0"/>
   <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
 </joint>
@@ -294,7 +294,7 @@
 <joint name="Revolute 8" type="revolute">
   <origin xyz="0.158229 -0.030004 -0.004" rpy="0 0 0"/>
   <parent link="Combined_femur__3__1"/>
-  <child link="tibia_2_1"/>
+  <child link="leg1_knee_tibia_1"/>
   <axis xyz="0.0 0.0 1.0"/>
   <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
 </joint>
@@ -302,7 +302,7 @@
 <joint name="Revolute 9" type="revolute">
   <origin xyz="0.103229 0.03 0.0" rpy="0 0 0"/>
   <parent link="combined_motor_tibia_1"/>
-  <child link="tibia_2_1"/>
+  <child link="leg1_knee_tibia_2"/>
   <axis xyz="-0.0 0.0 -1.0"/>
   <limit upper="-3.403392" lower="-5.759587" effort="100" velocity="100"/>
 </joint>
@@ -310,7 +310,7 @@
 <joint name="Revolute 10" type="revolute">
   <origin xyz="0.103229 -0.03 0.0" rpy="0 0 0"/>
   <parent link="combined_motor_tibia__1__1"/>
-  <child link="tibia_2__1__1"/>
+  <child link="leg2_knee_tibia_2"/>
   <axis xyz="0.0 0.0 1.0"/>
   <limit upper="2.96706" lower="0.523599" effort="100" velocity="100"/>
 </joint>

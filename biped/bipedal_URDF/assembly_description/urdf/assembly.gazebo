@@ -56,28 +56,28 @@
   <self_collide>true</self_collide>
 </gazebo>
 
-<gazebo reference="tibia_2__1__1">
+<gazebo reference="leg2_knee_tibia_1">
   <material>${body_color}</material>
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
-<gazebo reference="tibia_2_1">
+<gazebo reference="leg1_knee_tibia_1">
   <material>${body_color}</material>
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
-<gazebo reference="tibia_2_1">
+<gazebo reference="leg1_knee_tibia_2">
   <material>${body_color}</material>
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
-<gazebo reference="tibia_2__1__1">
+<gazebo reference="leg2_knee_tibia_2">
   <material>${body_color}</material>
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>

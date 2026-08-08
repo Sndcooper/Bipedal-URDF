@@ -4,197 +4,9 @@
 <material name="silver">
   <color rgba="0.700 0.700 0.700 1.000"/>
 </material>
-<transmission name="Revolute 1_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 1">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 1_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
 
-<transmission name="Revolute 2_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 2">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 2_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
+<!-- ==================== LINKS ==================== -->
 
-<transmission name="Revolute 3_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 3">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 3_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 4_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 4">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 4_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 5_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 5">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 5_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 6_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 6">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 6_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 7_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 7">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 7_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 8_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 8">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 8_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 9_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 9">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 9_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Revolute 10_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Revolute 10">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Revolute 10_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-<xacro:property name="body_color" value="Gazebo/Silver" />
-
-<gazebo>
-  <plugin name="control" filename="libgazebo_ros_control.so"/>
-</gazebo>
-<gazebo reference="base_link">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-  <gravity>true</gravity>
-</gazebo>
-
-<gazebo reference="Combined_femur_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="Combined_femur__3__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="Combined_femur__1__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="Combined_femur__2__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="combined_motor_tibia__1__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="combined_motor_tibia_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="tibia_2__1__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="tibia_2_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="tibia_2_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
-
-<gazebo reference="tibia_2__1__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
 <link name="base_link">
   <inertial>
     <origin xyz="0.021483404329702544 0.02602124280867646 -0.06951546728903525" rpy="0 0 0"/>
@@ -204,14 +16,14 @@
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/base_link.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/base_link.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -225,14 +37,14 @@
   <visual>
     <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.065 0.005 0.144" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -246,14 +58,14 @@
   <visual>
     <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.065 -0.055 0.144" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__3__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -267,14 +79,14 @@
   <visual>
     <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.065 -0.055 -0.004" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -288,14 +100,14 @@
   <visual>
     <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.065 0.005 -0.004" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/Combined_femur__2__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -309,14 +121,14 @@
   <visual>
     <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.12 -0.055004 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/combined_motor_tibia__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -330,19 +142,21 @@
   <visual>
     <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.12 0.005004 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/combined_motor_tibia_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="tibia_2__1__1">
+<!-- 4-bar knee linkage arms — all 4 with unique names (fixed from duplicate CAD export) -->
+
+<link name="leg2_knee_tibia_1">
   <inertial>
     <origin xyz="0.060273696368209784 0.017517055517382807 -0.001667704624892007" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -351,19 +165,19 @@
   <visual>
     <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.12 0.004996 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="tibia_2_1">
+<link name="leg1_knee_tibia_1">
   <inertial>
     <origin xyz="0.060273696368209784 -0.017517055517382668 0.001667704624891908" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -372,19 +186,19 @@
   <visual>
     <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.12 -0.054996 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="tibia_2_1">
+<link name="leg1_knee_tibia_2">
   <inertial>
     <origin xyz="-0.04295530363179023 0.012482944482617334 0.001667704624891908" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -393,19 +207,19 @@
   <visual>
     <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.223229 -0.024996 0.148" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="tibia_2__1__1">
+<link name="leg2_knee_tibia_2">
   <inertial>
     <origin xyz="-0.04295530363179023 -0.012482944482617192 -0.001667704624892007" rpy="0 0 0"/>
     <mass value="0.16915049183932718"/>
@@ -414,17 +228,19 @@
   <visual>
     <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="-0.223229 -0.025004 -0.008" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="package://assembly_description/meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="../meshes/tibia_2__1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
+
+<!-- ==================== JOINTS ==================== -->
 
 <joint name="Revolute 1" type="revolute">
   <origin xyz="0.065 -0.005 -0.144" rpy="0 0 0"/>
@@ -477,7 +293,7 @@
 <joint name="Revolute 7" type="revolute">
   <origin xyz="0.158229 0.030004 0.004" rpy="0 0 0"/>
   <parent link="Combined_femur__2__1"/>
-  <child link="tibia_2__1__1"/>
+  <child link="leg2_knee_tibia_1"/>
   <axis xyz="-0.0 0.0 -1.0"/>
   <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
 </joint>
@@ -485,7 +301,7 @@
 <joint name="Revolute 8" type="revolute">
   <origin xyz="0.158229 -0.030004 -0.004" rpy="0 0 0"/>
   <parent link="Combined_femur__3__1"/>
-  <child link="tibia_2_1"/>
+  <child link="leg1_knee_tibia_1"/>
   <axis xyz="0.0 0.0 1.0"/>
   <limit upper="3.926991" lower="-0.785398" effort="100" velocity="100"/>
 </joint>
@@ -493,7 +309,7 @@
 <joint name="Revolute 9" type="revolute">
   <origin xyz="0.103229 0.03 0.0" rpy="0 0 0"/>
   <parent link="combined_motor_tibia_1"/>
-  <child link="tibia_2_1"/>
+  <child link="leg1_knee_tibia_2"/>
   <axis xyz="-0.0 0.0 -1.0"/>
   <limit upper="-3.403392" lower="-5.759587" effort="100" velocity="100"/>
 </joint>
@@ -501,7 +317,7 @@
 <joint name="Revolute 10" type="revolute">
   <origin xyz="0.103229 -0.03 0.0" rpy="0 0 0"/>
   <parent link="combined_motor_tibia__1__1"/>
-  <child link="tibia_2__1__1"/>
+  <child link="leg2_knee_tibia_2"/>
   <axis xyz="0.0 0.0 1.0"/>
   <limit upper="2.96706" lower="0.523599" effort="100" velocity="100"/>
 </joint>
