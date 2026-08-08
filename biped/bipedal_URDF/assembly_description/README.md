@@ -59,18 +59,68 @@ Instead:
 
 | Joint | Type | Limits | Notes |
 | :--- | :--- | :--- | :--- |
-| `left_hip_rear`, `left_hip_front` | revolute | ±60° | actuated |
-| `right_hip_rear`, `right_hip_front` | revolute | ±60° | actuated |
-| `left_knee_rear`, `right_knee_rear` | revolute | −87.2°…+68.2° | passive, set by closure |
-| `left_knee_front`, `right_knee_front` | revolute | −68.7°…+100.6° | passive, set by closure |
+| `left_hip_rear`, `left_hip_front` | revolute | ±30° | actuated |
+| `right_hip_rear`, `right_hip_front` | revolute | ±30° | actuated |
+| `left_knee_rear`, `right_knee_rear` | revolute | −60°…+80° | passive, set by closure |
+| `left_knee_front`, `right_knee_front` | revolute | −60°…+80° | passive, set by closure |
 | `*_foot_closure` | — | — | the cut joint; Gazebo only |
 
-The ±60° hip range was chosen by sweeping the closure solver: over that box
-every pose is reachable, and the mechanism stays 45 mm clear of the stretched
-singularity. The knee limits are the range the dependent knees actually sweep
-over that hip box, plus a small margin. **Do not widen the hips to ±90°** without
-re-checking self-collision — beyond about ±75° the linkage folds back through
-itself.
+**The knee limits are wider than the closure ever uses.** Driven correctly
+(hips within the real ±30° range), the knees only ever reach about ±58°/46° —
+see the "practical ceiling" note below. The extra headroom to −60°/+80° exists
+so the joints can be posed by hand past the mechanism's working range, e.g. in
+a static URDF viewer where you drag one joint at a time.
+
+**Widening these does not make a static viewer show the leg closed.** A knee's
+correct position is a function of *both* hip angles — a nonlinear one (an arc
+closing, not a line) — and a viewer that drags joints independently has no way
+to enforce that. This is a property of representing a closed loop as an open
+tree, not a limit that can be tuned away; URDF's only joint-coupling feature,
+`<mimic>`, is strictly linear and the best possible linear fit to this
+relationship misses by **up to 370 mm** at ±60–80°. See
+[`doc/five_bar_viewer.html`](doc/five_bar_viewer.html) — an interactive page
+running the exact same solver, with a "Manual" mode that reproduces this
+failure live so you can see why widening the limit doesn't help. RViz
+`mode:=demo` / `mode:=gui` is the equivalent for the real robot and is exact.
+
+### Zero pose and why the hip range is what it is
+
+`zero_splay` in the xacro sets how far each femur sits from vertical at q = 0
+(rear at −splay, front at +splay). It defaults to **0 — both femurs hang
+straight down.**
+
+The binding constraint on hip travel is **not** the loop closure, it is the two
+femurs of a leg hitting each other: they are coplanar, and counter-rotating them
+closes the gap between their knee pivots as
+`hip_spacing − 2·femur_len·sin(range)`. At `zero_splay = 0` that gap reaches
+zero at **33.06°**, so 30° is the practical ceiling — and even there the worst
+corner (rear +30, front −30) leaves only **5 mm** between the pivots.
+
+Two consequences worth knowing:
+
+- **The default pose is nearly fully extended.** Foot depth is 223.2 mm and the
+  mechanism's absolute maximum reach is 227.5 mm. Over the whole hip box the leg
+  travels only 203.5 → 224.7 mm, about **21 mm**. Splaying the zero pose gets
+  that range back: the raw CAD pose is ~52° of splay, sits at 176.6 mm, and
+  tolerated ±60° hips.
+- **`demo` mode only crouches.** The sweep runs one-sided (0 → +spread) rather
+  than symmetric about zero, because there is nothing above the default to
+  extend into.
+
+If you want a stance that stands rather than locks out, set:
+
+```xml
+<xacro:property name="zero_splay" value="0.5" />   <!-- ~29 deg -->
+```
+
+then re-derive `hip_range`, the four knee limits and `foot_overhang`. Everything
+else — the baked joint rotations, `stand_height`, `phi_zero` — recomputes itself
+from `zero_splay`.
+
+> **Keep `ZERO_SPLAY` in `five_bar_state_publisher.py` equal to `zero_splay` in
+> the xacro.** The xacro bakes the matching rotations into the joint origins;
+> the node has to measure its angles from the same reference or the published
+> knee values will be offset and the linkage will render open.
 
 ---
 

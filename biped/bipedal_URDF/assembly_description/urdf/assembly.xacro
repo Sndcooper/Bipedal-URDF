@@ -67,29 +67,117 @@
   <xacro:property name="femur_len"   value="0.055"   />
   <xacro:property name="shank_len"   value="0.1075"  />
   <xacro:property name="hip_spacing" value="0.060"   />
-  <!-- lowest point of the foot meshes at the zero pose, in CAD +X -->
-  <xacro:property name="stand_height" value="0.2018" />
+
+  <!-- ===================================================================== -->
+  <!-- ZERO POSE                                                             -->
+  <!--                                                                       -->
+  <!-- zero_splay is the angle each femur makes with straight-down at the    -->
+  <!-- zero configuration, measured symmetrically: the rear femur sits at    -->
+  <!-- -zero_splay and the front femur at +zero_splay, so they open like a   -->
+  <!-- V. 0 puts both femurs vertical.                                       -->
+  <!--                                                                       -->
+  <!-- CAREFUL: 0 is very close to full extension. The foot then hangs       -->
+  <!-- 223.2 mm below the base origin and the mechanism's maximum reach is   -->
+  <!-- 227.5 mm, so the leg can essentially only retract from the default    -->
+  <!-- pose. It also shrinks the usable hip range - see hip_range below.     -->
+  <!-- The CAD assembly pose corresponds to roughly 52 deg of splay, which   -->
+  <!-- is a well-conditioned crouch; try 0.5 rad if you want the default to  -->
+  <!-- stand rather than lock out.                                           -->
+  <!-- ===================================================================== -->
+  <xacro:property name="zero_splay" value="0.0" />
+
+  <!-- Closure solved for the symmetric splay pose. Both femurs share the
+       same x, so the knee separation is hip_spacing + 2*femur_len*sin(splay)
+       and the foot lands on the hip midline. -->
+  <xacro:property name="splay_sin"  value="${sin(zero_splay)}" />
+  <xacro:property name="knee_gap"   value="${hip_spacing + 2*femur_len*splay_sin}" />
+  <xacro:property name="foot_reach" value="${sqrt(shank_len**2 - (knee_gap/2)**2)}" />
+  <!-- shank angles at the zero pose: rear +phi, front -phi -->
+  <xacro:property name="phi_zero"
+                  value="${atan2(hip_spacing/2 + femur_len*splay_sin, foot_reach)}" />
+  <!-- depth of the foot pivot below the base origin, along CAD +X -->
+  <xacro:property name="foot_depth" value="${0.065 + femur_len*cos(zero_splay) + foot_reach}" />
+  <!-- ===================================================================== -->
+  <!-- CAD zero-pose geometry                                                -->
+  <!--                                                                       -->
+  <!-- These are the link vectors exactly as the Fusion export gives them:   -->
+  <!-- hip pivot -> knee pivot, and knee pivot -> foot pivot, expressed in   -->
+  <!-- the base-aligned frame. Everything else is derived, so these are the  -->
+  <!-- only measured numbers in the file.                                    -->
+  <!-- ===================================================================== -->
+  <xacro:property name="l_kr_x" value="0.027496" /><xacro:property name="l_kr_y" value="-0.047634" />
+  <xacro:property name="l_kf_x" value="0.038696" /><xacro:property name="l_kf_y" value="0.039085"  />
+  <xacro:property name="l_sr_x" value="0.083752" /><xacro:property name="l_sr_y" value="0.067394"  />
+  <xacro:property name="l_sf_x" value="0.072552" /><xacro:property name="l_sf_y" value="-0.079325" />
+
+  <xacro:property name="r_kr_x" value="0.027504" /><xacro:property name="r_kr_y" value="-0.047629" />
+  <xacro:property name="r_kf_x" value="0.039057" /><xacro:property name="r_kf_y" value="0.038724"  />
+  <xacro:property name="r_sr_x" value="0.084070" /><xacro:property name="r_sr_y" value="0.066995"  />
+  <xacro:property name="r_sf_x" value="0.072517" /><xacro:property name="r_sf_y" value="-0.079358" />
+
+  <!-- Rotations baked into each leg joint's origin so that q = 0 lands on
+       the splay pose above instead of on the raw CAD pose. Nothing else in
+       the link definitions changes: the bodies rotate rigidly with their
+       frames, so the meshes, centres of mass and inertia tensors all stay
+       valid as written. -->
+  <xacro:property name="l_dhr" value="${-zero_splay - atan2(l_kr_y, l_kr_x)}" />
+  <xacro:property name="l_dhf" value="${ zero_splay - atan2(l_kf_y, l_kf_x)}" />
+  <xacro:property name="l_dkr" value="${ phi_zero - atan2(l_sr_y, l_sr_x) - l_dhr}" />
+  <xacro:property name="l_dkf" value="${-phi_zero - atan2(l_sf_y, l_sf_x) - l_dhf}" />
+
+  <xacro:property name="r_dhr" value="${-zero_splay - atan2(r_kr_y, r_kr_x)}" />
+  <xacro:property name="r_dhf" value="${ zero_splay - atan2(r_kf_y, r_kf_x)}" />
+  <xacro:property name="r_dkr" value="${ phi_zero - atan2(r_sr_y, r_sr_x) - r_dhr}" />
+  <xacro:property name="r_dkf" value="${-phi_zero - atan2(r_sf_y, r_sf_x) - r_dhf}" />
+
+  <!-- How far the foot meshes reach past the foot pivot, along CAD +X, at
+       the zero pose. Measured from the meshes; re-measure if you change
+       zero_splay (urdf/generate_urdf.py prints nothing, but the validation
+       in the README explains how). -->
+  <xacro:property name="foot_overhang" value="0.02525" />
+  <xacro:property name="stand_height"  value="${foot_depth + foot_overhang}" />
+
   <!-- The CAD origin is not centred between the legs (they sit at CAD
-       z = +0.008 and -0.148, and the feet at CAD y = +0.0146), so the model
-       would otherwise render hanging off to one side of the grid. These two
-       offsets put base_footprint midway between the feet. -->
-  <xacro:property name="centre_x" value="-0.0146" />
-  <xacro:property name="centre_y" value="-0.0700" />
+       z = +0.008 and -0.148), so the model would otherwise render hanging
+       off to one side of the grid. These put base_footprint midway between
+       the feet. -->
+  <xacro:property name="centre_x" value="-0.025" />
+  <xacro:property name="centre_y" value="-0.070" />
 
-  <!-- Actuated hip travel about the CAD pose. Verified by sweeping the
-       closure solver: over +-60 deg the mechanism stays 45 mm away from the
-       stretched singularity and every pose is reachable. Going to +-90 deg
-       folds the linkage back through itself, so do not widen this without
-       re-checking self-collision. -->
-  <xacro:property name="hip_lower"  value="-1.047198" />  <!-- -60 deg -->
-  <xacro:property name="hip_upper"  value="1.047198"  />  <!-- +60 deg -->
+  <!-- Actuated hip travel about the zero pose.
+       The binding constraint is the two femurs of a leg colliding: they are
+       coplanar, and counter-rotating them closes the gap between their knee
+       pivots as hip_spacing - 2*femur_len*sin(range). At zero_splay = 0 that
+       gap vanishes at 33.06 deg, so 30 deg is the practical ceiling and even
+       that leaves only 5 mm at the worst corner (rear +30, front -30).
+       Splaying the zero pose buys range back: at the CAD splay of ~52 deg,
+       +-60 deg was safe. -->
+  <xacro:property name="hip_range" value="0.523599" />  <!-- 30 deg -->
+  <xacro:property name="hip_lower" value="${-hip_range}" />
+  <xacro:property name="hip_upper" value="${hip_range}"  />
 
-  <!-- Passive knee travel: the range the dependent knees actually sweep over
-       the hip workspace above, plus a small margin. -->
-  <xacro:property name="knee_rear_lower"  value="-1.522119" />
-  <xacro:property name="knee_rear_upper"  value="1.189686"  />
-  <xacro:property name="knee_front_lower" value="-1.199474" />
-  <xacro:property name="knee_front_upper" value="1.756498"  />
+  <!-- Passive knee travel.
+       NOTE: these are wider than the closure ever actually uses. Driven
+       correctly (hips within +-30 deg), the knees only ever reach about
+       +-58/46 deg - see doc/CLOSURE_README for the swept range. These wider
+       bounds (-60 deg "inward" / +80 deg "outward" from the zero pose, same
+       convention on both joints) exist so the joints can be posed by hand
+       past the mechanism's real working range, e.g. in a static URDF viewer
+       where you are dragging one joint at a time.
+
+       IMPORTANT: widening these does NOT make a static/offline viewer show
+       the leg closed. The knee position is only correct when it equals the
+       output of the closure solver for the current hip angles - dragging a
+       knee slider independently can never reproduce that, because URDF has
+       no way to express "this joint's value is a function of two other
+       joints." That is inherent to representing a closed loop as an open
+       tree, not something a limit change can fix. Use the interactive
+       closure viewer (doc/five_bar_viewer.html) or RViz mode:=demo /
+       mode:=gui, both of which run the real solver and are exact. -->
+  <xacro:property name="knee_rear_lower"  value="-1.047198" />  <!-- -60 deg -->
+  <xacro:property name="knee_rear_upper"  value="1.396263"  />  <!-- +80 deg -->
+  <xacro:property name="knee_front_lower" value="-1.047198" />  <!-- -60 deg -->
+  <xacro:property name="knee_front_upper" value="1.396263"  />  <!-- +80 deg -->
 
   <xacro:property name="joint_effort"   value="100" />
   <xacro:property name="joint_velocity" value="100" />
@@ -186,7 +274,7 @@
       org_x="0.103696" org_y="0.094085" org_z="-0.148"/>
 
   <joint name="left_hip_rear" type="revolute">
-    <origin xyz="0.065 -0.005 -0.144" rpy="0 0 0"/>
+    <origin xyz="0.065 -0.005 -0.144" rpy="0 0 ${l_dhr}"/>
     <parent link="base_link"/>
     <child  link="left_femur_rear"/>
     <axis xyz="0 0 1"/>
@@ -196,7 +284,7 @@
   </joint>
 
   <joint name="left_hip_front" type="revolute">
-    <origin xyz="0.065 0.055 -0.144" rpy="0 0 0"/>
+    <origin xyz="0.065 0.055 -0.144" rpy="0 0 ${l_dhf}"/>
     <parent link="base_link"/>
     <child  link="left_femur_front"/>
     <axis xyz="0 0 1"/>
@@ -208,7 +296,7 @@
   <!-- knee = femur distal pivot. 55.000 mm from the hip, confirmed against
        the bolt-hole ring in the mesh. -->
   <joint name="left_knee_rear" type="revolute">
-    <origin xyz="0.027496 -0.047634 -0.004" rpy="0 0 0"/>
+    <origin xyz="${l_kr_x} ${l_kr_y} -0.004" rpy="0 0 ${l_dkr}"/>
     <parent link="left_femur_rear"/>
     <child  link="left_shank_rear"/>
     <axis xyz="0 0 1"/>
@@ -218,7 +306,7 @@
   </joint>
 
   <joint name="left_knee_front" type="revolute">
-    <origin xyz="0.038696 0.039085 -0.004" rpy="0 0 0"/>
+    <origin xyz="${l_kf_x} ${l_kf_y} -0.004" rpy="0 0 ${l_dkf}"/>
     <parent link="left_femur_front"/>
     <child  link="left_shank_front"/>
     <axis xyz="0 0 1"/>
@@ -230,7 +318,7 @@
   <!-- foot frame at the loop-closure pivot, carried by the front shank -->
   <link name="left_foot"/>
   <joint name="left_foot_frame" type="fixed">
-    <origin xyz="0.072552 -0.079325 0.0" rpy="0 0 0"/>
+    <origin xyz="${l_sf_x} ${l_sf_y} 0.0" rpy="0 0 0"/>
     <parent link="left_shank_front"/>
     <child  link="left_foot"/>
   </joint>
@@ -271,7 +359,7 @@
       org_x="0.104057" org_y="0.093724" org_z="0.008"/>
 
   <joint name="right_hip_rear" type="revolute">
-    <origin xyz="0.065 -0.005 0.004" rpy="0 0 0"/>
+    <origin xyz="0.065 -0.005 0.004" rpy="0 0 ${r_dhr}"/>
     <parent link="base_link"/>
     <child  link="right_femur_rear"/>
     <axis xyz="0 0 1"/>
@@ -281,7 +369,7 @@
   </joint>
 
   <joint name="right_hip_front" type="revolute">
-    <origin xyz="0.065 0.055 0.004" rpy="0 0 0"/>
+    <origin xyz="0.065 0.055 0.004" rpy="0 0 ${r_dhf}"/>
     <parent link="base_link"/>
     <child  link="right_femur_front"/>
     <axis xyz="0 0 1"/>
@@ -295,7 +383,7 @@
        empty space, well off the end of a 55 mm femur. The correct distal
        pivot is the one below. -->
   <joint name="right_knee_rear" type="revolute">
-    <origin xyz="0.027504 -0.047629 0.004" rpy="0 0 0"/>
+    <origin xyz="${r_kr_x} ${r_kr_y} 0.004" rpy="0 0 ${r_dkr}"/>
     <parent link="right_femur_rear"/>
     <child  link="right_shank_rear"/>
     <axis xyz="0 0 1"/>
@@ -305,7 +393,7 @@
   </joint>
 
   <joint name="right_knee_front" type="revolute">
-    <origin xyz="0.039057 0.038724 0.004" rpy="0 0 0"/>
+    <origin xyz="${r_kf_x} ${r_kf_y} 0.004" rpy="0 0 ${r_dkf}"/>
     <parent link="right_femur_front"/>
     <child  link="right_shank_front"/>
     <axis xyz="0 0 1"/>
@@ -316,7 +404,7 @@
 
   <link name="right_foot"/>
   <joint name="right_foot_frame" type="fixed">
-    <origin xyz="0.072517 -0.079358 0.0" rpy="0 0 0"/>
+    <origin xyz="${r_sf_x} ${r_sf_y} 0.0" rpy="0 0 0"/>
     <parent link="right_shank_front"/>
     <child  link="right_foot"/>
   </joint>

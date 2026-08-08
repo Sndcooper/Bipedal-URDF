@@ -85,7 +85,7 @@
   <!-- explodes on spawn, relax the closure with an <ode><erp>/<cfm> pair or  -->
   <!-- spawn already at the zero pose, where both pivots coincide exactly.    -->
   <!-- ===================================================================== -->
-  <!-- +60 deg -->
+  <!-- +80 deg -->
   <!-- ===================================================================== -->
   <!-- Helper macros                                                         -->
   <!-- ===================================================================== -->
@@ -96,7 +96,7 @@
   <joint name="base_footprint_to_base_link" type="fixed">
     <!-- rpy maps CAD (+X down, +Y forward, +Z lateral) onto ROS
          (+X forward, +Y left, +Z up); z lifts the feet onto the ground -->
-    <origin rpy="1.5707963 1.5707963 0" xyz="-0.0146 -0.07 0.2018"/>
+    <origin rpy="1.5707963 1.5707963 0" xyz="-0.025 -0.07 0.24847911411031287"/>
     <parent link="base_footprint"/>
     <child link="base_link"/>
   </joint>
@@ -206,38 +206,41 @@
     </collision>
   </link>
   <joint name="left_hip_rear" type="revolute">
-    <origin rpy="0 0 0" xyz="0.065 -0.005 -0.144"/>
+    <origin rpy="0 0 1.0472841962059805" xyz="0.065 -0.005 -0.144"/>
     <parent link="base_link"/>
     <child link="left_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="left_hip_front" type="revolute">
-    <origin rpy="0 0 0" xyz="0.065 0.055 -0.144"/>
+    <origin rpy="0 0 -0.790399343078837" xyz="0.065 0.055 -0.144"/>
     <parent link="base_link"/>
     <child link="left_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="left_hip_rear" multiplier="1.0" offset="0"/>
   </joint>
-  <!-- knee = femur distal pivot. 55.000 mm from the hip, confirmed against
-       the bolt-hole ring in the mesh. -->
+
   <joint name="left_knee_rear" type="revolute">
-    <origin rpy="0 0 0" xyz="0.027496 -0.047634 -0.004"/>
+    <origin rpy="0 0 -1.442050229164275" xyz="0.027496 -0.047634 -0.004"/>
     <parent link="left_femur_rear"/>
     <child link="left_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.522119" upper="1.189686" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="left_hip_rear" multiplier="-1.266389" offset="0"/>
   </joint>
+
   <joint name="left_knee_front" type="revolute">
-    <origin rpy="0 0 0" xyz="0.038696 0.039085 -0.004"/>
+    <origin rpy="0 0 1.337538022687104" xyz="0.038696 0.039085 -0.004"/>
     <parent link="left_femur_front"/>
     <child link="left_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.199474" upper="1.756498" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="left_hip_rear" multiplier="-1.266407" offset="0"/>
   </joint>
   <!-- foot frame at the loop-closure pivot, carried by the front shank -->
   <link name="left_foot"/>
@@ -331,40 +334,41 @@
     </collision>
   </link>
   <joint name="right_hip_rear" type="revolute">
-    <origin rpy="0 0 0" xyz="0.065 -0.005 0.004"/>
+    <origin rpy="0 0 1.0471127746125484" xyz="0.065 -0.005 0.004"/>
     <parent link="base_link"/>
     <child link="right_femur_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
   </joint>
   <joint name="right_hip_front" type="revolute">
-    <origin rpy="0 0 0" xyz="0.065 0.055 0.004"/>
+    <origin rpy="0 0 -0.7811169383490308" xyz="0.065 0.055 0.004"/>
     <parent link="base_link"/>
     <child link="right_femur_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+    <limit effort="100" lower="-0.523599" upper="0.523599" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="right_hip_rear" multiplier="1.0" offset="0"/>
   </joint>
-  <!-- NOTE: this origin is the one the Fusion exporter got wrong. It wrote
-       (0.111574, 0.019366, 0.004), which is 113 mm from the hip - a point in
-       empty space, well off the end of a 55 mm femur. The correct distal
-       pivot is the one below. -->
+
   <joint name="right_knee_rear" type="revolute">
-    <origin rpy="0 0 0" xyz="0.027504 -0.047629 0.004"/>
+    <origin rpy="0 0 -1.4371325724496562" xyz="0.027504 -0.047629 0.004"/>
     <parent link="right_femur_rear"/>
     <child link="right_shank_rear"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.522119" upper="1.189686" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="right_hip_rear" multiplier="-1.266421" offset="0"/>
   </joint>
+
   <joint name="right_knee_front" type="revolute">
-    <origin rpy="0 0 0" xyz="0.039057 0.038724 0.004"/>
+    <origin rpy="0 0 1.3287030430581956" xyz="0.039057 0.038724 0.004"/>
     <parent link="right_femur_front"/>
     <child link="right_shank_front"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" lower="-1.199474" upper="1.756498" velocity="100"/>
+    <limit effort="100" lower="-1.047198" upper="1.396263" velocity="100"/>
     <dynamics damping="0.05"/>
+    <mimic joint="right_hip_rear" multiplier="-1.266374" offset="0"/>
   </joint>
   <link name="right_foot"/>
   <joint name="right_foot_frame" type="fixed">

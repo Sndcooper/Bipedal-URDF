@@ -1,0 +1,529 @@
+<meta charset="utf-8">
+<title>5-bar closure viewer</title>
+<style>
+  :root {
+    --paper: #eef1ee;
+    --panel: #ffffff;
+    --ink: #16221f;
+    --ink-dim: #4c5852;
+    --line: #c9d0cb;
+    --actuated: #b5541f;
+    --actuated-dim: #e0a97e;
+    --passive: #2c6e8f;
+    --passive-dim: #a9c9d8;
+    --closed: #2f7d5a;
+    --closed-bg: #e2f0e8;
+    --open: #b23a2c;
+    --open-bg: #f5e3df;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+    --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #101513;
+      --panel: #171d1a;
+      --ink: #e7ece9;
+      --ink-dim: #9aa7a1;
+      --line: #2b3430;
+      --actuated: #e0895a;
+      --actuated-dim: #6b4530;
+      --passive: #6fb3d6;
+      --passive-dim: #2c4b5c;
+      --closed: #6bc99a;
+      --closed-bg: #163325;
+      --open: #e08575;
+      --open-bg: #3a201c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101513; --panel: #171d1a; --ink: #e7ece9; --ink-dim: #9aa7a1; --line: #2b3430;
+    --actuated: #e0895a; --actuated-dim: #6b4530; --passive: #6fb3d6; --passive-dim: #2c4b5c;
+    --closed: #6bc99a; --closed-bg: #163325; --open: #e08575; --open-bg: #3a201c;
+  }
+  :root[data-theme="light"] {
+    --paper: #eef1ee; --panel: #ffffff; --ink: #16221f; --ink-dim: #4c5852; --line: #c9d0cb;
+    --actuated: #b5541f; --actuated-dim: #e0a97e; --passive: #2c6e8f; --passive-dim: #a9c9d8;
+    --closed: #2f7d5a; --closed-bg: #e2f0e8; --open: #b23a2c; --open-bg: #f5e3df;
+  }
+
+  * { box-sizing: border-box; }
+  body, .root { background: var(--paper); color: var(--ink); }
+  .root {
+    font-family: var(--sans);
+    padding: 28px clamp(16px, 4vw, 40px) 40px;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  header { display: flex; flex-direction: column; gap: 6px; }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  header p {
+    margin: 0;
+    max-width: 65ch;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    font-size: 0.95rem;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .mode-toggle {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .mode-toggle button {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: var(--ink-dim);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 9px 6px;
+    cursor: pointer;
+  }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  .mode-toggle button:focus-visible { outline: 2px solid var(--passive); outline-offset: -2px; }
+
+  .group-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 18px 0 10px;
+  }
+  .group-label:first-child { margin-top: 0; }
+
+  .slider-row { margin-bottom: 14px; }
+  .slider-row label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 5px;
+  }
+  .slider-row .name { color: var(--ink); }
+  .slider-row .val { font-family: var(--mono); color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+  .slider-row.actuated .val { color: var(--actuated); }
+  .slider-row.passive .val { color: var(--passive); }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--ink-dim);
+  }
+  .slider-row.actuated input[type="range"] { accent-color: var(--actuated); }
+  .slider-row.passive input[type="range"] { accent-color: var(--passive); }
+  input[type="range"]:focus-visible { outline: 2px solid var(--passive); outline-offset: 2px; }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .canvas-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  canvas { display: block; width: 100%; height: auto; }
+
+  .status {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat .k {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .stat .v {
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+  .pill.closed { background: var(--closed-bg); color: var(--closed); }
+  .pill.open { background: var(--open-bg); color: var(--open); }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .note {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--ink-dim);
+    max-width: 72ch;
+  }
+  .note strong { color: var(--ink); font-weight: 600; }
+  .note code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.78rem; color: var(--ink-dim); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+</style>
+
+<div class="root">
+  <header>
+    <h1>5-bar leg closure — live solver</h1>
+    <p>
+      Each leg is a closed 5-bar linkage: two independently actuated hips, and two knees
+      whose position is <em>mathematically determined</em> by the hip angles, not free.
+      Drag the hip sliders below and the knees update to keep the two shanks joined at the
+      foot — this is the exact same solver that runs in <code>five_bar_state_publisher.py</code>.
+    </p>
+  </header>
+
+  <div class="layout">
+    <div class="panel">
+      <div class="mode-toggle">
+        <button id="btn-solved" class="active" type="button">Solved (closed)</button>
+        <button id="btn-manual" type="button">Manual (open)</button>
+      </div>
+
+      <div class="group-label">Hip — actuated, &plusmn;30&deg;</div>
+      <div class="slider-row actuated">
+        <label><span class="name">hip_rear</span><span class="val" id="v-hr">0.0&deg;</span></label>
+        <input type="range" id="s-hr" min="-30" max="30" step="0.5" value="0">
+      </div>
+      <div class="slider-row actuated">
+        <label><span class="name">hip_front</span><span class="val" id="v-hf">0.0&deg;</span></label>
+        <input type="range" id="s-hf" min="-30" max="30" step="0.5" value="0">
+      </div>
+
+      <div id="manual-controls" style="display:none;">
+        <div class="group-label">Knee — passive, dragged by hand</div>
+        <div class="slider-row passive">
+          <label><span class="name">knee_rear</span><span class="val" id="v-kr">0.0&deg;</span></label>
+          <input type="range" id="s-kr" min="-60" max="80" step="0.5" value="0">
+        </div>
+        <div class="slider-row passive">
+          <label><span class="name">knee_front</span><span class="val" id="v-kf">0.0&deg;</span></label>
+          <input type="range" id="s-kf" min="-60" max="80" step="0.5" value="0">
+        </div>
+      </div>
+
+      <p class="note" id="mode-note" style="margin-top: 4px;">
+        The knees are computed by the loop-closure equation, so the shanks
+        always meet at the foot — this is what runs in RViz.
+      </p>
+    </div>
+
+    <div class="stage">
+      <div class="canvas-wrap">
+        <canvas id="cv" width="900" height="560"></canvas>
+      </div>
+
+      <div class="status">
+        <div class="stat">
+          <span class="k">Foot-pivot gap</span>
+          <span class="v" id="gap-val">0.000 mm</span>
+        </div>
+        <div class="stat">
+          <span class="k">Loop state</span>
+          <span class="pill closed" id="loop-pill"><span class="dot"></span><span id="loop-text">closed</span></span>
+        </div>
+        <div class="stat">
+          <span class="k">Foot depth (each leg)</span>
+          <span class="v" id="depth-val">— mm</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--actuated)"></span>femur (actuated hip)</span>
+        <span><span class="swatch" style="background:var(--passive)"></span>shank (passive knee)</span>
+        <span><span class="swatch" style="background:var(--ink-dim)"></span>pelvis</span>
+      </div>
+
+      <p class="note">
+        <strong>Why the static URDF file alone can't do this:</strong> the knee's true
+        angle is a nonlinear function of <em>both</em> hip angles — a bolt-hole ring
+        closing an arc, not a straight line. URDF's only joint-coupling mechanism,
+        <code>&lt;mimic&gt;</code>, is strictly linear (<code>position = multiplier &times;
+        other + offset</code>), and fitting the best possible line through this
+        relationship misses by <strong>up to 370&nbsp;mm</strong> at &plusmn;60&ndash;80&deg; —
+        try Manual mode above to see the same effect happen live. A viewer that drags one
+        joint at a time can never enforce this constraint; only a program that reads both
+        hip values and re-solves the closure can, which is what this page and
+        <code>five_bar_state_publisher.py</code> both do.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- mechanism constants (must match assembly.xacro / five_bar_state_publisher.py) ----
+  var FEMUR = 55, SHANK = 107.5;              // mm
+  var HIP_REAR = [65, -5], HIP_FRONT = [65, 55];
+  var ZERO_SPLAY = 0;                          // rad; matches zero_splay in the xacro
+  var HIP_SPACING = HIP_FRONT[1] - HIP_REAR[1];
+
+  var gap0 = HIP_SPACING + 2 * FEMUR * Math.sin(ZERO_SPLAY);
+  var reach0 = Math.sqrt(SHANK * SHANK - (gap0 / 2) * (gap0 / 2));
+  var PHI_REAR_0 = Math.atan2(HIP_SPACING / 2 + FEMUR * Math.sin(ZERO_SPLAY), reach0);
+  var PHI_FRONT_0 = -PHI_REAR_0;
+  var THETA_REAR_0 = -ZERO_SPLAY;
+  var THETA_FRONT_0 = ZERO_SPLAY;
+
+  function d2r(d) { return d * Math.PI / 180; }
+  function r2d(r) { return r * 180 / Math.PI; }
+  function wrap(a) { return Math.atan2(Math.sin(a), Math.cos(a)); }
+  function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
+
+  // Exact closed-form 5-bar solve: hip angles -> {knee_rear, knee_front, foot, kr, kf}
+  function solve(qHipRear, qHipFront) {
+    var thetaRear = THETA_REAR_0 + qHipRear;
+    var thetaFront = THETA_FRONT_0 + qHipFront;
+    var kr = [HIP_REAR[0] + FEMUR * Math.cos(thetaRear), HIP_REAR[1] + FEMUR * Math.sin(thetaRear)];
+    var kf = [HIP_FRONT[0] + FEMUR * Math.cos(thetaFront), HIP_FRONT[1] + FEMUR * Math.sin(thetaFront)];
+    var dx = kf[0] - kr[0], dy = kf[1] - kr[1];
+    var d = Math.hypot(dx, dy);
+    if (d < 1e-9 || d > 2 * SHANK) return null;
+    var h2 = SHANK * SHANK - (d / 2) * (d / 2);
+    if (h2 < 0) return null;
+    var h = Math.sqrt(h2);
+    var mx = (kr[0] + kf[0]) / 2, my = (kr[1] + kf[1]) / 2;
+    var ux = dx / d, uy = dy / d;
+    var foot = [mx + h * uy, my - h * ux];
+    var phiRear = Math.atan2(foot[1] - kr[1], foot[0] - kr[0]);
+    var phiFront = Math.atan2(foot[1] - kf[1], foot[0] - kf[0]);
+    var kneeRear = wrap((phiRear - PHI_REAR_0) - qHipRear);
+    var kneeFront = wrap((phiFront - PHI_FRONT_0) - qHipFront);
+    return { kneeRear: kneeRear, kneeFront: kneeFront, kr: kr, kf: kf, foot: foot };
+  }
+
+  // Forward kinematics for a leg given ALL FOUR joint values explicitly (used in
+  // manual mode, where the knees are not required to satisfy the closure).
+  function forward(qHipRear, qHipFront, qKneeRear, qKneeFront) {
+    var thetaRear = THETA_REAR_0 + qHipRear;
+    var thetaFront = THETA_FRONT_0 + qHipFront;
+    var kr = [HIP_REAR[0] + FEMUR * Math.cos(thetaRear), HIP_REAR[1] + FEMUR * Math.sin(thetaRear)];
+    var kf = [HIP_FRONT[0] + FEMUR * Math.cos(thetaFront), HIP_FRONT[1] + FEMUR * Math.sin(thetaFront)];
+    var phiRear = PHI_REAR_0 + qHipRear + qKneeRear;
+    var phiFront = PHI_FRONT_0 + qHipFront + qKneeFront;
+    var footRear = [kr[0] + SHANK * Math.cos(phiRear), kr[1] + SHANK * Math.sin(phiRear)];
+    var footFront = [kf[0] + SHANK * Math.cos(phiFront), kf[1] + SHANK * Math.sin(phiFront)];
+    return { kr: kr, kf: kf, footRear: footRear, footFront: footFront };
+  }
+
+  // ---- UI wiring ----
+  var mode = "solved";
+  var els = {
+    hr: document.getElementById("s-hr"), hf: document.getElementById("s-hf"),
+    kr: document.getElementById("s-kr"), kf: document.getElementById("s-kf"),
+    vhr: document.getElementById("v-hr"), vhf: document.getElementById("v-hf"),
+    vkr: document.getElementById("v-kr"), vkf: document.getElementById("v-kf"),
+    manualBox: document.getElementById("manual-controls"),
+    btnSolved: document.getElementById("btn-solved"), btnManual: document.getElementById("btn-manual"),
+    note: document.getElementById("mode-note"),
+    gapVal: document.getElementById("gap-val"), depthVal: document.getElementById("depth-val"),
+    pill: document.getElementById("loop-pill"), pillText: document.getElementById("loop-text"),
+    cv: document.getElementById("cv")
+  };
+  var ctx = els.cv.getContext("2d");
+
+  function css(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function setMode(next) {
+    mode = next;
+    els.btnSolved.classList.toggle("active", mode === "solved");
+    els.btnManual.classList.toggle("active", mode === "manual");
+    els.manualBox.style.display = mode === "manual" ? "" : "none";
+    els.note.textContent = mode === "solved"
+      ? "The knees are computed by the loop-closure equation, so the shanks always meet at the foot — this is what runs in RViz."
+      : "Every joint is independent here, exactly like dragging sliders in a static URDF viewer. Move a hip and watch the shank tips separate.";
+    render();
+  }
+  els.btnSolved.addEventListener("click", function () { setMode("solved"); });
+  els.btnManual.addEventListener("click", function () { setMode("manual"); });
+
+  [els.hr, els.hf, els.kr, els.kf].forEach(function (el) {
+    el.addEventListener("input", render);
+  });
+
+  function drawLeg(originX, mirrored, qHipRear, qHipFront, qKneeRear, qKneeFront) {
+    // originX: canvas x of the hip-midline vertical; mirrored: draw front-behind-rear swapped
+    var scale = 2.6;
+    var pelvisY = 60;
+
+    function P(p) {
+      // CAD (x=down, y=lateral) -> canvas (down, right), centred on originX
+      var lateral = mirrored ? -p[1] : p[1];
+      return [originX + lateral * scale, pelvisY + p[0] * scale];
+    }
+
+    var hipMidY = (HIP_REAR[1] + HIP_FRONT[1]) / 2;
+    var pHipRear = [HIP_REAR[0], HIP_REAR[1] - hipMidY];
+    var pHipFront = [HIP_FRONT[0], HIP_FRONT[1] - hipMidY];
+
+    var solvedRes = solve(qHipRear, qHipFront);
+    var kr, kf, footRear, footFront;
+
+    if (mode === "solved" && solvedRes) {
+      kr = [pHipRear[0] + FEMUR * Math.cos(THETA_REAR_0 + qHipRear), solvedRes.kr[1] - hipMidY];
+      kf = [pHipFront[0] + FEMUR * Math.cos(THETA_FRONT_0 + qHipFront), solvedRes.kf[1] - hipMidY];
+      var foot = [solvedRes.foot[0], solvedRes.foot[1] - hipMidY];
+      footRear = foot; footFront = foot;
+    } else {
+      var fwd = forward(qHipRear, qHipFront, qKneeRear, qKneeFront);
+      kr = [fwd.kr[0], fwd.kr[1] - hipMidY];
+      kf = [fwd.kf[0], fwd.kf[1] - hipMidY];
+      footRear = [fwd.footRear[0], fwd.footRear[1] - hipMidY];
+      footFront = [fwd.footFront[0], fwd.footFront[1] - hipMidY];
+    }
+
+    // pelvis stub
+    ctx.strokeStyle = css("--ink-dim");
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    var a = P([0, pHipRear[1]]), b = P([0, pHipFront[1]]);
+    ctx.moveTo(a[0], a[1] - 34); ctx.lineTo(a[0], a[1]);
+    ctx.moveTo(b[0], b[1] - 34); ctx.lineTo(b[0], b[1]);
+    ctx.moveTo(a[0], a[1] - 34); ctx.lineTo(b[0], b[1] - 34);
+    ctx.stroke();
+
+    // femurs
+    ctx.strokeStyle = css("--actuated");
+    ctx.lineWidth = 9;
+    ctx.beginPath();
+    var hr = P(pHipRear), krP = P(kr);
+    ctx.moveTo(hr[0], hr[1]); ctx.lineTo(krP[0], krP[1]);
+    var hf = P(pHipFront), kfP = P(kf);
+    ctx.moveTo(hf[0], hf[1]); ctx.lineTo(kfP[0], kfP[1]);
+    ctx.stroke();
+
+    // shanks
+    ctx.strokeStyle = css("--passive");
+    ctx.lineWidth = 7;
+    ctx.beginPath();
+    var frP = P(footRear);
+    ctx.moveTo(krP[0], krP[1]); ctx.lineTo(frP[0], frP[1]);
+    var ffP = P(footFront);
+    ctx.moveTo(kfP[0], kfP[1]); ctx.lineTo(ffP[0], ffP[1]);
+    ctx.stroke();
+
+    // pivot dots
+    function dot(pt, r, fill) {
+      ctx.beginPath();
+      ctx.arc(pt[0], pt[1], r, 0, Math.PI * 2);
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.strokeStyle = css("--panel");
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    dot(hr, 4, css("--actuated")); dot(hf, 4, css("--actuated"));
+    dot(krP, 4, css("--passive")); dot(kfP, 4, css("--passive"));
+
+    // foot markers: two independent markers so a gap is visible in manual mode
+    ctx.beginPath();
+    ctx.arc(frP[0], frP[1], 6, 0, Math.PI * 2);
+    ctx.strokeStyle = dist(footRear, footFront) > 1 ? css("--open") : css("--closed");
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+    dot(ffP, 3.5, dist(footRear, footFront) > 1 ? css("--open") : css("--closed"));
+
+    return { gap: dist(footRear, footFront), depth: (footRear[0] + footFront[0]) / 2 + hipMidY * 0 + 0 };
+  }
+
+  function render() {
+    var hr = parseFloat(els.hr.value), hf = parseFloat(els.hf.value);
+    var kr = parseFloat(els.kr.value), kf = parseFloat(els.kf.value);
+    els.vhr.textContent = hr.toFixed(1) + "°";
+    els.vhf.textContent = hf.toFixed(1) + "°";
+    els.vkr.textContent = kr.toFixed(1) + "°";
+    els.vkf.textContent = kf.toFixed(1) + "°";
+
+    var W = els.cv.width, H = els.cv.height;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = css("--panel");
+    ctx.fillRect(0, 0, W, H);
+
+    // ground line
+    ctx.strokeStyle = css("--line");
+    ctx.setLineDash([5, 5]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(20, H - 40); ctx.lineTo(W - 20, H - 40);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    var res1 = drawLeg(W * 0.34, false, d2r(hr), d2r(hf), d2r(kr), d2r(kf));
+    var res2 = drawLeg(W * 0.66, true, d2r(hr), d2r(hf), d2r(kr), d2r(kf));
+
+    var gapMm = Math.max(res1.gap, res2.gap);
+    els.gapVal.textContent = gapMm.toFixed(3) + " mm";
+    var closed = gapMm < 1.0;
+    els.pill.className = "pill " + (closed ? "closed" : "open");
+    els.pillText.textContent = closed ? "closed" : "open (" + gapMm.toFixed(0) + " mm gap)";
+
+    var s = solve(d2r(hr), d2r(hf));
+    els.depthVal.textContent = s ? s.foot[0].toFixed(1) + " mm" : "unreachable";
+  }
+
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  mq.addEventListener("change", render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  render();
+})();
+</script>

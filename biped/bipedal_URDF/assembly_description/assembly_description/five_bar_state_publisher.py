@@ -31,31 +31,22 @@ SHANK_LEN = 0.1075
 
 HIP_REAR = (0.065, -0.005)
 HIP_FRONT = (0.065, 0.055)
+HIP_SPACING = HIP_FRONT[1] - HIP_REAR[1]
 
-# Knee and foot pivots at the CAD zero pose, per leg. The two legs are related
-# by a 180 deg rotation about the CAD X axis rather than a mirror, so their
-# zero-pose angles differ slightly; both are kept exactly as built.
-LEGS = {
-    'left': {
-        'knee_rear': (0.092496, -0.052634),
-        'knee_front': (0.103696, 0.094085),
-        'foot': (0.176248, 0.014760),
-    },
-    'right': {
-        'knee_rear': (0.092504, -0.052629),
-        'knee_front': (0.104057, 0.093724),
-        'foot': (0.176574, 0.014366),
-    },
-}
+# Splay of each femur from straight-down at the zero pose. MUST match
+# zero_splay in assembly.xacro, which bakes the matching rotations into the
+# joint origins. 0.0 means both femurs hang vertically.
+ZERO_SPLAY = 0.0
+
+# Hip limit, matching hip_range in the URDF. Bounded by the two femurs of a
+# leg colliding, not by the closure: their knee pivots meet when
+# 2*FEMUR_LEN*sin(range) reaches HIP_SPACING + 2*FEMUR_LEN*sin(ZERO_SPLAY).
+HIP_LIMIT = 0.523599  # 30 deg
 
 HIP_JOINTS = ['left_hip_rear', 'left_hip_front', 'right_hip_rear', 'right_hip_front']
 KNEE_JOINTS = ['left_knee_rear', 'left_knee_front', 'right_knee_rear', 'right_knee_front']
 
-HIP_LIMIT = 1.047198  # +-60 deg; matches the URDF
-
-
-def _angle(a, b):
-    return math.atan2(b[1] - a[1], b[0] - a[0])
+LEGS = {'left': {}, 'right': {}}
 
 
 def _wrap(a):
@@ -63,13 +54,23 @@ def _wrap(a):
 
 
 class LegModel:
-    """Closed-form kinematics for one 5-bar leg."""
+    """Closed-form kinematics for one 5-bar leg.
 
-    def __init__(self, geom):
-        self.theta_rear_0 = _angle(HIP_REAR, geom['knee_rear'])
-        self.theta_front_0 = _angle(HIP_FRONT, geom['knee_front'])
-        self.phi_rear_0 = _angle(geom['knee_rear'], geom['foot'])
-        self.phi_front_0 = _angle(geom['knee_front'], geom['foot'])
+    Both legs share this model. The URDF re-zeros every leg joint onto the
+    symmetric splay pose, so in joint space the legs are identical even though
+    their raw CAD poses differ by about half a degree.
+    """
+
+    def __init__(self, geom=None):
+        # femur angles at q = 0, measured from CAD +X (straight down)
+        self.theta_rear_0 = -ZERO_SPLAY
+        self.theta_front_0 = ZERO_SPLAY
+        # the closure at that pose is symmetric about the hip midline
+        gap = HIP_SPACING + 2.0 * FEMUR_LEN * math.sin(ZERO_SPLAY)
+        reach = math.sqrt(SHANK_LEN ** 2 - (0.5 * gap) ** 2)
+        self.phi_rear_0 = math.atan2(0.5 * HIP_SPACING + FEMUR_LEN * math.sin(ZERO_SPLAY),
+                                     reach)
+        self.phi_front_0 = -self.phi_rear_0
 
     def solve(self, q_hip_rear, q_hip_front):
         """Hip joint angles -> (knee_rear, knee_front) joint angles.
@@ -100,21 +101,24 @@ class LegModel:
         mx, my = 0.5 * (kr[0] + kf[0]), 0.5 * (kr[1] + kf[1])
         ux, uy = dx / d, dy / d
 
-        # Two mirror solutions about the knee-to-knee line. The leg always
-        # reaches away from the pelvis, i.e. towards +X in the CAD frame; the
-        # other branch folds the shanks back up into the body. The branches
-        # only meet at the stretched singularity, which this mechanism stays
-        # 45 mm clear of, so this choice never flips mid-motion.
-        cand_a = (mx + h * uy, my - h * ux)
-        cand_b = (mx - h * uy, my + h * ux)
-        foot = cand_a if cand_a[0] >= cand_b[0] else cand_b
+        # Two mirror solutions about the knee-to-knee line. Pick the one on a
+        # FIXED side of that line - the assembly mode the robot is built in.
+        #
+        # Do not be tempted to pick "whichever foot is further along +X"
+        # instead: the two candidates differ by 2*h*uy in X, so that rule
+        # silently swaps branches the moment the knees cross over in Y, which
+        # is reachable once the zero pose is unsplayed. Choosing by the normal
+        # is continuous everywhere except the stretched singularity, which the
+        # mechanism cannot reach.
+        foot = (mx + h * uy, my - h * ux)
 
         phi_rear = math.atan2(foot[1] - kr[1], foot[0] - kr[0])
         phi_front = math.atan2(foot[1] - kf[1], foot[0] - kf[0])
 
-        # Every joint in the chain turns about +Z with no fixed rotation
-        # between frames, so a link's absolute angle is just the sum of the
-        # joint angles above it. Hence knee = (shank swing) - (hip swing).
+        # Every joint in the chain turns about +Z, and the fixed rotations the
+        # URDF bakes into the origins are already accounted for by measuring
+        # phi/theta from the zero pose. So a link's absolute angle is the sum
+        # of the joint angles above it: knee = (shank swing) - (hip swing).
         return (_wrap((phi_rear - self.phi_rear_0) - q_hip_rear),
                 _wrap((phi_front - self.phi_front_0) - q_hip_front))
 
@@ -140,7 +144,7 @@ class FiveBarStatePublisher(Node):
             hips = [0.0] * 4
         self.hips = dict(zip(HIP_JOINTS, hips))
 
-        self.legs = {side: LegModel(geom) for side, geom in LEGS.items()}
+        self.legs = {side: LegModel() for side in LEGS}
         self.last_knees = {side: (0.0, 0.0) for side in LEGS}
 
         self.pub = self.create_publisher(JointState, 'joint_states', 10)
@@ -167,18 +171,23 @@ class FiveBarStatePublisher(Node):
                 self.hips[name] = pos
 
     def _demo_hips(self, t):
-        amp = float(self.get_parameter('demo_amplitude').value)
+        amp = min(float(self.get_parameter('demo_amplitude').value), HIP_LIMIT)
         period = max(0.1, float(self.get_parameter('demo_period').value))
         w = 2.0 * math.pi * t / period
-        # Counter-rotating hips squat and extend the leg; the legs run half a
-        # cycle apart so the result reads as a slow step.
-        squat = amp * math.sin(w)
-        squat_other = amp * math.sin(w + math.pi)
+
+        # Spreading the femurs retracts the leg, closing them extends it. The
+        # sweep is deliberately ONE-SIDED (0 .. +amp of spread) rather than
+        # symmetric about zero: with zero_splay = 0 the default pose is already
+        # within 4 mm of full extension, so there is nothing to gain by driving
+        # the femurs together - it only walks them towards each other, and they
+        # are coplanar. So we only ever crouch from the default.
+        crouch = amp * 0.5 * (1.0 - math.cos(w))
+        crouch_other = amp * 0.5 * (1.0 - math.cos(w + math.pi))
         return {
-            'left_hip_rear': -squat,
-            'left_hip_front': squat,
-            'right_hip_rear': -squat_other,
-            'right_hip_front': squat_other,
+            'left_hip_rear': -crouch,
+            'left_hip_front': crouch,
+            'right_hip_rear': -crouch_other,
+            'right_hip_front': crouch_other,
         }
 
     def _tick(self):
