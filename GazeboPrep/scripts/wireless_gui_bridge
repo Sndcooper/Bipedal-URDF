@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+from gazebo_prep.wireless_gui_bridge import main
+
+if __name__ == "__main__":
+    main()

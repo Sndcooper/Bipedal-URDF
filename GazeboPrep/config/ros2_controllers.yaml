@@ -1,0 +1,101 @@
+# =============================================================================
+# ros2_controllers.yaml  -  controller_manager configuration
+#
+# Loaded by the gz_ros2_control plugin via the <parameters> tag in
+# assembly_gazebo.xacro. Do not also pass this file to a standalone
+# controller_manager node; in simulation, Gazebo owns the controller manager.
+# =============================================================================
+
+controller_manager:
+  ros__parameters:
+    # One controller update per physics step. The world uses a 1 ms step
+    # (worlds/balance_arena.sdf), so 1000 Hz keeps them locked together. If the
+    # world step changes, change this to match - a mismatch shows up as jitter
+    # in the control signal that is easy to mistake for a tuning problem.
+    update_rate: 1000
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    hip_position_controller:
+      type: position_controllers/JointGroupPositionController
+
+    wheel_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
+    # Loaded inactive. Swap in for isolated wheel tests with:
+    #   ros2 control switch_controllers \
+    #     --deactivate wheel_effort_controller \
+    #     --activate wheel_velocity_controller
+    wheel_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+
+# -----------------------------------------------------------------------------
+# Joint state broadcasting
+#
+# Publishes all ten joints, including the six mimic joints, so RViz and the
+# balance node see the full linkage state.
+# -----------------------------------------------------------------------------
+joint_state_broadcaster:
+  ros__parameters:
+    use_local_topic_based_interface: false
+    joints:
+      - left_hip_rear
+      - left_hip_front
+      - left_knee_rear
+      - left_knee_front
+      - left_wheel_joint
+      - right_hip_rear
+      - right_hip_front
+      - right_knee_rear
+      - right_knee_front
+      - right_wheel_joint
+    interfaces:
+      - position
+      - velocity
+
+
+# -----------------------------------------------------------------------------
+# Leg posture
+#
+# Only the two driver joints are commanded; the front hips and all four knees
+# follow through the URDF <mimic> tags. Commanding them here would be rejected.
+#
+# standing_mode publishes to /hip_position_controller/commands as a 2-element
+# Float64MultiArray in THIS ORDER.
+# -----------------------------------------------------------------------------
+hip_position_controller:
+  ros__parameters:
+    joints:
+      - left_hip_rear
+      - right_hip_rear
+
+
+# -----------------------------------------------------------------------------
+# Wheels - effort control
+#
+# ORDER IS LOAD-BEARING. balance_point publishes a 2-element Float64MultiArray
+# positionally as [left, right]. Reordering this list silently swaps the wheels
+# and the robot will steer the wrong way while still appearing to balance.
+#
+# Torque is clamped to the JGA12V stall figure of 0.15 N.m inside balance_point,
+# which also applies a back-EMF droop so torque falls off with speed.
+# -----------------------------------------------------------------------------
+wheel_effort_controller:
+  ros__parameters:
+    joints:
+      - left_wheel_joint
+      - right_wheel_joint
+
+
+# -----------------------------------------------------------------------------
+# Wheels - velocity control (inactive; for isolated testing)
+#
+# Same ordering contract as above.
+# -----------------------------------------------------------------------------
+wheel_velocity_controller:
+  ros__parameters:
+    joints:
+      - left_wheel_joint
+      - right_wheel_joint
