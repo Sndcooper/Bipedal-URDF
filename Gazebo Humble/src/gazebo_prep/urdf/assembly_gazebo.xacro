@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!--
+  ============================================================================
+  assembly_gazebo.xacro  -  Gazebo Harmonic plugin, sensors and surfaces
+  ============================================================================
+
+  Everything in this file is Gazebo-specific: the ros2_control system plugin,
+  the IMU sensor, per-link contact properties, and the optional 5-bar loop
+  closure joints.
+
+  ===========================================================================
+  WHY THE LOOP CLOSURE JOINTS ARE OFF BY DEFAULT
+  ===========================================================================
+  Each leg is a 5-bar with one kinematic loop, so URDF (a tree) must leave one
+  joint out - here the foot pivot. There are two ways to make the leg behave
+  as a closed linkage in physics:
+
+    (a) MIMIC JOINTS  (what this model uses, default)
+        gz_ros2_control slaves the front hip and both knees to the driver
+        joint kinematically. The leg moves as one coordinated unit.
+
+    (b) A REAL SDF REVOLUTE JOINT at the foot pivot (use_closure_joints:=true)
+        Physics enforces the closure through constraint forces.
+
+  Running BOTH is actively harmful. The knee ratio -1.477400 is a MINIMAX
+  LINEAR FIT to a closure that is genuinely nonlinear: the true ratio runs
+  from -1.5400 at -20 deg to -1.4416 at -80 deg. The fit is exact at the zero
+  pose but off by up to 6.48 mm of foot gap at the -80 deg extreme. So the
+  mimic constraint and the closure joint would demand slightly DIFFERENT poses
+  everywhere except zero, and the solver would fight itself - jitter at best,
+  spawn explosion at worst.
+
+  Option (a) is the right default: it is stable, it is what the position
+  controller expects, and the residual geometric error is under 1.5 mm across
+  the working range |t| < 50 deg.
+
+  Enable (b) only for experiments with passive knees, and if you do, remove
+  the <mimic> tags from the URDF first.
+  ============================================================================
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="assembly_gazebo"
+               params="controllers_file use_closure_joints:=false">
+
+    <!-- =================================================================== -->
+    <!-- ros2_control system plugin                                          -->
+    <!--                                                                     -->
+    <!-- A <gazebo> element with no "reference" attribute has its children   -->
+    <!-- copied verbatim into the SDF <model>. xacro resolves $(find ...) to -->
+    <!-- an absolute path at generation time, so the YAML is located even    -->
+    <!-- though Gazebo knows nothing about the ROS package layout.           -->
+    <!-- =================================================================== -->
+
+    <gazebo>
+      <plugin filename="ign_ros2_control-system"
+              name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <parameters>${controllers_file}</parameters>
+        <ros>
+          <namespace>/</namespace>
+        </ros>
+      </plugin>
+    </gazebo>
+
+    <!-- =================================================================== -->
+    <!-- IMU  (analogue of the pelvis-mounted MPU6050)                       -->
+    <!--                                                                     -->
+    <!-- Publishes on the Gazebo topic "imu"; the parameter_bridge in        -->
+    <!-- simulation.launch.py maps it to the ROS topic /imu.                 -->
+    <!--                                                                     -->
+    <!-- Noise figures approximate an MPU6050 at the +-250 dps / +-2 g       -->
+    <!-- settings the firmware uses. They are deliberately non-zero: a       -->
+    <!-- noiseless IMU makes derivative gains look far better behaved in sim -->
+    <!-- than they are on hardware, which is exactly the kind of false       -->
+    <!-- result this simulation exists to avoid.                             -->
+    <!--                                                                     -->
+    <!-- The world MUST load gz-sim-imu-system or this sensor never          -->
+    <!-- publishes. See worlds/balance_arena.sdf.                            -->
+    <!-- =================================================================== -->
+
+    <gazebo reference="imu_link">
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <visualize>false</visualize>
+        <topic>imu</topic>
+        <ignition_frame_id>imu_link</ignition_frame_id>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.009</stddev>
+                <bias_mean>0.00075</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.009</stddev>
+                <bias_mean>0.00075</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.009</stddev>
+                <bias_mean>0.00075</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.021</stddev>
+                <bias_mean>0.05</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.021</stddev>
+                <bias_mean>0.05</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.021</stddev>
+                <bias_mean>0.05</bias_mean>
+                <bias_stddev>0.005</bias_stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo>
+
+    <!-- =================================================================== -->
+    <!-- Contact surfaces                                                    -->
+    <!--                                                                     -->
+    <!-- Friction values carried over from the original assembly.gazebo:     -->
+    <!--   shanks  mu 1.0, self_collide FALSE - the two bars of a leg        -->
+    <!--           physically overlap at the foot pivot, so self-collision   -->
+    <!--           would push them apart                                     -->
+    <!--   femurs  mu 0.2, self_collide true                                 -->
+    <!--   base    mu 0.2 - low friction lets the pelvis settle rather than  -->
+    <!--           catch while the robot is lying down                       -->
+    <!--   wheels  mu 1.5 - new; needs real grip or the balance loop cannot  -->
+    <!--           put force into the ground                                 -->
+    <!-- =================================================================== -->
+
+    <gazebo reference="base_link">
+      <material>Gazebo/Silver</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+      <gravity>true</gravity>
+    </gazebo>
+
+    <xacro:macro name="femur_surface" params="link">
+      <gazebo reference="${link}">
+        <material>Gazebo/Orange</material>
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <self_collide>true</self_collide>
+      </gazebo>
+    </xacro:macro>
+
+    <xacro:femur_surface link="left_femur_rear"/>
+    <xacro:femur_surface link="left_femur_front"/>
+    <xacro:femur_surface link="right_femur_rear"/>
+    <xacro:femur_surface link="right_femur_front"/>
+
+    <xacro:macro name="shank_surface" params="link">
+      <gazebo reference="${link}">
+        <material>Gazebo/DarkGrey</material>
+        <mu1>1.0</mu1>
+        <mu2>1.0</mu2>
+        <self_collide>false</self_collide>
+      </gazebo>
+    </xacro:macro>
+
+    <xacro:shank_surface link="left_shank_rear"/>
+    <xacro:shank_surface link="left_shank_front"/>
+    <xacro:shank_surface link="right_shank_rear"/>
+    <xacro:shank_surface link="right_shank_front"/>
+
+    <!-- Wheels: high friction, stiff contact. kp/kd keep the sphere from
+         sinking into the ground plane under the robot's weight, which would
+         otherwise show up as a slow phantom oscillation and be mistaken for
+         a control problem. -->
+    <xacro:macro name="wheel_surface" params="link">
+      <gazebo reference="${link}">
+        <material>Gazebo/Black</material>
+        <mu1>1.5</mu1>
+        <mu2>1.5</mu2>
+        <kp>1000000.0</kp>
+        <kd>100.0</kd>
+        <minDepth>0.0005</minDepth>
+        <maxVel>0.1</maxVel>
+        <self_collide>false</self_collide>
+      </gazebo>
+    </xacro:macro>
+
+    <xacro:wheel_surface link="left_wheel"/>
+    <xacro:wheel_surface link="right_wheel"/>
+
+    <!-- =================================================================== -->
+    <!-- OPTIONAL: 5-bar loop closure joints                                 -->
+    <!--                                                                     -->
+    <!-- SDF syntax, not URDF. Off by default - see the file header for why. -->
+    <!-- Anchored relative to the FRONT shank, whose foot-frame coordinates  -->
+    <!-- are the ones also used by <side>_foot_frame, so the two agree.      -->
+    <!-- =================================================================== -->
+
+    <xacro:if value="${use_closure_joints}">
+      <gazebo>
+        <joint name="left_foot_closure" type="revolute">
+          <parent>left_shank_rear</parent>
+          <child>left_shank_front</child>
+          <pose relative_to="left_shank_front">0.072552 -0.079325 0 0 0 0</pose>
+          <axis>
+            <xyz expressed_in="left_shank_front">0 0 1</xyz>
+            <limit>
+              <lower>-3.14159</lower>
+              <upper>3.14159</upper>
+            </limit>
+            <dynamics>
+              <damping>0.05</damping>
+            </dynamics>
+          </axis>
+        </joint>
+
+        <joint name="right_foot_closure" type="revolute">
+          <parent>right_shank_rear</parent>
+          <child>right_shank_front</child>
+          <pose relative_to="right_shank_front">0.072517 -0.079358 0 0 0 0</pose>
+          <axis>
+            <xyz expressed_in="right_shank_front">0 0 1</xyz>
+            <limit>
+              <lower>-3.14159</lower>
+              <upper>3.14159</upper>
+            </limit>
+            <dynamics>
+              <damping>0.05</damping>
+            </dynamics>
+          </axis>
+        </joint>
+      </gazebo>
+    </xacro:if>
+
+  </xacro:macro>
+
+</robot>

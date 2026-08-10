@@ -1,0 +1,117 @@
+[0.005s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep
+[0.033s] -- The C compiler identification is GNU 11.4.0
+[0.057s] -- The CXX compiler identification is GNU 11.4.0
+[0.060s] -- Detecting C compiler ABI info
+[0.093s] -- Detecting C compiler ABI info - done
+[0.096s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.096s] -- Detecting C compile features
+[0.096s] -- Detecting C compile features - done
+[0.098s] -- Detecting CXX compiler ABI info
+[0.133s] -- Detecting CXX compiler ABI info - done
+[0.137s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.138s] -- Detecting CXX compile features
+[0.138s] -- Detecting CXX compile features - done
+[0.139s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.208s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.236s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.245s] -- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)
+[0.260s] -- Found rosidl_generator_c: 3.1.9 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.262s] -- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.265s] -- Found rosidl_generator_cpp: 3.1.9 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.269s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.275s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.290s] -- Found rmw_implementation_cmake: 6.1.3 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.291s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.334s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.346s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.369s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.372s] -- Looking for pthread.h
+[0.409s] -- Looking for pthread.h - found
+[0.409s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.440s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.441s] -- Found Threads: TRUE  
+[0.462s] -- Found sensor_msgs: 4.9.2 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.473s] -- Found std_srvs: 4.9.2 (/opt/ros/humble/share/std_srvs/cmake)
+[0.514s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.550s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.550s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep/include>
+[0.550s] -- Configured cppcheck exclude dirs and/or files: 
+[0.550s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.550s] -- Added test 'lint_cmake' to check CMake code style
+[0.550s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.551s] -- Added test 'uncrustify' to check C / C++ code style
+[0.551s] -- Configured uncrustify additional arguments: 
+[0.551s] -- Added test 'xmllint' to check XML markup files
+[0.551s] -- Configuring done
+[0.556s] -- Generating done
+[0.558s] -- Build files have been written to: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep
+[0.564s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep
+[0.565s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+[0.591s] [ 50%] [32mBuilding CXX object CMakeFiles/balance_point.dir/src/balance_point.cpp.o[0m
+[0.594s] [ 50%] Built target ament_cmake_python_symlink_gazebo_prep
+[0.682s] running egg_info
+[0.683s] creating gazebo_prep.egg-info
+[0.683s] writing gazebo_prep.egg-info/PKG-INFO
+[0.683s] writing dependency_links to gazebo_prep.egg-info/dependency_links.txt
+[0.683s] writing top-level names to gazebo_prep.egg-info/top_level.txt
+[0.683s] writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[0.684s] reading manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[0.684s] writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[0.700s] [ 50%] Built target ament_cmake_python_build_gazebo_prep_egg
+[7.633s] [100%] [32m[1mLinking CXX executable balance_point[0m
+[7.960s] [100%] Built target balance_point
+[7.967s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+[7.972s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep
+[7.977s] -- Install configuration: ""
+[7.977s] -- Execute custom install script
+[7.977s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/balance_point
+[7.981s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.sh
+[7.985s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.dsv
+[7.989s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/PKG-INFO
+[7.992s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/SOURCES.txt
+[7.996s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/dependency_links.txt
+[7.999s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/top_level.txt
+[8.002s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py
+[8.005s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py
+[8.008s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py
+[8.012s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py
+[8.015s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/standing_mode
+[8.019s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/rc_teleop
+[8.022s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/wireless_gui_bridge
+[8.025s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly.urdf.xacro
+[8.029s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_gazebo.xacro
+[8.032s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_ros2_control.xacro
+[8.036s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_front.stl
+[8.039s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_rear.stl
+[8.043s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_front.stl
+[8.046s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_rear.stl
+[8.049s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/pelvis.stl
+[8.052s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_front.stl
+[8.055s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_rear.stl
+[8.058s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_front.stl
+[8.061s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_rear.stl
+[8.065s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/balance_params.yaml
+[8.068s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/ros2_controllers.yaml
+[8.071s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/worlds/balance_arena.sdf
+[8.075s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/launch/simulation.launch.py
+[8.078s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/package_run_dependencies/gazebo_prep
+[8.081s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/parent_prefix_path/gazebo_prep
+[8.085s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.sh
+[8.087s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.dsv
+[8.091s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.sh
+[8.096s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.dsv
+[8.100s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.bash
+[8.103s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.sh
+[8.107s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.zsh
+[8.110s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.dsv
+[8.113s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.dsv
+[8.116s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/packages/gazebo_prep
+[8.120s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig.cmake
+[8.123s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig-version.cmake
+[8.126s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.xml
+[8.147s] Listing '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep'...
+[8.147s] Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py'...
+[8.147s] Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py'...
+[8.147s] Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py'...
+[8.147s] Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py'...
+[8.152s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep

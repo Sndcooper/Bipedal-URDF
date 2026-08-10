@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!--
+  ============================================================================
+  assembly_ros2_control.xacro  -  hardware interface declaration
+  ============================================================================
+
+  Declares which joints gz_ros2_control manages and what interfaces each one
+  exposes. Three rules govern this file:
+
+  1. MIMIC JOINTS MUST BE LISTED, WITH STATE INTERFACES ONLY.
+     If a mimic joint is omitted, gz_ros2_control never registers it and the
+     linkage does not move. If a mimic joint is given a COMMAND interface,
+     ros2_control rejects the hardware component at load time.
+
+  2. THE <mimic> TAG LIVES IN THE URDF JOINT, NOT HERE.
+     Jazzy parses <mimic> straight off the URDF <joint>. The older
+     <param name="mimic"> form inside <ros2_control> was removed and will be
+     silently ignored if used.
+
+  3. WHEELS DECLARE BOTH effort AND velocity COMMAND INTERFACES.
+     Only the active controller claims one of them, so this costs nothing and
+     lets wheel_velocity_controller be swapped in for isolated testing without
+     regenerating the model.
+
+  ===========================================================================
+  DOF ACCOUNTING
+  ===========================================================================
+    Commanded  : left_hip_rear, right_hip_rear          (position)
+                 left_wheel_joint, right_wheel_joint    (effort / velocity)
+    Kinematic  : *_hip_front, *_knee_rear, *_knee_front (mimic, state only)
+
+  That is 4 actuated DOF, matching the physical robot: 2 leg postures and
+  2 wheels.
+  ============================================================================
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="assembly_ros2_control">
+
+    <ros2_control name="GazeboSimSystem" type="system">
+
+      <hardware>
+        <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      </hardware>
+
+      <!-- ================================================================= -->
+      <!-- DRIVER JOINTS  -  position commanded                              -->
+      <!--                                                                   -->
+      <!-- initial_value 0.0 is the CAD zero pose (femurs vertical). The     -->
+      <!-- robot is spawned lying down, so standing_mode drives these to the -->
+      <!-- stance angle on arming rather than at load.                       -->
+      <!-- ================================================================= -->
+
+      <joint name="left_hip_rear">
+        <command_interface name="position">
+          <param name="min">-1.396263</param>
+          <param name="max">0.087266</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="right_hip_rear">
+        <command_interface name="position">
+          <param name="min">-1.396263</param>
+          <param name="max">0.087266</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <!-- ================================================================= -->
+      <!-- WHEELS  -  effort commanded (velocity available but unclaimed)    -->
+      <!--                                                                   -->
+      <!-- Effort limits match the JGA12V stall torque of 0.15 N.m           -->
+      <!-- (1.5 kg.cm). balance_point additionally applies a back-EMF droop  -->
+      <!-- model, so the commanded torque falls off with wheel speed the way -->
+      <!-- a real DC motor does.                                             -->
+      <!-- ================================================================= -->
+
+      <joint name="left_wheel_joint">
+        <command_interface name="effort">
+          <param name="min">-0.15</param>
+          <param name="max">0.15</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-31.4</param>
+          <param name="max">31.4</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="right_wheel_joint">
+        <command_interface name="effort">
+          <param name="min">-0.15</param>
+          <param name="max">0.15</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-31.4</param>
+          <param name="max">31.4</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <!-- ================================================================= -->
+      <!-- MIMIC JOINTS  -  state interfaces ONLY                            -->
+      <!--                                                                   -->
+      <!-- Every one of these carries a <mimic> tag on its URDF <joint>      -->
+      <!-- pointing at its leg's driver. Adding a command interface to any   -->
+      <!-- of them makes the hardware component fail to load.                -->
+      <!-- ================================================================= -->
+
+      <joint name="left_hip_front">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="left_knee_rear">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="left_knee_front">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hip_front">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_knee_rear">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_knee_front">
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>

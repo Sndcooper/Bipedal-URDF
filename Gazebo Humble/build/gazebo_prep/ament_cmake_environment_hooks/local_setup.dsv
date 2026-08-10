@@ -1,0 +1,3 @@
+source;share/gazebo_prep/environment/ament_prefix_path.sh
+source;share/gazebo_prep/environment/path.sh
+source;share/gazebo_prep/environment/pythonpath.sh

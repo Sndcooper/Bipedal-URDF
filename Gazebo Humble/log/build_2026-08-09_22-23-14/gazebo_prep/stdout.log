@@ -1,0 +1,57 @@
+[  0%] Built target ament_cmake_python_symlink_gazebo_prep
+[100%] Built target balance_point
+running egg_info
+writing gazebo_prep.egg-info/PKG-INFO
+writing dependency_links to gazebo_prep.egg-info/dependency_links.txt
+writing top-level names to gazebo_prep.egg-info/top_level.txt
+reading manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[100%] Built target ament_cmake_python_build_gazebo_prep_egg
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/balance_point
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.sh
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.dsv
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/PKG-INFO
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/SOURCES.txt
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/dependency_links.txt
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/top_level.txt
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/standing_mode
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/rc_teleop
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/wireless_gui_bridge
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly.urdf.xacro
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_gazebo.xacro
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_ros2_control.xacro
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_front.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_rear.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_front.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_rear.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/pelvis.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_front.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_rear.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_front.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_rear.stl
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/balance_params.yaml
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/ros2_controllers.yaml
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/worlds/balance_arena.sdf
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/launch/simulation.launch.py
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/package_run_dependencies/gazebo_prep
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/parent_prefix_path/gazebo_prep
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.sh
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.dsv
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.bash
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.sh
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.zsh
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.dsv
+-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.dsv
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/packages/gazebo_prep
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig.cmake
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig-version.cmake
+-- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.xml
+Listing '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep'...

@@ -1,0 +1,9 @@
+setup.py
+gazebo_prep/__init__.py
+gazebo_prep/rc_teleop.py
+gazebo_prep/standing_mode.py
+gazebo_prep/wireless_gui_bridge.py
+gazebo_prep.egg-info/PKG-INFO
+gazebo_prep.egg-info/SOURCES.txt
+gazebo_prep.egg-info/dependency_links.txt
+gazebo_prep.egg-info/top_level.txt

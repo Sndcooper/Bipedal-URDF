@@ -1,0 +1,206 @@
+[0.000000] (-) TimerEvent: {}
+[0.000388] (gazebo_prep) JobQueued: {'identifier': 'gazebo_prep', 'dependencies': OrderedDict()}
+[0.000408] (gazebo_prep) JobStarted: {'identifier': 'gazebo_prep'}
+[0.003664] (gazebo_prep) JobProgress: {'identifier': 'gazebo_prep', 'progress': 'cmake'}
+[0.003863] (gazebo_prep) Command: {'cmd': ['/usr/bin/cmake', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep'], 'cwd': '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'coooper'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/coooper'), ('OLDPWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '2082'), ('SYSTEMD_EXEC_PID', '2257'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7547'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'coooper'), ('JOURNAL_STREAM', '8:24277'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'coooper'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/coooper/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/cooper:@/tmp/.ICE-unix/2233,unix/cooper:/tmp/.ICE-unix/2233'), ('INVOCATION_ID', 'c67040c47fdb4807a10250d5da50260c'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NQBRT3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:cba44d52-1be7-4205-8adf-f60ca35a01da'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble')]), 'shell': False}
+[0.033008] (gazebo_prep) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.056888] (gazebo_prep) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.059933] (gazebo_prep) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.093077] (gazebo_prep) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.096279] (gazebo_prep) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.096395] (gazebo_prep) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.096584] (gazebo_prep) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.097969] (gazebo_prep) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.099816] (-) TimerEvent: {}
+[0.133225] (gazebo_prep) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.137855] (gazebo_prep) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.137958] (gazebo_prep) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.138171] (gazebo_prep) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.139127] (gazebo_prep) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.199914] (-) TimerEvent: {}
+[0.208083] (gazebo_prep) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[0.236171] (gazebo_prep) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.245416] (gazebo_prep) StdoutLine: {'line': b'-- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.260470] (gazebo_prep) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.9 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.262049] (gazebo_prep) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.264980] (gazebo_prep) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.9 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.269187] (gazebo_prep) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.274813] (gazebo_prep) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.290068] (gazebo_prep) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.3 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.290863] (gazebo_prep) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.300022] (-) TimerEvent: {}
+[0.334288] (gazebo_prep) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[0.346758] (gazebo_prep) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[0.369150] (gazebo_prep) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.372306] (gazebo_prep) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[0.400096] (-) TimerEvent: {}
+[0.409125] (gazebo_prep) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[0.409304] (gazebo_prep) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.440677] (gazebo_prep) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.441301] (gazebo_prep) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[0.461908] (gazebo_prep) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.2 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[0.473402] (gazebo_prep) StdoutLine: {'line': b'-- Found std_srvs: 4.9.2 (/opt/ros/humble/share/std_srvs/cmake)\n'}
+[0.500190] (-) TimerEvent: {}
+[0.514516] (gazebo_prep) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.549979] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[0.550229] (gazebo_prep) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep/include>\n'}
+[0.550356] (gazebo_prep) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[0.550473] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[0.550509] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.550633] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[0.551158] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[0.551189] (gazebo_prep) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[0.551340] (gazebo_prep) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.551815] (gazebo_prep) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.556510] (gazebo_prep) StdoutLine: {'line': b'-- Generating done\n'}
+[0.558198] (gazebo_prep) StdoutLine: {'line': b'-- Build files have been written to: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep\n'}
+[0.564489] (gazebo_prep) CommandEnded: {'returncode': 0}
+[0.564841] (gazebo_prep) JobProgress: {'identifier': 'gazebo_prep', 'progress': 'build'}
+[0.565295] (gazebo_prep) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep', '--', '-j32', '-l32'], 'cwd': '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'coooper'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/coooper'), ('OLDPWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '2082'), ('SYSTEMD_EXEC_PID', '2257'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7547'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'coooper'), ('JOURNAL_STREAM', '8:24277'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'coooper'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/coooper/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/cooper:@/tmp/.ICE-unix/2233,unix/cooper:/tmp/.ICE-unix/2233'), ('INVOCATION_ID', 'c67040c47fdb4807a10250d5da50260c'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NQBRT3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:cba44d52-1be7-4205-8adf-f60ca35a01da'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble')]), 'shell': False}
+[0.590882] (gazebo_prep) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/balance_point.dir/src/balance_point.cpp.o\x1b[0m\n'}
+[0.594709] (gazebo_prep) StdoutLine: {'line': b'[ 50%] Built target ament_cmake_python_symlink_gazebo_prep\n'}
+[0.600245] (-) TimerEvent: {}
+[0.682509] (gazebo_prep) StdoutLine: {'line': b'running egg_info\n'}
+[0.682897] (gazebo_prep) StdoutLine: {'line': b'creating gazebo_prep.egg-info\n'}
+[0.683039] (gazebo_prep) StdoutLine: {'line': b'writing gazebo_prep.egg-info/PKG-INFO\n'}
+[0.683195] (gazebo_prep) StdoutLine: {'line': b'writing dependency_links to gazebo_prep.egg-info/dependency_links.txt\n'}
+[0.683274] (gazebo_prep) StdoutLine: {'line': b'writing top-level names to gazebo_prep.egg-info/top_level.txt\n'}
+[0.683344] (gazebo_prep) StdoutLine: {'line': b"writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'\n"}
+[0.683966] (gazebo_prep) StdoutLine: {'line': b"reading manifest file 'gazebo_prep.egg-info/SOURCES.txt'\n"}
+[0.684186] (gazebo_prep) StdoutLine: {'line': b"writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'\n"}
+[0.700347] (-) TimerEvent: {}
+[0.700569] (gazebo_prep) StdoutLine: {'line': b'[ 50%] Built target ament_cmake_python_build_gazebo_prep_egg\n'}
+[0.800543] (-) TimerEvent: {}
+[0.901019] (-) TimerEvent: {}
+[1.001518] (-) TimerEvent: {}
+[1.101969] (-) TimerEvent: {}
+[1.202406] (-) TimerEvent: {}
+[1.302805] (-) TimerEvent: {}
+[1.403199] (-) TimerEvent: {}
+[1.503642] (-) TimerEvent: {}
+[1.604093] (-) TimerEvent: {}
+[1.704507] (-) TimerEvent: {}
+[1.804894] (-) TimerEvent: {}
+[1.905149] (-) TimerEvent: {}
+[2.005441] (-) TimerEvent: {}
+[2.105865] (-) TimerEvent: {}
+[2.206245] (-) TimerEvent: {}
+[2.306490] (-) TimerEvent: {}
+[2.406798] (-) TimerEvent: {}
+[2.507206] (-) TimerEvent: {}
+[2.607566] (-) TimerEvent: {}
+[2.708019] (-) TimerEvent: {}
+[2.808423] (-) TimerEvent: {}
+[2.908918] (-) TimerEvent: {}
+[3.009342] (-) TimerEvent: {}
+[3.109750] (-) TimerEvent: {}
+[3.210115] (-) TimerEvent: {}
+[3.310446] (-) TimerEvent: {}
+[3.410836] (-) TimerEvent: {}
+[3.511345] (-) TimerEvent: {}
+[3.611770] (-) TimerEvent: {}
+[3.712185] (-) TimerEvent: {}
+[3.812582] (-) TimerEvent: {}
+[3.913032] (-) TimerEvent: {}
+[4.013432] (-) TimerEvent: {}
+[4.113727] (-) TimerEvent: {}
+[4.214204] (-) TimerEvent: {}
+[4.314694] (-) TimerEvent: {}
+[4.415132] (-) TimerEvent: {}
+[4.515515] (-) TimerEvent: {}
+[4.616019] (-) TimerEvent: {}
+[4.716449] (-) TimerEvent: {}
+[4.816800] (-) TimerEvent: {}
+[4.917393] (-) TimerEvent: {}
+[5.017786] (-) TimerEvent: {}
+[5.118184] (-) TimerEvent: {}
+[5.218535] (-) TimerEvent: {}
+[5.318778] (-) TimerEvent: {}
+[5.419051] (-) TimerEvent: {}
+[5.519449] (-) TimerEvent: {}
+[5.619780] (-) TimerEvent: {}
+[5.720085] (-) TimerEvent: {}
+[5.820474] (-) TimerEvent: {}
+[5.920888] (-) TimerEvent: {}
+[6.021273] (-) TimerEvent: {}
+[6.121634] (-) TimerEvent: {}
+[6.221950] (-) TimerEvent: {}
+[6.322316] (-) TimerEvent: {}
+[6.422611] (-) TimerEvent: {}
+[6.523007] (-) TimerEvent: {}
+[6.623409] (-) TimerEvent: {}
+[6.723773] (-) TimerEvent: {}
+[6.824246] (-) TimerEvent: {}
+[6.924658] (-) TimerEvent: {}
+[7.025095] (-) TimerEvent: {}
+[7.125585] (-) TimerEvent: {}
+[7.225993] (-) TimerEvent: {}
+[7.326415] (-) TimerEvent: {}
+[7.426833] (-) TimerEvent: {}
+[7.527260] (-) TimerEvent: {}
+[7.627650] (-) TimerEvent: {}
+[7.633507] (gazebo_prep) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable balance_point\x1b[0m\n'}
+[7.727773] (-) TimerEvent: {}
+[7.828149] (-) TimerEvent: {}
+[7.928537] (-) TimerEvent: {}
+[7.960204] (gazebo_prep) StdoutLine: {'line': b'[100%] Built target balance_point\n'}
+[7.966846] (gazebo_prep) CommandEnded: {'returncode': 0}
+[7.967728] (gazebo_prep) JobProgress: {'identifier': 'gazebo_prep', 'progress': 'install'}
+[7.972495] (gazebo_prep) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep'], 'cwd': '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'coooper'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/coooper'), ('OLDPWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '2082'), ('SYSTEMD_EXEC_PID', '2257'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7547'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'coooper'), ('JOURNAL_STREAM', '8:24277'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'coooper'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/coooper/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/cooper:@/tmp/.ICE-unix/2233,unix/cooper:/tmp/.ICE-unix/2233'), ('INVOCATION_ID', 'c67040c47fdb4807a10250d5da50260c'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NQBRT3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:cba44d52-1be7-4205-8adf-f60ca35a01da'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep:/opt/ros/humble')]), 'shell': False}
+[7.977148] (gazebo_prep) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[7.977422] (gazebo_prep) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[7.977612] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/balance_point\n'}
+[7.981284] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.sh\n'}
+[7.985573] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.dsv\n'}
+[7.989504] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/PKG-INFO\n'}
+[7.992823] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[7.996239] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[7.999318] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/top_level.txt\n'}
+[8.002657] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py\n'}
+[8.005670] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py\n'}
+[8.008543] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py\n'}
+[8.012406] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py\n'}
+[8.015619] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/standing_mode\n'}
+[8.019478] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/rc_teleop\n'}
+[8.022094] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/wireless_gui_bridge\n'}
+[8.025356] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly.urdf.xacro\n'}
+[8.028623] (-) TimerEvent: {}
+[8.028884] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_gazebo.xacro\n'}
+[8.032032] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_ros2_control.xacro\n'}
+[8.036170] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_front.stl\n'}
+[8.039565] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_rear.stl\n'}
+[8.042854] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_front.stl\n'}
+[8.046037] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_rear.stl\n'}
+[8.049258] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/pelvis.stl\n'}
+[8.052532] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_front.stl\n'}
+[8.055434] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_rear.stl\n'}
+[8.058639] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_front.stl\n'}
+[8.061752] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_rear.stl\n'}
+[8.065270] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/balance_params.yaml\n'}
+[8.068656] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/ros2_controllers.yaml\n'}
+[8.071681] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/worlds/balance_arena.sdf\n'}
+[8.075324] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/launch/simulation.launch.py\n'}
+[8.078383] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/package_run_dependencies/gazebo_prep\n'}
+[8.081712] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/parent_prefix_path/gazebo_prep\n'}
+[8.084861] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.sh\n'}
+[8.087758] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.dsv\n'}
+[8.091218] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.sh\n'}
+[8.095964] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.dsv\n'}
+[8.100316] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.bash\n'}
+[8.103594] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.sh\n'}
+[8.107051] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.zsh\n'}
+[8.110141] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.dsv\n'}
+[8.113103] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.dsv\n'}
+[8.116175] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/packages/gazebo_prep\n'}
+[8.120087] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig.cmake\n'}
+[8.123128] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig-version.cmake\n'}
+[8.126197] (gazebo_prep) StdoutLine: {'line': b'-- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.xml\n'}
+[8.128675] (-) TimerEvent: {}
+[8.147509] (gazebo_prep) StdoutLine: {'line': b"Listing '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep'...\n"}
+[8.147591] (gazebo_prep) StdoutLine: {'line': b"Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py'...\n"}
+[8.147616] (gazebo_prep) StdoutLine: {'line': b"Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py'...\n"}
+[8.147636] (gazebo_prep) StdoutLine: {'line': b"Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py'...\n"}
+[8.147655] (gazebo_prep) StdoutLine: {'line': b"Compiling '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py'...\n"}
+[8.152295] (gazebo_prep) CommandEnded: {'returncode': 0}
+[8.159741] (gazebo_prep) JobEnded: {'identifier': 'gazebo_prep', 'rc': 0}
+[8.160078] (-) EventReactorShutdown: {}

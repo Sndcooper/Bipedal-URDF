@@ -1,0 +1,61 @@
+[0.005s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+[0.029s] [100%] Built target balance_point
+[0.034s] [100%] Built target ament_cmake_python_symlink_gazebo_prep
+[0.119s] running egg_info
+[0.120s] writing gazebo_prep.egg-info/PKG-INFO
+[0.120s] writing dependency_links to gazebo_prep.egg-info/dependency_links.txt
+[0.120s] writing top-level names to gazebo_prep.egg-info/top_level.txt
+[0.120s] reading manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[0.121s] writing manifest file 'gazebo_prep.egg-info/SOURCES.txt'
+[0.133s] [100%] Built target ament_cmake_python_build_gazebo_prep_egg
+[0.139s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+[0.144s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep
+[0.147s] -- Install configuration: ""
+[0.147s] -- Execute custom install script
+[0.147s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/balance_point
+[0.147s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.sh
+[0.147s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/pythonpath.dsv
+[0.147s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/PKG-INFO
+[0.147s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/SOURCES.txt
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/dependency_links.txt
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep-1.0.0-py3.10.egg-info/top_level.txt
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/__init__.py
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/rc_teleop.py
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/standing_mode.py
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep/wireless_gui_bridge.py
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/standing_mode
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/rc_teleop
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/lib/gazebo_prep/wireless_gui_bridge
+[0.148s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly.urdf.xacro
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_gazebo.xacro
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/urdf/assembly_ros2_control.xacro
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_front.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_femur_rear.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_front.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/left_shank_rear.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/pelvis.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_front.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_femur_rear.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_front.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/meshes/right_shank_rear.stl
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/balance_params.yaml
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/config/ros2_controllers.yaml
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/worlds/balance_arena.sdf
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/launch/simulation.launch.py
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/package_run_dependencies/gazebo_prep
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/parent_prefix_path/gazebo_prep
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.sh
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/ament_prefix_path.dsv
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.sh
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/environment/path.dsv
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.bash
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.sh
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.zsh
+[0.149s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/local_setup.dsv
+[0.149s] -- Symlinking: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.dsv
+[0.153s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/ament_index/resource_index/packages/gazebo_prep
+[0.153s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig.cmake
+[0.153s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/cmake/gazebo_prepConfig-version.cmake
+[0.153s] -- Up-to-date symlink: /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/share/gazebo_prep/package.xml
+[0.168s] Listing '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/install/gazebo_prep/local/lib/python3.10/dist-packages/gazebo_prep'...
+[0.172s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep

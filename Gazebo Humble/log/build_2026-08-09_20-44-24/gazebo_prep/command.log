@@ -1,0 +1,4 @@
+Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep -- -j32 -l32
+Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep
+Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep

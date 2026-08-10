@@ -1,0 +1,474 @@
+<?xml version="1.0"?>
+<!--
+  ============================================================================
+  assembly.urdf.xacro  -  SIMULATION model of the wheeled bipedal robot
+  ============================================================================
+
+  Ported from assembly_description/urdf/assembly_view.urdf, which is the
+  CAD-derived source of truth. Every link origin, mass and inertia tensor here
+  is copied VERBATIM from that file. Four deliberate changes were made for
+  simulation:
+
+    1. Mesh URIs are package:// instead of ../meshes/ (relative paths do not
+       resolve once the package is installed).
+
+    2. Joint effort/velocity limits carry real actuator numbers instead of the
+       placeholder 100/100:
+         - Hips:   3.0 N.m / 6.18 rad/s   (2x AX-12+ @ 1.5 N.m per leg, see below)
+         - Wheels: 0.15 N.m / 31.4 rad/s  (JGA12V 300 rpm, 1.5 kg.cm stall)
+
+    3. The FRONT KNEE MIMICS WERE RETARGETED.  In the source file
+       <side>_knee_front mimics <side>_hip_front, which is ITSELF a mimic of
+       <side>_hip_rear. ros2_control enforces a mimic by mirroring the
+       mimicked joint's COMMAND interface, and hip_front has no command
+       interface, so a chained mimic either fails validation or silently
+       freezes. Retargeting to the driver with multiplier +1.477400 is
+       mathematically identical, because hip_front = -1.0 * hip_rear:
+           -1.4774 * hip_front  ==  -1.4774 * (-1.0 * hip_rear)
+                                ==  +1.4774 * hip_rear
+       The source file's own comment at left_knee_front notes this equivalence.
+
+    4. An imu_link was added (the physical MPU6050 has no URDF counterpart).
+
+  ===========================================================================
+  ACTUATOR AUTHORITY NOTE
+  ===========================================================================
+  The physical robot has FOUR AX-12+ servos, one per femur, 1.5 N.m stall each.
+  The URDF exposes only two independent DOF (one driver per leg) because the
+  5-bar closure constraint determines the front hip angle from the rear one.
+  Mimic joints contribute no torque of their own in gz_ros2_control, so the
+  driver joint carries the COMBINED authority of both servos on that leg:
+      1.5 N.m x 2 servos = 3.0 N.m per driver joint.
+  This is the physically correct aggregation, not an inflation.
+
+  ===========================================================================
+  FRAMES
+  ===========================================================================
+  CAD was exported with +X down, +Y forward, +Z lateral. base_footprint
+  re-expresses that as REP-103 (X forward, Y left, Z up) through one fixed
+  joint. All link/joint numbers below stay in the original CAD frame so they
+  remain checkable against the Fusion export.
+  ============================================================================
+-->
+<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ===================================================================== -->
+  <!-- Arguments                                                             -->
+  <!-- ===================================================================== -->
+
+  <!-- Re-attach the two 5-bar foot pivots as real SDF revolute joints.
+       DEFAULT FALSE - see assembly_gazebo.xacro for the full rationale.
+       Never enable this together with the mimic-driven ros2_control block. -->
+  <xacro:arg name="use_closure_joints" default="false"/>
+
+  <!-- Emit the <ros2_control> and <gazebo> blocks. Set false to produce a
+       plain visualisation URDF for RViz or a mesh viewer. -->
+  <xacro:arg name="simulation" default="true"/>
+
+  <!-- Absolute path to the controller YAML handed to gz_ros2_control. -->
+  <xacro:arg name="controllers_file"
+             default="$(find gazebo_prep)/config/ros2_controllers.yaml"/>
+
+  <!-- ===================================================================== -->
+  <!-- Properties                                                            -->
+  <!-- ===================================================================== -->
+
+  <xacro:property name="mesh_pkg" value="package://gazebo_prep/meshes"/>
+  <xacro:property name="mesh_scale" value="0.001 0.001 0.001"/>
+
+  <!-- Actuator limits -->
+  <xacro:property name="hip_effort"   value="3.0"/>    <!-- 2x AX-12+ @ 1.5 N.m -->
+  <xacro:property name="hip_velocity" value="6.18"/>   <!-- 59 RPM              -->
+  <xacro:property name="wheel_effort" value="0.15"/>   <!-- 1.5 kg.cm stall     -->
+  <xacro:property name="wheel_velocity" value="31.4"/> <!-- 300 RPM             -->
+
+  <!-- Joint position limits (unchanged from the source URDF). Inward travel
+       was tightened to 5 deg to stop the femurs crowding the centreline; the
+       femur-collision hard ceiling is 33.06 deg. -->
+  <xacro:property name="hip_rear_lower"  value="-1.396263"/>
+  <xacro:property name="hip_rear_upper"  value="0.087266"/>
+  <xacro:property name="hip_front_lower" value="-0.087266"/>
+  <xacro:property name="hip_front_upper" value="1.396263"/>
+  <xacro:property name="knee_rear_lower"  value="-1.047198"/>
+  <xacro:property name="knee_rear_upper"  value="2.094395"/>
+  <xacro:property name="knee_front_lower" value="-2.094395"/>
+  <xacro:property name="knee_front_upper" value="1.047198"/>
+
+  <!-- Minimax fit of the true (nonlinear) knee ratio over the driver range
+       [-80, +30] deg. Exact at zero pose; worst-case foot gap 6.48 mm at the
+       -80 deg extreme. -->
+  <xacro:property name="knee_ratio" value="1.477400"/>
+
+  <xacro:property name="hip_damping"   value="0.05"/>
+  <xacro:property name="wheel_damping" value="0.01"/>
+
+  <xacro:property name="wheel_radius" value="0.033"/>
+  <xacro:property name="wheel_width"  value="0.015"/>
+
+  <!-- ===================================================================== -->
+  <!-- Materials                                                             -->
+  <!-- ===================================================================== -->
+
+  <material name="pelvis_grey">
+    <color rgba="0.45 0.47 0.50 1.0"/>
+  </material>
+  <material name="femur_orange">
+    <color rgba="0.95 0.55 0.15 1.0"/>
+  </material>
+  <!-- motor-carrying shank -->
+  <material name="shank_dark">
+    <color rgba="0.18 0.20 0.23 1.0"/>
+  </material>
+  <!-- thin inner linkage bar -->
+  <material name="linkage_blue">
+    <color rgba="0.20 0.50 0.85 1.0"/>
+  </material>
+  <material name="silver">
+    <color rgba="0.700 0.700 0.700 1.000"/>
+  </material>
+
+  <!-- ===================================================================== -->
+  <!-- Helper macros                                                         -->
+  <!-- ===================================================================== -->
+
+  <!-- A mesh-bodied link: identical visual and collision geometry, with the
+       inertial block given separately. -->
+  <xacro:macro name="mesh_link"
+               params="name mesh material mass
+                       com_x com_y com_z ixx iyy izz
+                       vis_x vis_y vis_z">
+    <link name="${name}">
+      <inertial>
+        <origin rpy="0 0 0" xyz="${com_x} ${com_y} ${com_z}"/>
+        <mass value="${mass}"/>
+        <inertia ixx="${ixx}" ixy="0.0" ixz="0.0"
+                 iyy="${iyy}" iyz="0.0" izz="${izz}"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="${vis_x} ${vis_y} ${vis_z}"/>
+        <geometry>
+          <mesh filename="${mesh_pkg}/${mesh}.stl" scale="${mesh_scale}"/>
+        </geometry>
+        <material name="${material}"/>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="${vis_x} ${vis_y} ${vis_z}"/>
+        <geometry>
+          <mesh filename="${mesh_pkg}/${mesh}.stl" scale="${mesh_scale}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <!-- A wheel. COLLISION IS A SPHERE, not the visual cylinder, so the contact
+       solver sees one smooth point instead of catching on a polygonal rim
+       edge. This is deliberate and must not be "corrected". -->
+  <xacro:macro name="wheel_link" params="name">
+    <link name="${name}">
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="0.030000"/>
+        <!-- solid cylinder about local Z: Izz = m*r^2/2, Ixx=Iyy = m*(3r^2+L^2)/12 -->
+        <inertia ixx="8.730000e-06" ixy="0.0" ixz="0.0"
+                 iyy="8.730000e-06" iyz="0.0" izz="1.633500e-05"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="shank_dark"/>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <sphere radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <!-- ===================================================================== -->
+  <!-- Root: ROS-oriented frame -> CAD-oriented pelvis                       -->
+  <!-- ===================================================================== -->
+
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <!-- rpy maps CAD (+X down, +Y forward, +Z lateral) onto ROS
+         (+X forward, +Y left, +Z up); z lifts the feet onto the ground -->
+    <origin rpy="1.5707963 1.5707963 0" xyz="-0.025 -0.07 0.24847911411031287"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.171800 0.026020 0.000000"/>
+      <mass value="0.915000"/>
+      <inertia ixx="2.790826e-03" ixy="0.0" ixz="0.0"
+               iyy="4.122323e-03" iyz="0.0" izz="3.527497e-03"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="${mesh_pkg}/pelvis.stl" scale="${mesh_scale}"/>
+      </geometry>
+      <material name="pelvis_grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="${mesh_pkg}/pelvis.stl" scale="${mesh_scale}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================================================================== -->
+  <!-- IMU  (analogue of the pelvis-mounted MPU6050)                         -->
+  <!--                                                                       -->
+  <!-- rpy is the exact inverse of the CAD->ROS rotation carried by           -->
+  <!-- base_footprint_to_base_link (rpy 1.5707963 1.5707963 0 = Ry(pi/2)     -->
+  <!-- Rx(pi/2)). Inverting that and re-expressing in URDF's Rz*Ry*Rx order  -->
+  <!-- gives roll=-pi/2, pitch=0, yaw=+pi/2. The result is that imu_link is  -->
+  <!-- parallel to base_footprint when the robot stands upright, so pitch is -->
+  <!-- a clean rotation about +Y and gravity lies along -Z. balance_point    -->
+  <!-- depends on this alignment.                                            -->
+  <!-- ===================================================================== -->
+
+  <link name="imu_link"/>
+
+  <joint name="imu_joint" type="fixed">
+    <origin rpy="-1.5707963 0 1.5707963" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- LEFT LEG   (CAD z = -0.144 / -0.148)                                  -->
+  <!-- On this leg the motor-carrying shank is the REAR one; the two legs    -->
+  <!-- are related by a 180 deg rotation about the CAD X axis, not a mirror. -->
+  <!-- ===================================================================== -->
+
+  <xacro:mesh_link name="left_femur_rear" mesh="left_femur_rear"
+                   material="femur_orange" mass="0.040000"
+                   com_x="0.010118" com_y="-0.017534" com_z="-0.006482"
+                   ixx="1.809003e-05" iyy="9.708333e-06" izz="2.675670e-05"
+                   vis_x="-0.065" vis_y="0.005" vis_z="0.144"/>
+
+  <xacro:mesh_link name="left_femur_front" mesh="left_femur_front"
+                   material="femur_orange" mass="0.040000"
+                   com_x="0.014245" com_y="0.014384" com_z="-0.006482"
+                   ixx="1.438833e-05" iyy="1.421687e-05" izz="2.756353e-05"
+                   vis_x="-0.065" vis_y="-0.055" vis_z="0.144"/>
+
+  <xacro:mesh_link name="left_shank_rear" mesh="left_shank_rear"
+                   material="shank_dark" mass="0.338000"
+                   com_x="0.003882" com_y="0.003124" com_z="0.000416"
+                   ixx="4.490088e-04" iyy="5.551611e-04" izz="7.475011e-04"
+                   vis_x="-0.092496" vis_y="0.052634" vis_z="0.148"/>
+
+  <xacro:mesh_link name="left_shank_front" mesh="left_shank_front"
+                   material="linkage_blue" mass="0.040000"
+                   com_x="0.042362" com_y="-0.046317" com_z="0.001668"
+                   ixx="4.724833e-05" iyy="4.210497e-05" izz="8.847163e-05"
+                   vis_x="-0.103696" vis_y="-0.094085" vis_z="0.148"/>
+
+  <!-- DRIVER JOINT for the left leg. -->
+  <joint name="left_hip_rear" type="revolute">
+    <origin rpy="0 0 1.0472841962059805" xyz="0.065 -0.005 -0.144"/>
+    <parent link="base_link"/>
+    <child link="left_femur_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${hip_rear_lower}"
+           upper="${hip_rear_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+  </joint>
+
+  <!-- multiplier -1 makes the two femurs counter-rotate, which is the
+       symmetric spread/crouch motion. -->
+  <joint name="left_hip_front" type="revolute">
+    <origin rpy="0 0 -0.790399343078837" xyz="0.065 0.055 -0.144"/>
+    <parent link="base_link"/>
+    <child link="left_femur_front"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${hip_front_lower}"
+           upper="${hip_front_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="left_hip_rear" multiplier="-1.0" offset="0"/>
+  </joint>
+
+  <!-- knee = femur distal pivot, 55.000 mm from the hip. -->
+  <joint name="left_knee_rear" type="revolute">
+    <origin rpy="0 0 -1.442050229164275" xyz="0.027496 -0.047634 -0.004"/>
+    <parent link="left_femur_rear"/>
+    <child link="left_shank_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${knee_rear_lower}"
+           upper="${knee_rear_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="left_hip_rear" multiplier="-${knee_ratio}" offset="0"/>
+  </joint>
+
+  <!-- RETARGETED: mimics the DRIVER directly with a positive multiplier.
+       See the header note on chained mimics. -->
+  <joint name="left_knee_front" type="revolute">
+    <origin rpy="0 0 1.337538022687104" xyz="0.038696 0.039085 -0.004"/>
+    <parent link="left_femur_front"/>
+    <child link="left_shank_front"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${knee_front_lower}"
+           upper="${knee_front_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="left_hip_rear" multiplier="${knee_ratio}" offset="0"/>
+  </joint>
+
+  <!-- foot frame at the loop-closure pivot, carried by the front shank -->
+  <link name="left_foot"/>
+  <joint name="left_foot_frame" type="fixed">
+    <origin rpy="0 0 0" xyz="0.072552 -0.079325 0.0"/>
+    <parent link="left_shank_front"/>
+    <child link="left_foot"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- LEFT WHEEL                                                            -->
+  <!--                                                                       -->
+  <!-- Mounts on the D-shaft protruding from the OUTBOARD face of the        -->
+  <!-- motor-carrying rear shank. Outboard on this leg is -Z, so the axis is -->
+  <!-- negated relative to the right wheel: +rotation is "forward" on BOTH   -->
+  <!-- sides. balance_point relies on this - it means the same-signed effort -->
+  <!-- drives both wheels the same way, exactly as the firmware assumes.     -->
+  <!-- ===================================================================== -->
+
+  <xacro:wheel_link name="left_wheel"/>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0.090401 0.068482 -0.018500"/>
+    <parent link="left_shank_rear"/>
+    <child link="left_wheel"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+    <dynamics damping="${wheel_damping}"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT LEG  (CAD z = +0.004 / +0.008)                                  -->
+  <!-- Here the motor-carrying shank is the FRONT one.                       -->
+  <!-- ===================================================================== -->
+
+  <xacro:mesh_link name="right_femur_rear" mesh="right_femur_rear"
+                   material="femur_orange" mass="0.040000"
+                   com_x="0.010126" com_y="-0.017530" com_z="0.006482"
+                   ixx="1.809003e-05" iyy="9.708333e-06" izz="2.675670e-05"
+                   vis_x="-0.065" vis_y="0.005" vis_z="-0.004"/>
+
+  <xacro:mesh_link name="right_femur_front" mesh="right_femur_front"
+                   material="femur_orange" mass="0.040000"
+                   com_x="0.014374" com_y="0.014255" com_z="0.006482"
+                   ixx="1.425963e-05" iyy="1.438833e-05" izz="2.760630e-05"
+                   vis_x="-0.065" vis_y="-0.055" vis_z="-0.004"/>
+
+  <xacro:mesh_link name="right_shank_rear" mesh="right_shank_rear"
+                   material="linkage_blue" mass="0.040000"
+                   com_x="0.049087" com_y="0.039118" com_z="-0.001668"
+                   ixx="3.803563e-05" iyy="5.111713e-05" izz="8.827110e-05"
+                   vis_x="-0.092504" vis_y="0.052629" vis_z="-0.008"/>
+
+  <xacro:mesh_link name="right_shank_front" mesh="right_shank_front"
+                   material="shank_dark" mass="0.338000"
+                   com_x="0.003361" com_y="-0.003678" com_z="-0.000416"
+                   ixx="5.251940e-04" iyy="4.810264e-04" izz="7.495516e-04"
+                   vis_x="-0.104057" vis_y="-0.093724" vis_z="-0.008"/>
+
+  <!-- DRIVER JOINT for the right leg. The two legs are NOT sign-inverted -
+       both use axis 0 0 1 with origins that differ by under 0.01 rad. -->
+  <joint name="right_hip_rear" type="revolute">
+    <origin rpy="0 0 1.0471127746125484" xyz="0.065 -0.005 0.004"/>
+    <parent link="base_link"/>
+    <child link="right_femur_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${hip_rear_lower}"
+           upper="${hip_rear_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+  </joint>
+
+  <joint name="right_hip_front" type="revolute">
+    <origin rpy="0 0 -0.7811169383490308" xyz="0.065 0.055 0.004"/>
+    <parent link="base_link"/>
+    <child link="right_femur_front"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${hip_front_lower}"
+           upper="${hip_front_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="right_hip_rear" multiplier="-1.0" offset="0"/>
+  </joint>
+
+  <!-- NOTE: this origin is the one the Fusion exporter got wrong. It wrote
+       (0.111574, 0.019366, 0.004), which is 113 mm from the hip - a point in
+       empty space, well off the end of a 55 mm femur. The correct distal
+       pivot is the one below. -->
+  <joint name="right_knee_rear" type="revolute">
+    <origin rpy="0 0 -1.4371325724496562" xyz="0.027504 -0.047629 0.004"/>
+    <parent link="right_femur_rear"/>
+    <child link="right_shank_rear"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${knee_rear_lower}"
+           upper="${knee_rear_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="right_hip_rear" multiplier="-${knee_ratio}" offset="0"/>
+  </joint>
+
+  <!-- RETARGETED - see the note on left_knee_front. -->
+  <joint name="right_knee_front" type="revolute">
+    <origin rpy="0 0 1.3287030430581956" xyz="0.039057 0.038724 0.004"/>
+    <parent link="right_femur_front"/>
+    <child link="right_shank_front"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${hip_effort}" lower="${knee_front_lower}"
+           upper="${knee_front_upper}" velocity="${hip_velocity}"/>
+    <dynamics damping="${hip_damping}"/>
+    <mimic joint="right_hip_rear" multiplier="${knee_ratio}" offset="0"/>
+  </joint>
+
+  <link name="right_foot"/>
+  <joint name="right_foot_frame" type="fixed">
+    <origin rpy="0 0 0" xyz="0.072517 -0.079358 0.0"/>
+    <parent link="right_shank_front"/>
+    <child link="right_foot"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT WHEEL                                                           -->
+  <!--                                                                       -->
+  <!-- Same D-shaft mount, but on this leg the motor-carrying shank is the   -->
+  <!-- FRONT one and its outboard face is +Z. Axis is +Z here (mirrored from -->
+  <!-- the left) so that a positive joint value drives both wheels the same  -->
+  <!-- way.                                                                  -->
+  <!-- ===================================================================== -->
+
+  <xacro:wheel_link name="right_wheel"/>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <origin rpy="0 0 0" xyz="0.078907 -0.081444 0.018500"/>
+    <parent link="right_shank_front"/>
+    <child link="right_wheel"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+    <dynamics damping="${wheel_damping}"/>
+  </joint>
+
+  <!-- ===================================================================== -->
+  <!-- Simulation blocks                                                     -->
+  <!-- ===================================================================== -->
+
+  <xacro:if value="$(arg simulation)">
+    <xacro:include filename="$(find gazebo_prep)/urdf/assembly_ros2_control.xacro"/>
+    <xacro:include filename="$(find gazebo_prep)/urdf/assembly_gazebo.xacro"/>
+
+    <xacro:assembly_ros2_control/>
+    <xacro:assembly_gazebo controllers_file="$(arg controllers_file)"
+                           use_closure_joints="$(arg use_closure_joints)"/>
+  </xacro:if>
+
+</robot>

@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-76aed0c844d7788efd45.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gazebo_prep",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_gazebo_prep_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_gazebo_prep_egg-4a4a4e836dd00dde6a59.json",
+					"name" : "ament_cmake_python_build_gazebo_prep_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_gazebo_prep::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_gazebo_prep-7bcb7bb548eae1e2915e.json",
+					"name" : "ament_cmake_python_symlink_gazebo_prep",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "balance_point::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-balance_point-500f9e3f316404a1edc6.json",
+					"name" : "balance_point",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gazebo_prep_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gazebo_prep_uninstall-56c0e5ebd7d3c58008c1.json",
+					"name" : "gazebo_prep_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-45af396288171bbd265f.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep",
+		"source" : "/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/src/gazebo_prep"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

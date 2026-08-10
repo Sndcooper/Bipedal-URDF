@@ -1,0 +1,12 @@
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/uninstall.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/gazebo_prep_uninstall.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/balance_point.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/ament_cmake_python_symlink_gazebo_prep.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/ament_cmake_python_build_gazebo_prep_egg.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/test.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/edit_cache.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/rebuild_cache.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/list_install_components.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/install.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/install/local.dir
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/CMakeFiles/install/strip.dir

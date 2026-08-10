@@ -1,0 +1,1 @@
+/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/ament_cmake_environment_hooks/pythonpath.sh

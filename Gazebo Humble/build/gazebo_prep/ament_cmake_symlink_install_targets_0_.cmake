@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/coooper/Documents/biped/Bipedal-URDF/Gazebo Humble/build/gazebo_prep/balance_point" "TARGETS" "balance_point" "DESTINATION" "lib/gazebo_prep")

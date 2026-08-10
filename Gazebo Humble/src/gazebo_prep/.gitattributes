@@ -1,0 +1,23 @@
+# Force LF endings on everything that runs on Linux.
+#
+# These files are authored on Windows and executed on Ubuntu. A CR before the
+# newline in a Python wrapper makes the kernel look for an interpreter named
+# "python3\r", which fails with a confusing "bad interpreter" error. Xacro and
+# YAML tolerate CRLF but are normalised here too, for consistency.
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.cpp   text eol=lf
+*.hpp   text eol=lf
+*.xacro text eol=lf
+*.urdf  text eol=lf
+*.sdf   text eol=lf
+*.yaml  text eol=lf
+*.xml   text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+
+# Wrappers in scripts/ have no extension.
+scripts/*  text eol=lf
+
+*.stl   binary

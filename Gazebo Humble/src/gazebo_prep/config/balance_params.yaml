@@ -1,0 +1,197 @@
+# =============================================================================
+# balance_params.yaml  -  runtime parameters for the simulated control stack
+#
+# Gain defaults are the tuned hardware values from
+#   RelevantPhysicalRobotFiles/RC_mcu_IK_wireless/gui/profiles/
+#   params_20260807_161915.json
+# so a simulation run starts from the same place the real robot does.
+#
+# EVERY gain below is a DYNAMIC parameter. Change it live with either:
+#   ros2 param set /balance_point kp 110.0
+#   (or) the wireless GUI protocol:  echo -n 'P110.0|' | nc localhost 3333
+#
+# After changing gains mid-run, call /reset_state to flush the integrators.
+# Otherwise a loaded integrator produces a transient that looks like
+# instability but is really just leftover state from the previous gain set.
+# =============================================================================
+
+/balance_point:
+  ros__parameters:
+    use_sim_time: true
+
+    # --- Loop rate ------------------------------------------------------
+    # 100 Hz, matching the STM32 firmware exactly. Changing this changes the
+    # effective Ki and Kd (the firmware integrates error*dt and differentiates
+    # on measurement), so gains will NOT transfer if you alter it.
+    control_rate: 100.0
+
+    # --- INNER LOOP: balance PID (degrees) ------------------------------
+    # error = target_angle - pitch;  derivative = -gyro_rate  (on measurement)
+    # output is PWM-equivalent, clamped to +-255 as on the hardware.
+    kp: 95.0
+    ki: 670.0
+    kd: 2.0
+
+    # Complementary filter blend. pitch = alpha*(pitch + gyro*dt)
+    #                                   + (1-alpha)*accel_pitch
+    alpha: 0.96
+
+    # Operating point. The real robot's mass is biased rearward, so a small
+    # positive (nose-down) target is often needed to stop it drifting back.
+    base_target_angle: 0.0
+
+    # Safety latch. Beyond this tilt the motors cut, integrators reset, and a
+    # disarm -> arm cycle is required. Mirrors the firmware behaviour.
+    max_safe_tilt: 25.0
+
+    # --- MIDDLE LOOP: velocity PI -> tilt bias (degrees) ----------------
+    kp_vel: 0.02
+    ki_vel: 0.001
+    tilt_bias_limit: 5.0
+
+    # --- OUTER LOOP: position hold P ------------------------------------
+    kp_pos: 0.5
+
+    # Velocity command ceiling, in encoder counts/sec.
+    #
+    # NOTE ON THE UNITS: at counts_per_rev = 1320 and r = 0.033 m,
+    #   800 counts/s = 3.81 rad/s = 0.126 m/s
+    # so the firmware's 800 corresponds to a fairly slow robot. rc_teleop's
+    # max_speed must not exceed this or commands silently saturate:
+    #   max_speed [m/s] <= max_vel_cmd / counts_per_rev * 2*pi * wheel_radius
+    # The rc_teleop default (0.125 m/s) is set to match. If you raise one,
+    # raise the other, and re-check counts_per_rev first - it scales both.
+    max_vel_cmd: 800.0          # counts/sec
+    hold_vel_threshold: 20.0    # |vel| below this latches the hold position
+
+    # Encoder velocity EMA retention coefficient. Firmware uses 0.85 as the
+    # retention term (equivalent to a 0.15 update weight).
+    vel_alpha: 0.85
+
+    # --- Encoder model --------------------------------------------------
+    # NOT DOCUMENTED ANYWHERE IN THE HARDWARE REPO - this is the one number
+    # you must measure. kp_vel, ki_vel, kp_pos and max_vel_cmd are all
+    # expressed in encoder counts, so a wrong value here silently re-gains
+    # both outer loops.
+    #
+    # To measure: drive one wheel exactly one revolution by hand and read the
+    # count delta. counts_per_rev = (pulses per motor rev) x (gear ratio) x 4
+    # for a quadrature encoder counted on all edges, or x1 if only RISING
+    # edges are counted - the firmware uses a RISING-edge ISR, so x1.
+    counts_per_rev: 1320.0
+
+    # --- Actuator model -------------------------------------------------
+    wheel_radius: 0.033
+    pwm_max: 255.0
+
+    # JGA12V 300 rpm: 1.5 kg.cm stall = 0.15 N.m.
+    stall_torque: 0.15
+    no_load_speed: 31.4         # rad/s (300 rpm)
+
+    # Back-EMF droop: available torque falls linearly with speed, reaching
+    # zero at no_load_speed. Keep this TRUE. A pure torque source with no
+    # speed droop is far stronger at speed than the real motor, and gains
+    # tuned against it will not transfer to hardware.
+    use_motor_model: true
+
+    # Sign of the PID output as applied to wheel effort. The firmware negates
+    # (left = -output + turn, right = -output - turn), and the URDF wheel axes
+    # are pre-mirrored so the same sign drives both wheels forward.
+    #
+    # VERIFY BEFORE TRUSTING ANY TUNING RESULT: arm the robot, tilt it
+    # forward, and confirm the wheels drive FORWARD to catch it. If it
+    # accelerates in the direction it is falling, flip this to +1.0.
+    effort_sign: -1.0
+
+    # --- Telemetry ------------------------------------------------------
+    # Full control-rate logging. The hardware sends 20 Hz over a 3DR radio
+    # because of bandwidth; there is no such limit here, and decimating to
+    # 20 Hz would ALIAS the oscillations this simulation exists to study.
+    telemetry_rate: 100.0
+    # Separate, slower rate for the human-readable GUI stream.
+    gui_telemetry_rate: 20.0
+
+    # Timeout after which a stale /balance/cmd_vel is treated as zero.
+    cmd_vel_timeout: 0.5
+
+    # Joint names - must match the URDF and the wheel_effort_controller order.
+    left_wheel_joint: "left_wheel_joint"
+    right_wheel_joint: "right_wheel_joint"
+
+
+# =============================================================================
+/standing_mode:
+  ros__parameters:
+    use_sim_time: true
+
+    # Calibrated stance. 0.0 is the CAD zero pose, which sits within ~4 mm of
+    # the 5-bar's full-extension singularity - the linkage locks out there and
+    # the robot cannot absorb shocks. A crouch keeps it in the well-conditioned
+    # part of the workspace.
+    #
+    # Range is [-1.396263, 0.087266]; more negative = more crouched.
+    stance_angle: -0.60
+
+    # Pose held while disarmed, i.e. lying down. Slightly crouched so the legs
+    # are already off the singularity when the stand-up begins.
+    fallen_angle: -0.30
+
+    # Seconds for the stance transition. Too fast and the leg inertia kicks the
+    # body over before the balance loop has authority.
+    stand_duration: 1.5
+    publish_rate: 50.0
+
+    # Return to fallen_angle when disarmed. False leaves the legs where they
+    # are, which makes repeated A/B runs start from a consistent pose.
+    relax_on_disarm: false
+
+
+# =============================================================================
+/rc_teleop:
+  ros__parameters:
+    use_sim_time: true
+
+    # /cmd_vel linear.x clamp (m/s).
+    #
+    # Matched to balance_point's max_vel_cmd of 800 counts/s:
+    #   800 / 1320 * 2*pi * 0.033 = 0.1257 m/s
+    # Setting this higher would let /cmd_vel request speeds the outer loop
+    # simply clips, which reads as an unresponsive robot rather than as
+    # saturation. Raise max_vel_cmd first if you want more speed.
+    max_speed: 0.125
+
+    # /cmd_vel angular.z clamp (rad/s).
+    max_turn: 2.0
+
+    # angular.z -> turn-bias PWM. The RC transmitter's ch4 spans +-425 PWM,
+    # so max_turn maps onto that full range.
+    turn_gain: 212.5
+
+    # Stick deadband, as a fraction of full scale (the firmware uses a
+    # 1425-1575 window on a 1000-2000 range, i.e. about 7.5%).
+    deadband: 0.075
+
+    # Slew limits, per second. Prevents a step command from destabilising the
+    # robot - the physical RC sticks cannot move instantly either.
+    accel_limit: 1.0
+    turn_slew_limit: 4.0
+
+    publish_rate: 50.0
+
+
+# =============================================================================
+/wireless_gui_bridge:
+  ros__parameters:
+    use_sim_time: true
+
+    # TCP server replacing the 3DR radio link. The existing GUI can point at
+    # this instead of a serial port.
+    bind_address: "0.0.0.0"
+    port: 3333
+
+    # Telemetry frames per second sent to connected clients. 20 Hz matches the
+    # hardware radio and is what the GUI expects.
+    telemetry_rate: 20.0
+
+    # Maximum simultaneous GUI clients.
+    max_clients: 4
