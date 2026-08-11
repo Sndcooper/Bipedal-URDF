@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!--
+  Transmissions exist ONLY for the four hips.
+
+  The four knees are passive: they carry no motor and their angle is fixed by
+  the 5-bar closure once the hips are set. Declaring transmissions for them
+  (as the raw CAD export did for all ten joints) would tell ros2_control the
+  leg has 4 DOF when it really has 2, and the controllers would fight the
+  linkage.
+-->
+<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="hip_transmission" params="joint">
+    <transmission name="${joint}_tran">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${joint}_actr">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:hip_transmission joint="left_hip_rear"/>
+  <xacro:hip_transmission joint="left_hip_front"/>
+  <xacro:hip_transmission joint="right_hip_rear"/>
+  <xacro:hip_transmission joint="right_hip_front"/>
+
+</robot>

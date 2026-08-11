@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<robot name="assembly" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="body_color" value="Gazebo/Silver" />
+
+  <gazebo>
+    <plugin name="control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+  <xacro:macro name="gz_link" params="name mu:=0.2 self_collide:=true">
+    <gazebo reference="${name}">
+      <material>${body_color}</material>
+      <mu1>${mu}</mu1>
+      <mu2>${mu}</mu2>
+      <self_collide>${self_collide}</self_collide>
+    </gazebo>
+  </xacro:macro>
+
+  <gazebo reference="base_link">
+    <material>${body_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <self_collide>true</self_collide>
+    <gravity>true</gravity>
+  </gazebo>
+
+  <xacro:gz_link name="left_femur_rear"/>
+  <xacro:gz_link name="left_femur_front"/>
+  <xacro:gz_link name="right_femur_rear"/>
+  <xacro:gz_link name="right_femur_front"/>
+
+  <!-- shanks make ground contact: higher friction, and self_collide off so the
+       two bars of a leg (which physically overlap at the foot pivot) do not
+       push each other apart -->
+  <xacro:gz_link name="left_shank_rear"   mu="1.0" self_collide="false"/>
+  <xacro:gz_link name="left_shank_front"  mu="1.0" self_collide="false"/>
+  <xacro:gz_link name="right_shank_rear"  mu="1.0" self_collide="false"/>
+  <xacro:gz_link name="right_shank_front" mu="1.0" self_collide="false"/>
+
+  <!-- ===================================================================== -->
+  <!-- LOOP CLOSURE                                                          -->
+  <!--                                                                       -->
+  <!-- URDF cannot express the foot pivot (a tree has no cycles), so it is    -->
+  <!-- re-attached here. A <gazebo> element with no "reference" attribute has -->
+  <!-- its children copied verbatim into the SDF <model>, which lets us add   -->
+  <!-- the missing revolute joint and make each leg a real closed 5-bar in    -->
+  <!-- physics.                                                              -->
+  <!--                                                                       -->
+  <!-- These two joints are what turn "4 disconnected knee arms" into "2      -->
+  <!-- closed linkages". They are SDF syntax, not URDF syntax.                -->
+  <!--                                                                       -->
+  <!-- NOTE: this is written for Gazebo Classic 11 / SDF 1.7 and has not been -->
+  <!-- run here - there is no Gazebo in this environment. If the model        -->
+  <!-- explodes on spawn, relax the closure with an <ode><erp>/<cfm> pair or  -->
+  <!-- spawn already at the zero pose, where both pivots coincide exactly.    -->
+  <!-- ===================================================================== -->
+
+  <gazebo>
+    <joint name="left_foot_closure" type="revolute">
+      <parent>left_shank_rear</parent>
+      <child>left_shank_front</child>
+      <pose relative_to="left_shank_rear">0.083752 0.067394 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="left_shank_rear">0 0 1</xyz>
+        <limit>
+          <lower>-3.14159</lower>
+          <upper>3.14159</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name="right_foot_closure" type="revolute">
+      <parent>right_shank_rear</parent>
+      <child>right_shank_front</child>
+      <pose relative_to="right_shank_rear">0.084070 0.066995 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="right_shank_rear">0 0 1</xyz>
+        <limit>
+          <lower>-3.14159</lower>
+          <upper>3.14159</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
+    </joint>
+  </gazebo>
+
+</robot>
