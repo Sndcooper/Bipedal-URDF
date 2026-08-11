@@ -1,0 +1,3 @@
+[console_scripts]
+five_bar_state_publisher = biped_rviz_launch_suite.five_bar_state_publisher:main
+

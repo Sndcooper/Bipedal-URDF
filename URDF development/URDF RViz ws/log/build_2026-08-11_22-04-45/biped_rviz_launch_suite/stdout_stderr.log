@@ -1,0 +1,30 @@
+running egg_info
+creating ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info
+writing ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/PKG-INFO
+writing dependency_links to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/dependency_links.txt
+writing entry points to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/entry_points.txt
+writing requirements to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/requires.txt
+writing top-level names to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/top_level.txt
+writing manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+package init file 'biped_rviz_launch_suite/__init__.py' not found (or not a regular file)
+reading manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+writing manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+copying biped_rviz_launch_suite/launch_helpers.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+copying biped_rviz_launch_suite/five_bar_state_publisher.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+running install
+running install_lib
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+copying /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite/launch_helpers.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+copying /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite/five_bar_state_publisher.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+byte-compiling /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite/launch_helpers.py to launch_helpers.cpython-310.pyc
+byte-compiling /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite/five_bar_state_publisher.py to five_bar_state_publisher.cpython-310.pyc
+running install_data
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index/resource_index
+creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index/resource_index/packages
+error: can't copy 'resource/biped_rviz_launch_suite': doesn't exist or not a regular file

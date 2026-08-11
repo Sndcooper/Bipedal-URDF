@@ -1,0 +1,32 @@
+[0.294s] Invoking command in '/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/src/rviz_launch_suite': PYTHONPATH=/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/biped_rviz_launch_suite build --build-base /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build install --record /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/install.log --install-scripts $base/lib/biped_rviz_launch_suite --single-version-externally-managed install_data
+[0.380s] running egg_info
+[0.380s] creating ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info
+[0.380s] writing ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/PKG-INFO
+[0.380s] writing dependency_links to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/dependency_links.txt
+[0.380s] writing entry points to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/entry_points.txt
+[0.380s] writing requirements to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/requires.txt
+[0.380s] writing top-level names to ../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/top_level.txt
+[0.380s] writing manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+[0.381s] package init file 'biped_rviz_launch_suite/__init__.py' not found (or not a regular file)
+[0.381s] reading manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+[0.381s] writing manifest file '../../build/biped_rviz_launch_suite/biped_rviz_launch_suite.egg-info/SOURCES.txt'
+[0.381s] running build
+[0.381s] running build_py
+[0.381s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build
+[0.382s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib
+[0.382s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+[0.382s] copying biped_rviz_launch_suite/launch_helpers.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+[0.382s] copying biped_rviz_launch_suite/five_bar_state_publisher.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite
+[0.382s] running install
+[0.382s] running install_lib
+[0.382s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+[0.382s] copying /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite/launch_helpers.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+[0.382s] copying /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build/lib/biped_rviz_launch_suite/five_bar_state_publisher.py -> /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite
+[0.382s] byte-compiling /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite/launch_helpers.py to launch_helpers.cpython-310.pyc
+[0.382s] byte-compiling /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages/biped_rviz_launch_suite/five_bar_state_publisher.py to five_bar_state_publisher.cpython-310.pyc
+[0.383s] running install_data
+[0.383s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index
+[0.383s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index/resource_index
+[0.383s] creating /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/share/ament_index/resource_index/packages
+[0.383s] error: can't copy 'resource/biped_rviz_launch_suite': doesn't exist or not a regular file
+[0.392s] Invoked command in '/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/src/rviz_launch_suite' returned '1': PYTHONPATH=/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/install/biped_rviz_launch_suite/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/biped_rviz_launch_suite build --build-base /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/build install --record /home/coooper/Documents/biped/Bipedal-URDF/URDF development/URDF RViz ws/build/biped_rviz_launch_suite/install.log --install-scripts $base/lib/biped_rviz_launch_suite --single-version-externally-managed install_data
